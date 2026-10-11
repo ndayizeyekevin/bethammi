@@ -174,8 +174,14 @@ function cleanContent(rawHtml, pagePaths) {
 }
 
 function localPageLink(item, kind = "page") {
-  const directory = kind === "post" ? "stories" : "pages";
-  return `${siteRoot}${directory}/${encodeURIComponent(item.slug)}.html`;
+  const slug = encodeURIComponent(item.slug);
+  if (document.body.dataset.routeMode === "static") {
+    const directory = kind === "post" ? "stories" : "pages";
+    return `${siteRoot}${directory}/${slug}.html`;
+  }
+  return kind === "post"
+    ? `${siteRoot}post.php?slug=${slug}`
+    : `${siteRoot}page.html?type=page&slug=${slug}`;
 }
 
 function addFeaturedImage(card, item) {
@@ -208,7 +214,8 @@ function createStoryCard(item) {
   const title = document.createElement("h3");
   title.textContent = decodeEntities(item.title.rendered);
   const excerpt = document.createElement("p");
-  excerpt.textContent = plainText(item.excerpt.rendered).slice(0, 180);
+  const summary = plainText(item.excerpt.rendered);
+  excerpt.textContent = summary.length > 180 ? `${summary.slice(0, 177).trimEnd()}…` : summary;
   const link = document.createElement("a");
   link.className = "story-card__link";
   link.href = localPageLink(item, "post");
@@ -312,6 +319,100 @@ function renderRelated(pages, currentSlug) {
   document.querySelector("#page-related").hidden = false;
 }
 
+function renderDirectoryCard({ title, subtitle, description, imageUrl, imageAlt }) {
+  const card = document.createElement("article");
+  card.className = "directory-card";
+
+  if (imageUrl) {
+    const imageSource = new URL(imageUrl, window.location.href);
+    if (imageSource.protocol !== "https:" && imageSource.protocol !== "http:") {
+      throw new Error("A directory photo has an invalid image URL.");
+    }
+    const image = document.createElement("img");
+    image.src = imageSource.href;
+    image.alt = imageAlt || "";
+    image.loading = "lazy";
+    card.append(image);
+  }
+
+  const copy = document.createElement("div");
+  copy.className = "directory-card__copy";
+  const heading = document.createElement("h2");
+  heading.textContent = title;
+  copy.append(heading);
+
+  if (subtitle) {
+    const label = document.createElement("p");
+    label.className = "directory-card__subtitle";
+    label.textContent = subtitle;
+    copy.append(label);
+  }
+
+  if (description) {
+    const text = document.createElement("p");
+    text.className = "directory-card__description";
+    text.textContent = description;
+    copy.append(text);
+  }
+
+  card.append(copy);
+  return card;
+}
+
+async function renderTeamDirectory() {
+  const response = await fetch(`${siteRoot}team.php`);
+  if (!response.ok) throw new Error(`Team request failed (${response.status}).`);
+  const payload = await response.json();
+  if (!Array.isArray(payload.team)) throw new Error("Team response has an invalid format.");
+
+  const grid = document.createElement("div");
+  grid.className = "directory-grid";
+  payload.team.forEach((member) => {
+    grid.append(renderDirectoryCard({
+      title: member.name,
+      subtitle: member.title,
+      description: member.bio,
+      imageUrl: member.photo_url,
+      imageAlt: member.name
+    }));
+  });
+  article.replaceChildren(grid);
+  if (!payload.team.length) {
+    article.textContent = "Team profiles will be added soon.";
+    article.className = "remote-content remote-content--empty";
+  }
+}
+
+async function renderParishDirectory() {
+  const response = await fetch(`${siteRoot}parishes.php`);
+  if (!response.ok) throw new Error(`Parish request failed (${response.status}).`);
+  const payload = await response.json();
+  if (!Array.isArray(payload.parishes)) throw new Error("Parish response has an invalid format.");
+
+  const grid = document.createElement("div");
+  grid.className = "directory-grid";
+  payload.parishes.forEach((parish) => {
+    const location = [parish.location, parish.region, parish.country].filter(Boolean).join(" · ");
+    const details = [
+      parish.short_info,
+      parish.description,
+      parish.member_count ? `${parish.member_count} members` : ""
+    ].filter(Boolean).join("\n\n");
+    grid.append(renderDirectoryCard({
+      title: parish.name,
+      subtitle: location,
+      description: details,
+      imageUrl: parish.photo_url,
+      imageAlt: parish.name
+    }));
+  });
+  article.replaceChildren(grid);
+  if (!payload.parishes.length) {
+    article.textContent = "Parish information will be added soon.";
+    article.className = "remote-content remote-content--empty";
+  }
+}
+
 async function start() {
   const params = new URLSearchParams(window.location.search);
   const kind = document.body.dataset.contentKind || (params.get("type") === "post" ? "post" : "page");
@@ -323,8 +424,15 @@ async function start() {
     const data = await response.json();
     const asList = (items) => Array.isArray(items) ? items : Array.isArray(items?.value) ? items.value : [];
     const pages = asList(data.pages);
-    const posts = asList(data.posts);
-    if (!pages.length || !posts.length) throw new Error("The page and article content snapshot is incomplete.");
+    let posts = asList(data.posts);
+    const staticRoutes = document.body.dataset.routeMode === "static";
+    if (!staticRoutes && kind === "page" && slug === "news-and-sermons") {
+      const postsResponse = await fetch(`${siteRoot}posts.php`);
+      if (!postsResponse.ok) throw new Error(`Posts request failed (${postsResponse.status}).`);
+      const postsData = await postsResponse.json();
+      posts = asList(postsData.posts);
+    }
+    if (!pages.length) throw new Error("The page content snapshot is incomplete.");
     const pagePaths = new Map();
     [...pages, ...posts].forEach((item) => {
       try {
@@ -340,8 +448,15 @@ async function start() {
       return;
     }
 
-    const items = kind === "post" ? posts : pages;
-    const item = items.find((entry) => entry.slug === slug);
+    let item;
+    if (kind === "post" && !staticRoutes) {
+      const postResponse = await fetch(`${siteRoot}posts.php?slug=${encodeURIComponent(slug)}`);
+      if (!postResponse.ok) throw new Error(`Post request failed (${postResponse.status}).`);
+      item = await postResponse.json();
+    } else {
+      const items = kind === "post" ? posts : pages;
+      item = items.find((entry) => entry.slug === slug);
+    }
     if (!item) throw new Error("We couldn't find that page. Use the navigation to explore the site.");
 
     const title = decodeEntities(item.title.rendered);
@@ -381,6 +496,10 @@ async function start() {
       document.querySelector("#feature-media").hidden = false;
     } else if (kind === "page" && (slug === "contact-us" || slug === "contact")) {
       createContactOptions();
+    } else if (kind === "page" && slug === "our-staff" && !staticRoutes) {
+      await renderTeamDirectory();
+    } else if (kind === "page" && slug === "our-parishes" && !staticRoutes) {
+      await renderParishDirectory();
     }
 
     if (kind === "page" && slug !== "news-and-sermons") renderRelated(pages, slug);

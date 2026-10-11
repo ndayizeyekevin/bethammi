@@ -1,4 +1,4 @@
-import { cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -45,7 +45,7 @@ if (!template.includes("<body>")) throw new Error("The page template must contai
 function createStandalonePage(kind, slug) {
   let html = template.replace(
     "<body>",
-    `<body data-content-kind="${kind}" data-content-slug="${slug}" data-site-root="../">`
+    `<body data-content-kind="${kind}" data-content-slug="${slug}" data-site-root="../" data-route-mode="static">`
   );
 
   html = html
@@ -61,11 +61,27 @@ await rm(storyDirectory, { recursive: true, force: true });
 await mkdir(pageDirectory, { recursive: true });
 await mkdir(storyDirectory, { recursive: true });
 
-for (const file of ["page.html", "page.js", "script.js", "site-content.json", "styles.css"]) {
+for (const file of ["page.html", "page.js", "posts.js", "script.js", "site-content.json", "styles.css"]) {
   await cp(path.join(root, file), path.join(output, file));
 }
+const assetDirectory = path.join(root, "assets");
+try {
+  if ((await stat(assetDirectory)).isDirectory()) {
+    await cp(assetDirectory, path.join(output, "assets"), { recursive: true });
+  }
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
+}
 const home = await readFile(path.join(root, "index.html"), "utf8");
-await writeFile(path.join(output, "index.html"), rewritePageLinks(home, ""));
+await writeFile(
+  path.join(output, "index.html"),
+  rewritePageLinks(home.replace("<body>", '<body data-route-mode="static">'), "")
+);
+const staticPage = await readFile(path.join(root, "page.html"), "utf8");
+await writeFile(
+  path.join(output, "page.html"),
+  staticPage.replace("<body>", '<body data-route-mode="static">')
+);
 
 for (const page of pages) {
   if (page.slug === "home") continue;

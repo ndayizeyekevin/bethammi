@@ -1,17 +1,31 @@
-# Beth Ammi website redesign
+# Beth Ammi website
 
-This is a responsive static redesign of the Beth Ammi Christian Fellowship Church website. It includes the updated homepage and shared navigation, the published church pages, the news and sermon archive, and the existing donation information. The contact form prepares a message in WhatsApp for the visitor to review and send.
+The website uses a shared responsive layout, PHP pages and a MySQL/MariaDB database for posts, team profiles, and parish information. A protected dashboard at `/admin/` lets administrators create, edit, publish, hide, and delete those records.
 
-## Build and preview
+## Local setup with XAMPP
 
-Run `npm run build` with Node.js 18 or newer. The build creates a deployable `dist/` folder containing the homepage, one standalone HTML file per church page and story, shared assets, and the content snapshot. Page shells are generated from `page.html`, so shared layout changes only need to be made once.
+Requirements: PHP 8.1+, PDO MySQL, `mbstring`, `iconv`, and MySQL or MariaDB.
 
-To preview the generated site, serve `dist/` over HTTP—for example, place its contents under `C:\xampp\htdocs\bethammi-redesign` and open `http://localhost/bethammi-redesign/`. For deployment, publish the contents of `dist/` (or configure the hosting provider's publish directory as `dist`). This static output works on hosting that serves HTML, CSS, and JavaScript; it does not require PHP.
+1. Start Apache and MySQL in the XAMPP Control Panel.
+2. Create a database named `bethammi_redesign` in phpMyAdmin using `utf8mb4`.
+3. Import [`database/schema.sql`](./database/schema.sql) into that database.
+4. Copy `config/database.example.php` to `config/database.local.php`, then enter the local database settings. This local file is ignored by Git. For production, set the `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` environment variables instead.
+5. From the project root, import the existing published posts once: `php tools/import-content.php`. The importer skips existing slugs and will not overwrite later admin edits.
+6. Create the first dashboard account: `php tools/create-admin.php admin`. Enter a unique password of at least 12 characters when prompted.
+7. Open `http://localhost/bethammi-redesign/` and manage content at `http://localhost/bethammi-redesign/admin/`.
 
-Use the shared navigation to open the church pages. The News & Sermons page lists all articles in the included content snapshot and has a client-side search. Pages are served at `pages/<slug>.html`; stories are served at `stories/<slug>.html`.
+Do not deploy `config/database.local.php`. Use a dedicated database user with only the permissions the site needs, and serve the admin area over HTTPS.
 
-## Content and external services
+## Database content
 
-`site-content.json` is a snapshot of the public WordPress pages and articles at `bethammicfc.org`, exported on October 11, 2026. The build generates independent page URLs from `page.html`; `page.js` loads the content snapshot for the requested slug. To refresh the snapshot, re-export the WordPress REST API page and post collections and their featured-media URLs into `site-content.json`, then run `npm run build`.
+- **Posts** store a title, URL slug, publication date, highlight image URL/path, short card summary, full plain-text description, and publication status. The homepage and News & Sermons archive query published posts; selecting a post opens its full description.
+- **Team members** store name, title, photo URL/path, optional short bio, display order, and publication status. The Our Staff page lists published profiles.
+- **Parishes** store name, country, region, location, photo URL/path, short summary, additional description, optional member count, display order, and publication status. The Our Parishes page lists published entries.
+
+The import command populates posts from the included WordPress snapshot. Team profiles and parish records are managed in the dashboard and are not fabricated from the old page markup. Images can be provided as public `https://` URLs or site-relative paths such as `assets/images/photo.jpg`.
+
+## Static preview
+
+If the church's eventual host does not support PHP, run `npm run build` with Node.js 18+ and publish `dist/`. That is a static preview built from the included snapshot; database updates and the admin dashboard require PHP and MySQL/MariaDB.
 
 Uploaded WordPress images, YouTube videos, and Google Fonts load from their original external services. Replace stock photography with approved church images before launch. Contact and giving details should be checked with the church before deployment.
