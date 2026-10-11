@@ -1,6 +1,12 @@
 const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector("#site-nav");
 
+if (document.body.dataset.routeMode !== "static" && /\/index\.html$/.test(window.location.pathname)) {
+  const destination = new URL(window.location.href);
+  destination.pathname = destination.pathname.replace(/index\.html$/, "index.php");
+  window.location.replace(destination.href);
+}
+
 function closeDropdowns(except) {
   document.querySelectorAll(".nav-dropdown.is-open").forEach((dropdown) => {
     if (dropdown !== except) {
@@ -31,7 +37,7 @@ if (menuButton && navigation) {
 
   navigation.addEventListener("click", (event) => {
     const link = event.target instanceof Element ? event.target.closest("a") : null;
-    if (link && window.matchMedia("(max-width: 680px)").matches) {
+    if (link && window.matchMedia("(max-width: 1050px)").matches) {
       menuButton.setAttribute("aria-expanded", "false");
       menuButton.setAttribute("aria-label", "Open navigation");
       navigation.classList.remove("is-open");

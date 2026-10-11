@@ -65,6 +65,7 @@ const archiveGrid = document.querySelector("#archive-grid");
 const archiveSearch = document.querySelector("#archive-search");
 const archiveCount = document.querySelector("#archive-count");
 const archiveEmpty = document.querySelector("#archive-empty");
+const siteRoot = document.body.dataset.siteRoot || "";
 
 function decodeEntities(value) {
   const textarea = document.createElement("textarea");
@@ -85,7 +86,7 @@ function safeLink(rawValue, pagePaths) {
     const url = new URL(rawValue, "https://www.bethammicfc.org/");
     if (url.protocol !== "http:" && url.protocol !== "https:") return "#";
     if (url.hostname === "www.bethammicfc.org" || url.hostname === "bethammicfc.org") {
-      if (url.pathname === "/" || url.pathname === "/home/") return "index.html";
+      if (url.pathname === "/" || url.pathname === "/home/") return `${siteRoot}${document.body.dataset.routeMode === "static" ? "index.html" : "index.php"}`;
       const target = pagePaths.get(url.pathname.replace(/\/?$/, "/"));
       return target || `https://www.bethammicfc.org${url.pathname}${url.search}${url.hash}`;
     }
@@ -173,8 +174,22 @@ function cleanContent(rawHtml, pagePaths) {
 }
 
 function localPageLink(item, kind = "page") {
-  return `page.html?type=${kind}&slug=${encodeURIComponent(item.slug)}`;
+  const slug = encodeURIComponent(item.slug);
+  if (document.body.dataset.routeMode === "static") {
+    const directory = kind === "post" ? "stories" : "pages";
+    return `${siteRoot}${directory}/${slug}.html`;
+  }
+  if (kind === "post") return `${siteRoot}post.php?slug=${slug}`;
+  return staticPageSlugs.has(item.slug)
+    ? `${siteRoot}pages/${slug}.php`
+    : `${siteRoot}page.php?type=page&slug=${slug}`;
 }
+
+const staticPageSlugs = new Set([
+  "about-us", "who-we-are", "our-parishes", "ministries", "outreach-evangelism",
+  "children-ministries", "women-ministries", "ltu", "partners",
+  "josh", "joan", "ep-kiramutse", "donate", "daily-bible-verses"
+]);
 
 function addFeaturedImage(card, item) {
   const image = item.featuredImage;
@@ -206,7 +221,8 @@ function createStoryCard(item) {
   const title = document.createElement("h3");
   title.textContent = decodeEntities(item.title.rendered);
   const excerpt = document.createElement("p");
-  excerpt.textContent = plainText(item.excerpt.rendered).slice(0, 180);
+  const summary = plainText(item.excerpt.rendered);
+  excerpt.textContent = summary.length > 180 ? `${summary.slice(0, 177).trimEnd()}…` : summary;
   const link = document.createElement("a");
   link.className = "story-card__link";
   link.href = localPageLink(item, "post");
@@ -310,19 +326,164 @@ function renderRelated(pages, currentSlug) {
   document.querySelector("#page-related").hidden = false;
 }
 
+function renderDirectoryCard({ title, subtitle, description, imageUrl, imageAlt, variant = "default" }) {
+  const card = document.createElement("article");
+  const isParishCard = variant === "parish";
+  card.className = isParishCard
+    ? "card directory-card directory-card--parish h-100 border-0 shadow-sm"
+    : "directory-card";
+
+  if (imageUrl) {
+    const imageSource = new URL(imageUrl, window.location.href);
+    if (imageSource.protocol !== "https:" && imageSource.protocol !== "http:") {
+      throw new Error("A directory photo has an invalid image URL.");
+    }
+    const image = document.createElement("img");
+    if (isParishCard) image.className = "card-img-top";
+    image.src = imageSource.href;
+    image.alt = imageAlt || "";
+    image.loading = "lazy";
+    card.append(image);
+  }
+
+  const copy = document.createElement("div");
+  copy.className = isParishCard ? "card-body directory-card__copy" : "directory-card__copy";
+  const heading = document.createElement("h2");
+  if (isParishCard) heading.className = "card-title";
+  heading.textContent = title;
+  copy.append(heading);
+
+  if (subtitle) {
+    const label = document.createElement("p");
+    label.className = isParishCard
+      ? "card-text directory-card__subtitle"
+      : "directory-card__subtitle";
+    label.textContent = subtitle;
+    copy.append(label);
+  }
+
+  if (description) {
+    const text = document.createElement("p");
+    text.className = isParishCard
+      ? "card-text directory-card__description"
+      : "directory-card__description";
+    text.textContent = description;
+    copy.append(text);
+  }
+
+  card.append(copy);
+  return card;
+}
+
+async function renderTeamDirectory() {
+  const response = await fetch(`${siteRoot}team.php`);
+  if (!response.ok) throw new Error(`Team request failed (${response.status}).`);
+  const payload = await response.json();
+  if (!Array.isArray(payload.team)) throw new Error("Team response has an invalid format.");
+
+  const grid = document.createElement("div");
+  grid.className = "directory-grid";
+  payload.team.forEach((member) => {
+    grid.append(renderDirectoryCard({
+      title: member.name,
+      subtitle: member.title,
+      description: member.bio,
+      imageUrl: member.photo_url,
+      imageAlt: member.name
+    }));
+  });
+  article.replaceChildren(grid);
+  if (!payload.team.length) {
+    article.textContent = "Team profiles will be added soon.";
+    article.className = "remote-content remote-content--empty";
+  }
+}
+
+async function renderParishDirectory() {
+  const response = await fetch(`${siteRoot}parishes.php`);
+  if (!response.ok) throw new Error(`Parish request failed (${response.status}).`);
+  const payload = await response.json();
+  if (!Array.isArray(payload.parishes)) throw new Error("Parish response has an invalid format.");
+
+  const grid = document.createElement("div");
+  grid.className = "directory-grid directory-grid--parishes";
+  payload.parishes.forEach((parish) => {
+    const location = [parish.location, parish.region, parish.country].filter(Boolean).join(" · ");
+    const details = [
+      parish.short_info,
+      parish.description,
+      parish.member_count ? `${parish.member_count} members` : ""
+    ].filter(Boolean).join("\n\n");
+    grid.append(renderDirectoryCard({
+      title: parish.name,
+      subtitle: location,
+      description: details,
+      imageUrl: parish.photo_url,
+      imageAlt: parish.name,
+      variant: "parish"
+    }));
+  });
+  article.replaceChildren(grid);
+  if (!payload.parishes.length) {
+    article.textContent = "Parish information will be added soon.";
+    article.className = "remote-content remote-content--empty";
+  }
+}
+
 async function start() {
   const params = new URLSearchParams(window.location.search);
-  const kind = params.get("type") === "post" ? "post" : "page";
-  const slug = params.get("slug");
+  const kind = document.body.dataset.contentKind || (params.get("type") === "post" ? "post" : "page");
+  const slug = document.body.dataset.contentSlug || params.get("slug");
+  const staticRoutes = document.body.dataset.routeMode === "static";
+
+  if (document.body.dataset.staticPage === "true") {
+    const title = document.body.dataset.pageTitle || "";
+    const source = document.querySelector("#static-page-content");
+    if (!title || !(source instanceof HTMLTemplateElement)) {
+      throw new Error("This page is missing its title or content.");
+    }
+    document.title = `${title} | Beth Ammi Christian Fellowship Church`;
+    bannerTitle.textContent = title;
+    document.querySelector("#breadcrumb-label").textContent = title;
+    document.querySelector("#page-kicker").textContent = "Beth Ammi Christian Fellowship Church";
+    const pagePaths = new Map();
+    [
+      ...staticPageSlugs,
+      "news-and-sermons", "media", "contact-us", "contact", "our-staff", "our-parishes"
+    ].forEach((pageSlug) => {
+      const route = staticRoutes
+        ? `pages/${pageSlug}.html`
+        : staticPageSlugs.has(pageSlug)
+          ? `pages/${pageSlug}.php`
+          : `page.php?type=page&slug=${pageSlug}`;
+      pagePaths.set(`/${pageSlug}/`, `${siteRoot}${route}`);
+    });
+    article.innerHTML = cleanContent(source.innerHTML, pagePaths);
+    source.remove();
+    return;
+  }
+
+  if (!staticRoutes && /\/page\.html$/.test(window.location.pathname)) {
+    const destination = new URL(window.location.href);
+    destination.pathname = destination.pathname.replace(/page\.html$/, "page.php");
+    window.location.replace(destination.href);
+    return;
+  }
 
   try {
-    const response = await fetch("site-content.json");
+    const response = await fetch(`${siteRoot}site-content.json`);
     if (!response.ok) throw new Error(`Content request failed (${response.status}).`);
     const data = await response.json();
     const asList = (items) => Array.isArray(items) ? items : Array.isArray(items?.value) ? items.value : [];
     const pages = asList(data.pages);
-    const posts = asList(data.posts);
-    if (!pages.length || !posts.length) throw new Error("The page and article content snapshot is incomplete.");
+    let posts = asList(data.posts);
+    if (!staticRoutes && kind === "page" && slug === "news-and-sermons") {
+      const postsResponse = await fetch(`${siteRoot}posts.php`);
+      if (!postsResponse.ok) throw new Error(`Posts request failed (${postsResponse.status}).`);
+      const postsData = await postsResponse.json();
+      posts = asList(postsData.posts);
+    }
+    if (!pages.length) throw new Error("The page content snapshot is incomplete.");
     const pagePaths = new Map();
     [...pages, ...posts].forEach((item) => {
       try {
@@ -334,12 +495,19 @@ async function start() {
     });
 
     if (!slug || (slug === "home" && kind === "page")) {
-      window.location.replace("index.html");
+      window.location.replace(`${siteRoot}${staticRoutes ? "index.html" : "index.php"}`);
       return;
     }
 
-    const items = kind === "post" ? posts : pages;
-    const item = items.find((entry) => entry.slug === slug);
+    let item;
+    if (kind === "post" && !staticRoutes) {
+      const postResponse = await fetch(`${siteRoot}posts.php?slug=${encodeURIComponent(slug)}`);
+      if (!postResponse.ok) throw new Error(`Post request failed (${postResponse.status}).`);
+      item = await postResponse.json();
+    } else {
+      const items = kind === "post" ? posts : pages;
+      item = items.find((entry) => entry.slug === slug);
+    }
     if (!item) throw new Error("We couldn't find that page. Use the navigation to explore the site.");
 
     const title = decodeEntities(item.title.rendered);
@@ -379,6 +547,10 @@ async function start() {
       document.querySelector("#feature-media").hidden = false;
     } else if (kind === "page" && (slug === "contact-us" || slug === "contact")) {
       createContactOptions();
+    } else if (kind === "page" && slug === "our-staff" && !staticRoutes) {
+      await renderTeamDirectory();
+    } else if (kind === "page" && slug === "our-parishes" && !staticRoutes) {
+      await renderParishDirectory();
     }
 
     if (kind === "page" && slug !== "news-and-sermons") renderRelated(pages, slug);
