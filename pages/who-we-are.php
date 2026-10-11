@@ -529,7 +529,7 @@ require __DIR__ . '/../includes/site-header.php';
                 <div class="elementor-widget-wrap elementor-element-populated">
                       <div class="elementor-element elementor-element-96f1f18 elementor-widget elementor-widget-heading" data-id="96f1f18" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
-                    <h2 class="elementor-heading-title elementor-size-default">OUR TEAM</h2>        </div>
+                    <h2 class="elementor-heading-title elementor-size-default">OUR STAFF</h2>        </div>
                   </div>
                     </div>
               </div>

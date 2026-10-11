@@ -21,11 +21,26 @@ require __DIR__ . '/../includes/site-header.php';
     </div>
   </section>
   <div id="page-message" class="container page-message" role="status" hidden></div>
-  <section class="container page-layout" id="page-layout">
+  <section class="container page-layout page-layout--parishes" id="page-layout">
     <article class="page-article">
+      <header class="parish-directory-heading">
+        <div>
+          <p class="eyebrow"><span></span> Find your community</p>
+          <h2>Churches rooted<br><em>in community.</em></h2>
+          <p>Explore our parishes and find a welcoming place to worship, grow, and belong.</p>
+        </div>
+        <div class="parish-directory-heading__tools">
+          <span class="parish-directory-count" id="parish-directory-count" aria-live="polite">Loading parishes…</span>
+          <label class="parish-directory-search">
+            <span>Search parishes</span>
+            <input id="parish-search" type="search" placeholder="Name, town, or region" autocomplete="off">
+          </label>
+        </div>
+      </header>
       <div class="remote-content" id="page-content" aria-live="polite">
         <p>Loading parish directory…</p>
       </div>
+      <p class="parish-directory-empty" id="parish-directory-empty" role="status" hidden>No parishes match your search. Try another name or location.</p>
     </article>
     <aside class="page-sidebar" id="page-sidebar">
       <div class="sidebar-card sidebar-card--visit">
@@ -46,4 +61,27 @@ require __DIR__ . '/../includes/site-header.php';
     <div id="related-links"></div>
   </section>
 </main>
+<div class="modal fade" id="parishDetailsModal" tabindex="-1" aria-labelledby="parish-modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+    <div class="modal-content parish-details-modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="parish-modal-title"></h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img class="parish-details-modal__image" id="parish-modal-image" alt="" hidden>
+        <p class="directory-card__subtitle" id="parish-modal-location" hidden></p>
+        <div class="parish-details-modal__field" id="parish-modal-short-info" hidden>
+          <strong>Short info</strong>
+          <p data-parish-field-value></p>
+        </div>
+        <div class="parish-details-modal__field" id="parish-modal-description" hidden>
+          <strong>Additional information</strong>
+          <p data-parish-field-value></p>
+        </div>
+        <p class="directory-card__subtitle" id="parish-modal-members" hidden></p>
+      </div>
+    </div>
+  </div>
+</div>
 <?php require __DIR__ . '/../includes/site-footer.php'; ?>

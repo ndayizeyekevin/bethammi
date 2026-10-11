@@ -200,7 +200,20 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .page-banner__summary { max-width: 720px; margin: 16px 0 0; color: rgba(255,255,255,.72); font-size: 14px; }
 .page-layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 50px; align-items: start; padding-block: 62px 88px; }
 .page-layout[hidden] { display: none; }
+.page-layout--parishes { grid-template-columns: minmax(0, 1fr); gap: 35px; }
 .page-article { min-width: 0; }
+.parish-directory-heading { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 28px; }
+.parish-directory-heading .eyebrow { margin-bottom: 12px; }
+.parish-directory-heading h2 { color: var(--navy); font-size: clamp(30px, 4vw, 43px); }
+.parish-directory-heading h2 em { color: #a77d46; }
+.parish-directory-heading > div:first-child > p:last-child { max-width: 450px; margin: 12px 0 0; color: #707975; font-size: 12px; }
+.parish-directory-heading__tools { display: grid; flex: 0 0 min(290px, 34%); gap: 10px; justify-items: end; }
+.parish-directory-count { padding: 6px 11px; border: 1px solid #e3d4b9; border-radius: 999px; background: #f2e9d9; color: var(--navy); font-size: 9px; font-weight: 700; letter-spacing: .04em; }
+.parish-directory-search { display: grid; width: 100%; gap: 5px; color: #7a684e; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.parish-directory-search input { width: 100%; min-height: 43px; padding: 0 13px; border: 1px solid #dedbd2; border-radius: 0; background: var(--white); color: var(--ink); font: 12px var(--sans); letter-spacing: normal; text-transform: none; }
+.parish-directory-search input:focus { border-color: var(--gold); outline: 3px solid rgba(214,172,104,.2); }
+.parish-directory-empty { margin: 20px 0 0; padding: 20px; border-left: 3px solid var(--gold); background: #f2eee5; color: #535f5b; font-size: 12px; }
+.parish-directory-empty[hidden] { display: none; }
 .page-meta { margin: 0 0 24px; padding-bottom: 15px; border-bottom: 1px solid #e4e1d8; color: #8b6b3b; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .remote-content { color: #535f5b; font-size: 14px; line-height: 1.85; overflow-wrap: anywhere; }
 .remote-content > :first-child { margin-top: 0; }
@@ -242,6 +255,29 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .about-purpose__card h2 { position: relative; font-size: clamp(25px, 3vw, 34px); }
 .about-purpose__card > p:last-child { max-width: 480px; margin: 16px 0 0; color: #64706c; font-size: 12px; }
 .about-note { margin: 30px 0 0 !important; color: #8b6b3b; font-family: var(--serif); font-size: 18px; font-style: italic; text-align: center; }
+.remote-content .elementor-element-b0506q3 { position: relative; margin: 76px 0 26px; padding: clamp(24px, 4vw, 48px); overflow: hidden; border: 1px solid #e6dfd2; background: linear-gradient(145deg, #f2eee5 0%, #fff 58%, #edf2ef 100%); }
+.remote-content .elementor-element-b0506q3 > .elementor-container { display: block; }
+.remote-content .elementor-element-3a0a173 { margin-bottom: 25px; }
+.remote-content .elementor-element-96f1f18 .elementor-widget-container::before { display: block; margin-bottom: 10px; color: #8b6b3b; content: "LEADERSHIP"; font-size: 9px; font-weight: 700; letter-spacing: .2em; }
+.remote-content .elementor-element-96f1f18 h2 { display: inline-block; margin: 0; color: var(--navy); font-size: clamp(30px, 4vw, 43px); }
+.remote-content .elementor-element-96f1f18 h2::after { display: block; width: 48px; height: 3px; margin-top: 13px; background: var(--gold); content: ""; }
+.remote-content .elementor-element-cfc2260 > .elementor-container { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.remote-content .elementor-element-3312bfa > .elementor-container { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 18px; }
+.remote-content .elementor-element-cfc2260 .elementor-column,
+.remote-content .elementor-element-3312bfa .elementor-column { min-width: 0; }
+.remote-content .elementor-element-b0506q3 .elementor-widget-image-box,
+.remote-content .elementor-element-b0506q3 .elementor-widget-container,
+.remote-content .elementor-element-b0506q3 .elementor-image-box-wrapper { height: 100%; }
+.remote-content .elementor-element-b0506q3 .elementor-image-box-wrapper { display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(18,52,59,.08); background: var(--white); box-shadow: 0 12px 30px rgba(18,39,38,.07); transition: transform .2s ease, box-shadow .2s ease; }
+.remote-content .elementor-element-b0506q3 .elementor-image-box-wrapper:hover { transform: translateY(-4px); box-shadow: 0 18px 38px rgba(18,39,38,.13); }
+.remote-content .elementor-element-b0506q3 .elementor-image-box-img { display: block; width: 100%; max-width: none; height: auto; margin: 0; overflow: hidden; background: #e8e6df; }
+.remote-content .elementor-element-b0506q3 .elementor-image-box-img img { width: 100%; height: clamp(190px, 23vw, 285px); max-width: none; margin: 0; object-fit: cover; object-position: center 28%; }
+.remote-content .elementor-element-b0506q3 .elementor-image-box-content { flex: 1; padding: 19px 20px 21px; border-top: 3px solid var(--gold); }
+.remote-content .elementor-element-b0506q3 .elementor-image-box-title { margin: 0 0 7px; color: var(--navy); font-family: var(--display); font-size: 17px; font-weight: 700; line-height: 1.35; }
+.remote-content .elementor-element-b0506q3 .elementor-image-box-description { margin: 0; color: #7a684e; font-size: 9px; font-weight: 700; letter-spacing: .08em; line-height: 1.5; text-transform: uppercase; }
+.remote-content .elementor-element-9fd81ba { margin: 0 0 76px; text-align: center; }
+.remote-content .elementor-element-9fd81ba .elementor-button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 0 24px; border: 1px solid var(--navy); background: var(--navy); color: var(--white); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-decoration: none; transition: background .2s ease, transform .2s ease; }
+.remote-content .elementor-element-9fd81ba .elementor-button:hover { transform: translateY(-2px); background: #1b4850; }
 .page-sidebar { position: sticky; top: 24px; display: grid; gap: 16px; }
 .sidebar-card { padding: 25px; background: #efeee8; }
 .sidebar-card--visit .eyebrow { font-size: 8px; }
@@ -307,12 +343,22 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .related-link:hover { border-color: var(--gold); background: #efeee8; }
 .directory-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
 .directory-card { display: grid; grid-template-columns: minmax(120px, .75fr) 1fr; min-width: 0; background: var(--white); }
+.directory-card[hidden] { display: none !important; }
 .directory-card > img { width: 100%; height: 100%; min-height: 190px; object-fit: cover; background: #e5e3db; }
 .directory-grid--parishes .directory-card { display: flex; flex-direction: column; overflow: hidden; }
 .directory-grid--parishes .directory-card > img { width: 100%; height: auto; min-height: 0; aspect-ratio: 16 / 10; object-fit: cover; }
+.directory-grid--parishes .directory-card__copy { background: #f2e9d9; }
 .directory-grid--parishes .directory-card__copy h2 { margin: 0; }
 .directory-grid--parishes .directory-card__subtitle { margin-top: 10px; }
-.directory-grid--parishes .directory-card__description { margin-top: 12px; }
+.directory-grid--parishes .directory-card__detail { margin-top: 12px; }
+.directory-grid--parishes .directory-card__detail > strong,
+.parish-details-modal__field > strong { display: block; margin-bottom: 3px; color: var(--navy); font-size: 10px; }
+.directory-grid--parishes .directory-card__description { margin: 0; }
+.parish-details-modal__image { display: block; width: 100%; max-height: 380px; margin-bottom: 22px; object-fit: cover; }
+.parish-details-modal__image[hidden] { display: none; }
+#parish-modal-description { white-space: pre-line; }
+.parish-details-modal__field { margin-top: 16px; }
+.parish-details-modal__field p { margin: 0; white-space: pre-line; }
 .directory-card__copy { padding: 22px; }
 .directory-card__copy h2 { color: var(--navy); font-size: 21px; letter-spacing: -.035em; }
 .directory-card__subtitle { margin: 8px 0 0; color: #8b6b3b; font-size: 10px; font-weight: 700; }
@@ -358,6 +404,9 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .footer__top { grid-template-columns: 1.1fr 1fr 1fr; }
   .footer__social { grid-column: 3; }
   .page-layout { grid-template-columns: minmax(0, 1fr) 235px; gap: 28px; }
+  .page-layout--parishes { grid-template-columns: minmax(0, 1fr); }
+  .page-layout--parishes .page-sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .remote-content .elementor-element-3312bfa > .elementor-container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .directory-grid { grid-template-columns: 1fr; }
 }
@@ -429,6 +478,11 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .page-banner h1 { font-size: clamp(38px, 10vw, 55px); }
   .page-banner__summary { font-size: 12px; }
   .page-layout { grid-template-columns: 1fr; gap: 28px; padding-block: 39px 61px; }
+  .page-layout--parishes { gap: 24px; }
+  .parish-directory-heading { align-items: stretch; flex-direction: column; gap: 17px; margin-bottom: 22px; }
+  .parish-directory-heading__tools { flex: initial; justify-items: start; }
+  .parish-directory-heading h2 { font-size: 34px; }
+  .page-layout--parishes .page-sidebar { grid-template-columns: 1fr; }
   .page-sidebar { position: static; grid-template-columns: 1fr 1fr; }
   .sidebar-card { padding: 20px; }
   .sidebar-card h2 { font-size: 24px; }
@@ -440,6 +494,12 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .about-intro__image img { min-height: 190px; }
   .about-belief { margin-top: 45px; }
   .about-purpose { grid-template-columns: 1fr; gap: 12px; }
+  .remote-content .elementor-element-b0506q3 { margin-top: 48px; padding: 20px; }
+  .remote-content .elementor-element-cfc2260 > .elementor-container,
+  .remote-content .elementor-element-3312bfa > .elementor-container { grid-template-columns: 1fr; gap: 14px; }
+  .remote-content .elementor-element-3312bfa > .elementor-container { margin-top: 14px; }
+  .remote-content .elementor-element-b0506q3 .elementor-image-box-img img { height: 260px; }
+  .remote-content .elementor-element-9fd81ba { margin-bottom: 48px; }
   .remote-content iframe, .remote-content video { min-height: 220px; }
   .contact-options { grid-template-columns: 1fr; }
   .contact-form__name { grid-template-columns: 1fr; }

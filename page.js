@@ -65,6 +65,9 @@ const archiveGrid = document.querySelector("#archive-grid");
 const archiveSearch = document.querySelector("#archive-search");
 const archiveCount = document.querySelector("#archive-count");
 const archiveEmpty = document.querySelector("#archive-empty");
+const parishSearch = document.querySelector("#parish-search");
+const parishCount = document.querySelector("#parish-directory-count");
+const parishEmpty = document.querySelector("#parish-directory-empty");
 const siteRoot = document.body.dataset.siteRoot || "";
 
 function decodeEntities(value) {
@@ -326,7 +329,16 @@ function renderRelated(pages, currentSlug) {
   document.querySelector("#page-related").hidden = false;
 }
 
-function renderDirectoryCard({ title, subtitle, description, imageUrl, imageAlt, variant = "default" }) {
+function renderDirectoryCard({
+  title,
+  subtitle,
+  description,
+  shortInfo,
+  additionalInfo,
+  imageUrl,
+  imageAlt,
+  variant = "default"
+}) {
   const card = document.createElement("article");
   const isParishCard = variant === "parish";
   card.className = isParishCard
@@ -362,11 +374,25 @@ function renderDirectoryCard({ title, subtitle, description, imageUrl, imageAlt,
     copy.append(label);
   }
 
-  if (description) {
+  if (isParishCard) {
+    [
+      ["Short info", shortInfo],
+      ["Additional information", additionalInfo]
+    ].forEach(([label, value]) => {
+      if (!value) return;
+      const detail = document.createElement("div");
+      detail.className = "directory-card__detail";
+      const detailLabel = document.createElement("strong");
+      detailLabel.textContent = label;
+      const text = document.createElement("p");
+      text.className = "card-text directory-card__description";
+      text.textContent = value;
+      detail.append(detailLabel, text);
+      copy.append(detail);
+    });
+  } else if (description) {
     const text = document.createElement("p");
-    text.className = isParishCard
-      ? "card-text directory-card__description"
-      : "directory-card__description";
+    text.className = "directory-card__description";
     text.textContent = description;
     copy.append(text);
   }
@@ -405,24 +431,124 @@ async function renderParishDirectory() {
   const payload = await response.json();
   if (!Array.isArray(payload.parishes)) throw new Error("Parish response has an invalid format.");
 
+  const modalElement = document.querySelector("#parishDetailsModal");
+  const modalTitle = document.querySelector("#parish-modal-title");
+  const modalImage = document.querySelector("#parish-modal-image");
+  if (!(modalElement instanceof HTMLElement)
+    || !(modalTitle instanceof HTMLElement)
+    || !(modalImage instanceof HTMLImageElement)
+    || !window.bootstrap?.Modal) {
+    throw new Error("The parish details dialog could not be initialized. Please refresh the page.");
+  }
+
   const grid = document.createElement("div");
   grid.className = "directory-grid directory-grid--parishes";
-  payload.parishes.forEach((parish) => {
+  payload.parishes.forEach((parish, index) => {
     const location = [parish.location, parish.region, parish.country].filter(Boolean).join(" · ");
-    const details = [
-      parish.short_info,
-      parish.description,
-      parish.member_count ? `${parish.member_count} members` : ""
-    ].filter(Boolean).join("\n\n");
-    grid.append(renderDirectoryCard({
+    const shortInfo = String(parish.short_info ?? "").trim();
+    const fullDescription = String(parish.description ?? "").trim();
+    const shortPreview = fullDescription && shortInfo.length > 90
+      ? `${Array.from(shortInfo).slice(0, 87).join("").trimEnd()}…`
+      : shortInfo;
+    const additionalPreview = shortInfo && fullDescription.length > 90
+      ? `${Array.from(fullDescription).slice(0, 87).join("").trimEnd()}…`
+      : fullDescription;
+    const card = renderDirectoryCard({
       title: parish.name,
       subtitle: location,
-      description: details,
+      shortInfo: shortPreview,
+      additionalInfo: additionalPreview,
       imageUrl: parish.photo_url,
       imageAlt: parish.name,
       variant: "parish"
-    }));
+    });
+
+    const button = document.createElement("button");
+    button.className = "btn btn-sm btn-outline-dark mt-2";
+    button.type = "button";
+    button.dataset.parishIndex = String(index);
+    button.setAttribute("aria-haspopup", "dialog");
+    button.textContent = "View all information";
+    card.querySelector(".directory-card__copy")?.append(button);
+
+    grid.append(card);
   });
+
+  if (!(parishSearch instanceof HTMLInputElement)
+    || !(parishCount instanceof HTMLElement)
+    || !(parishEmpty instanceof HTMLElement)) {
+    throw new Error("The parish directory controls could not be initialized. Please refresh the page.");
+  }
+
+  const updateParishResults = () => {
+    const query = parishSearch.value.trim().toLocaleLowerCase();
+    let visibleCount = 0;
+    grid.querySelectorAll(".directory-card--parish").forEach((card, index) => {
+      const parish = payload.parishes[index];
+      const searchableText = [
+        parish.name,
+        parish.location,
+        parish.region,
+        parish.country,
+        parish.short_info,
+        parish.description
+      ].filter(Boolean).join(" ").toLocaleLowerCase();
+      const matches = searchableText.includes(query);
+      card.hidden = !matches;
+      if (matches) visibleCount += 1;
+    });
+    parishCount.textContent = query
+      ? `Showing ${visibleCount} of ${payload.parishes.length} ${payload.parishes.length === 1 ? "parish" : "parishes"}`
+      : `${payload.parishes.length} ${payload.parishes.length === 1 ? "parish" : "parishes"}`;
+    parishEmpty.textContent = payload.parishes.length
+      ? "No parishes match your search. Try another name or location."
+      : "There are no parishes to display yet.";
+    parishEmpty.hidden = visibleCount > 0;
+  };
+  parishSearch.addEventListener("input", updateParishResults);
+  updateParishResults();
+
+  grid.addEventListener("click", (event) => {
+    const target = event.target instanceof Element
+      ? event.target.closest("button[data-parish-index]")
+      : null;
+    if (!(target instanceof HTMLButtonElement)) return;
+
+    const parish = payload.parishes[Number(target.dataset.parishIndex)];
+    if (!parish) throw new Error("The selected parish information is unavailable.");
+
+    modalTitle.textContent = parish.name;
+    const cardImage = target.closest(".directory-card")?.querySelector("img");
+    modalImage.alt = parish.name;
+    modalImage.hidden = !(cardImage instanceof HTMLImageElement);
+    if (cardImage instanceof HTMLImageElement) {
+      modalImage.src = cardImage.src;
+    } else {
+      modalImage.removeAttribute("src");
+    }
+
+    const modalFields = [
+      ["#parish-modal-location", [parish.location, parish.region, parish.country].filter(Boolean).join(" · ")],
+      ["#parish-modal-short-info", parish.short_info],
+      ["#parish-modal-description", parish.description],
+      ["#parish-modal-members", parish.member_count ? `${parish.member_count} members` : ""]
+    ];
+    modalFields.forEach(([selector, value]) => {
+      const field = document.querySelector(selector);
+      if (!(field instanceof HTMLElement)) {
+        throw new Error("The parish details dialog is missing required content.");
+      }
+      const text = field.querySelector("[data-parish-field-value]") ?? field;
+      if (!(text instanceof HTMLElement)) {
+        throw new Error("The parish details dialog is missing a content field.");
+      }
+      text.textContent = String(value ?? "").trim();
+      field.hidden = text.textContent === "";
+    });
+
+    window.bootstrap.Modal.getOrCreateInstance(modalElement).show();
+  });
+
   article.replaceChildren(grid);
   if (!payload.parishes.length) {
     article.textContent = "Parish information will be added soon.";
