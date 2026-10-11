@@ -65,6 +65,7 @@ const archiveGrid = document.querySelector("#archive-grid");
 const archiveSearch = document.querySelector("#archive-search");
 const archiveCount = document.querySelector("#archive-count");
 const archiveEmpty = document.querySelector("#archive-empty");
+const siteRoot = document.body.dataset.siteRoot || "";
 
 function decodeEntities(value) {
   const textarea = document.createElement("textarea");
@@ -85,7 +86,7 @@ function safeLink(rawValue, pagePaths) {
     const url = new URL(rawValue, "https://www.bethammicfc.org/");
     if (url.protocol !== "http:" && url.protocol !== "https:") return "#";
     if (url.hostname === "www.bethammicfc.org" || url.hostname === "bethammicfc.org") {
-      if (url.pathname === "/" || url.pathname === "/home/") return "index.html";
+      if (url.pathname === "/" || url.pathname === "/home/") return `${siteRoot}index.html`;
       const target = pagePaths.get(url.pathname.replace(/\/?$/, "/"));
       return target || `https://www.bethammicfc.org${url.pathname}${url.search}${url.hash}`;
     }
@@ -173,7 +174,8 @@ function cleanContent(rawHtml, pagePaths) {
 }
 
 function localPageLink(item, kind = "page") {
-  return `page.html?type=${kind}&slug=${encodeURIComponent(item.slug)}`;
+  const directory = kind === "post" ? "stories" : "pages";
+  return `${siteRoot}${directory}/${encodeURIComponent(item.slug)}.html`;
 }
 
 function addFeaturedImage(card, item) {
@@ -312,11 +314,11 @@ function renderRelated(pages, currentSlug) {
 
 async function start() {
   const params = new URLSearchParams(window.location.search);
-  const kind = params.get("type") === "post" ? "post" : "page";
-  const slug = params.get("slug");
+  const kind = document.body.dataset.contentKind || (params.get("type") === "post" ? "post" : "page");
+  const slug = document.body.dataset.contentSlug || params.get("slug");
 
   try {
-    const response = await fetch("site-content.json");
+    const response = await fetch(`${siteRoot}site-content.json`);
     if (!response.ok) throw new Error(`Content request failed (${response.status}).`);
     const data = await response.json();
     const asList = (items) => Array.isArray(items) ? items : Array.isArray(items?.value) ? items.value : [];
@@ -334,7 +336,7 @@ async function start() {
     });
 
     if (!slug || (slug === "home" && kind === "page")) {
-      window.location.replace("index.html");
+      window.location.replace(`${siteRoot}index.html`);
       return;
     }
 

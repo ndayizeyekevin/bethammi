@@ -1,0 +1,79 @@
+import { cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = path.dirname(fileURLToPath(import.meta.url));
+const output = path.join(root, "dist");
+const pageDirectory = path.join(output, "pages");
+const storyDirectory = path.join(output, "stories");
+const content = JSON.parse(await readFile(path.join(root, "site-content.json"), "utf8"));
+
+function list(value, label) {
+  const items = Array.isArray(value) ? value : value?.value;
+  if (!Array.isArray(items)) throw new Error(`Expected ${label} to be an array.`);
+  return items;
+}
+
+const pages = list(content.pages, "pages");
+const stories = list(content.posts, "posts");
+const pageSlugs = new Set();
+const storySlugs = new Set();
+
+function addSlugs(items, slugs, label) {
+  for (const item of items) {
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(item.slug ?? "")) {
+      throw new Error(`Invalid ${label} slug: ${item.slug ?? "(missing)"}`);
+    }
+    if (slugs.has(item.slug)) throw new Error(`Duplicate ${label} slug: ${item.slug}`);
+    slugs.add(item.slug);
+  }
+}
+
+addSlugs(pages, pageSlugs, "page");
+addSlugs(stories, storySlugs, "story");
+
+function rewritePageLinks(html, rootPrefix) {
+  return html.replace(/href="page\.html\?type=page&amp;slug=([^"&]+)"/g, (match, slug) => {
+    if (!pageSlugs.has(slug)) throw new Error(`Template links to missing page slug "${slug}".`);
+    return `href="${rootPrefix}pages/${slug}.html"`;
+  });
+}
+
+const template = await readFile(path.join(root, "page.html"), "utf8");
+if (!template.includes("<body>")) throw new Error("The page template must contain an opening <body> tag.");
+
+function createStandalonePage(kind, slug) {
+  let html = template.replace(
+    "<body>",
+    `<body data-content-kind="${kind}" data-content-slug="${slug}" data-site-root="../">`
+  );
+
+  html = html
+    .replace('href="styles.css"', 'href="../styles.css"')
+    .replace('src="page.js"', 'src="../page.js"')
+    .replace(/href="index\.html(?=[#"])/g, 'href="../index.html');
+
+  return rewritePageLinks(html, "../");
+}
+
+await rm(pageDirectory, { recursive: true, force: true });
+await rm(storyDirectory, { recursive: true, force: true });
+await mkdir(pageDirectory, { recursive: true });
+await mkdir(storyDirectory, { recursive: true });
+
+for (const file of ["page.html", "page.js", "script.js", "site-content.json", "styles.css"]) {
+  await cp(path.join(root, file), path.join(output, file));
+}
+const home = await readFile(path.join(root, "index.html"), "utf8");
+await writeFile(path.join(output, "index.html"), rewritePageLinks(home, ""));
+
+for (const page of pages) {
+  if (page.slug === "home") continue;
+  await writeFile(path.join(pageDirectory, `${page.slug}.html`), createStandalonePage("page", page.slug));
+}
+
+for (const story of stories) {
+  await writeFile(path.join(storyDirectory, `${story.slug}.html`), createStandalonePage("post", story.slug));
+}
+
+console.log(`Built ${pageSlugs.size - Number(pageSlugs.has("home"))} pages and ${storySlugs.size} stories in dist/.`);
