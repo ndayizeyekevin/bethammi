@@ -16,6 +16,21 @@ function list(value, label) {
 
 const pages = list(content.pages, "pages");
 const stories = list(content.posts, "posts");
+const staticPageTitles = new Map([
+  ["about-us", "About Us"],
+  ["who-we-are", "Who we are"],
+  ["ministries", "Ministries"],
+  ["outreach-evangelism", "Outreach evangelism"],
+  ["children-ministries", "Children Ministries"],
+  ["women-ministries", "Women Ministries"],
+  ["ltu", "LTU"],
+  ["partners", "Partners"],
+  ["josh", "Josh"],
+  ["joan", "Joan"],
+  ["ep-kiramutse", "EP Kiramutse"],
+  ["donate", "Donate"],
+  ["daily-bible-verses", "Daily Bible verses"],
+]);
 const pageSlugs = new Set();
 const storySlugs = new Set();
 
@@ -89,7 +104,20 @@ await writeFile(
 
 for (const page of pages) {
   if (page.slug === "home") continue;
-  await writeFile(path.join(pageDirectory, `${page.slug}.html`), createStandalonePage("page", page.slug));
+  let html = createStandalonePage("page", page.slug);
+  if (staticPageTitles.has(page.slug)) {
+    const pageContent = await readFile(path.join(root, "page-content", `${page.slug}.html`), "utf8");
+    html = html
+      .replace(
+        `<body data-content-kind="page" data-content-slug="${page.slug}" data-site-root="../" data-route-mode="static">`,
+        `<body data-content-kind="page" data-content-slug="${page.slug}" data-site-root="../" data-route-mode="static" data-static-page="true" data-page-title="${staticPageTitles.get(page.slug)}">`
+      )
+      .replace(
+        '<div class="remote-content" id="page-content"></div>',
+        `<div class="remote-content" id="page-content"><template id="static-page-content">${pageContent}</template></div>`
+      );
+  }
+  await writeFile(path.join(pageDirectory, `${page.slug}.html`), html);
 }
 
 for (const story of stories) {

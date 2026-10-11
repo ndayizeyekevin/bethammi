@@ -179,10 +179,17 @@ function localPageLink(item, kind = "page") {
     const directory = kind === "post" ? "stories" : "pages";
     return `${siteRoot}${directory}/${slug}.html`;
   }
-  return kind === "post"
-    ? `${siteRoot}post.php?slug=${slug}`
+  if (kind === "post") return `${siteRoot}post.php?slug=${slug}`;
+  return staticPageSlugs.has(item.slug)
+    ? `${siteRoot}pages/${slug}.php`
     : `${siteRoot}page.php?type=page&slug=${slug}`;
 }
+
+const staticPageSlugs = new Set([
+  "about-us", "who-we-are", "ministries", "outreach-evangelism",
+  "children-ministries", "women-ministries", "ltu", "partners",
+  "josh", "joan", "ep-kiramutse", "donate", "daily-bible-verses"
+]);
 
 function addFeaturedImage(card, item) {
   const image = item.featuredImage;
@@ -418,6 +425,33 @@ async function start() {
   const kind = document.body.dataset.contentKind || (params.get("type") === "post" ? "post" : "page");
   const slug = document.body.dataset.contentSlug || params.get("slug");
   const staticRoutes = document.body.dataset.routeMode === "static";
+
+  if (document.body.dataset.staticPage === "true") {
+    const title = document.body.dataset.pageTitle || "";
+    const source = document.querySelector("#static-page-content");
+    if (!title || !(source instanceof HTMLTemplateElement)) {
+      throw new Error("This page is missing its title or content.");
+    }
+    document.title = `${title} | Beth Ammi Christian Fellowship Church`;
+    bannerTitle.textContent = title;
+    document.querySelector("#breadcrumb-label").textContent = title;
+    document.querySelector("#page-kicker").textContent = "Beth Ammi Christian Fellowship Church";
+    const pagePaths = new Map();
+    [
+      ...staticPageSlugs,
+      "news-and-sermons", "media", "contact-us", "contact", "our-staff", "our-parishes"
+    ].forEach((pageSlug) => {
+      const route = staticRoutes
+        ? `pages/${pageSlug}.html`
+        : staticPageSlugs.has(pageSlug)
+          ? `pages/${pageSlug}.php`
+          : `page.php?type=page&slug=${pageSlug}`;
+      pagePaths.set(`/${pageSlug}/`, `${siteRoot}${route}`);
+    });
+    article.innerHTML = cleanContent(source.innerHTML, pagePaths);
+    source.remove();
+    return;
+  }
 
   if (!staticRoutes && /\/page\.html$/.test(window.location.pathname)) {
     const destination = new URL(window.location.href);
