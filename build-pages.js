@@ -39,6 +39,10 @@ function rewritePageLinks(html, rootPrefix) {
   });
 }
 
+function removeAdminLoginLink(html) {
+  return html.replace(/\s*<a class="btn header-login" data-admin-login href="admin\/">Login<\/a>/g, "");
+}
+
 const template = await readFile(path.join(root, "page.html"), "utf8");
 if (!template.includes("<body>")) throw new Error("The page template must contain an opening <body> tag.");
 
@@ -53,7 +57,7 @@ function createStandalonePage(kind, slug) {
     .replace('src="page.js"', 'src="../page.js"')
     .replace(/href="index\.html(?=[#"])/g, 'href="../index.html');
 
-  return rewritePageLinks(html, "../");
+  return rewritePageLinks(removeAdminLoginLink(html), "../");
 }
 
 await rm(pageDirectory, { recursive: true, force: true });
@@ -75,12 +79,12 @@ try {
 const home = await readFile(path.join(root, "index.html"), "utf8");
 await writeFile(
   path.join(output, "index.html"),
-  rewritePageLinks(home.replace("<body>", '<body data-route-mode="static">'), "")
+  rewritePageLinks(removeAdminLoginLink(home.replace("<body>", '<body data-route-mode="static">')), "")
 );
 const staticPage = await readFile(path.join(root, "page.html"), "utf8");
 await writeFile(
   path.join(output, "page.html"),
-  staticPage.replace("<body>", '<body data-route-mode="static">')
+  removeAdminLoginLink(staticPage.replace("<body>", '<body data-route-mode="static">'))
 );
 
 for (const page of pages) {

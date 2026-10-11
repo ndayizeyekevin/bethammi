@@ -1,6 +1,6 @@
 # Beth Ammi website
 
-The website uses a shared responsive layout, PHP pages and a MySQL/MariaDB database for posts, team profiles, and parish information. A protected dashboard at `/admin/` lets administrators create, edit, publish, hide, and delete those records.
+The website uses shared PHP head, header, and footer includes for the live homepage, content pages, and posts, with a MySQL/MariaDB database for posts, team profiles, and parish information. The header login button opens a sign-in modal. A protected dashboard at `/admin/` lets administrators create, edit, publish, hide, and delete those records.
 
 ## Local setup with XAMPP
 
@@ -12,7 +12,7 @@ Requirements: PHP 8.1+, PDO MySQL, `mbstring`, `iconv`, and MySQL or MariaDB.
 4. Copy `config/database.example.php` to `config/database.local.php`, then enter the local database settings. This local file is ignored by Git. For production, set the `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` environment variables instead.
 5. From the project root, import the existing published posts once: `php tools/import-content.php`. The importer skips existing slugs and will not overwrite later admin edits.
 6. Create the first dashboard account: `php tools/create-admin.php admin`. Enter a unique password of at least 12 characters when prompted.
-7. Open `http://localhost/bethammi-redesign/` and manage content at `http://localhost/bethammi-redesign/admin/`.
+7. Open `http://localhost/bethammi-redesign/` and manage content at `http://localhost/bethammi-redesign/admin/`. The live homepage and content routes use `index.php`, `page.php`, and `post.php`; the shared shell lives in `includes/site-head.php`, `includes/site-header.php`, and `includes/site-footer.php`.
 
 Do not deploy `config/database.local.php`. Use a dedicated database user with only the permissions the site needs, and serve the admin area over HTTPS.
 
@@ -29,3 +29,5 @@ The import command populates posts from the included WordPress snapshot. Team pr
 If the church's eventual host does not support PHP, run `npm run build` with Node.js 18+ and publish `dist/`. That is a static preview built from the included snapshot; database updates and the admin dashboard require PHP and MySQL/MariaDB.
 
 Uploaded WordPress images, YouTube videos, and Google Fonts load from their original external services. Replace stock photography with approved church images before launch. Contact and giving details should be checked with the church before deployment.
+
+Bootstrap 5.3.3 and Bootstrap Icons 1.11.3 are loaded from jsDelivr for the public site and admin controls; visitors need an internet connection to load those assets.

@@ -1,0 +1,117 @@
+<main id="main">
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero__image" role="img" aria-label="A church community gathering for worship"></div>
+      <div class="hero__shade"></div>
+      <div class="container hero__content">
+        <p class="eyebrow eyebrow--light"><span></span> Beth Ammi Christian Fellowship Church</p>
+        <h1 id="hero-title">Faith grows<br>better <em>together.</em></h1>
+        <p class="hero__intro">Come as you are. Find a welcoming community, worship together, and grow in the Word of God.</p>
+        <div class="hero__actions">
+          <a class="btn button button--gold" href="#gather">Join us this week <span aria-hidden="true">↗</span></a>
+          <a class="text-link text-link--light" href="#welcome">Get to know us <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero__note"><span class="hero__note-icon" aria-hidden="true">✦</span><span>There is a place for you here.</span></div>
+      </div>
+      <a class="hero__scroll" href="#gather" aria-label="Scroll to service times"><span></span> SCROLL TO EXPLORE</a>
+    </section>
+
+    <section class="gather section" id="gather" aria-labelledby="gather-title">
+      <div class="container gather__grid">
+        <div class="gather__intro">
+          <p class="eyebrow"><span></span> You are welcome here</p>
+          <h2 id="gather-title">Let's worship<br>and grow <em>together.</em></h2>
+          <p>Whether you are new to church or looking for a place to belong, we would love to meet you. Join us for a service this week.</p>
+          <a class="text-link" href="tel:+250788482324">Ask us about your visit <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="schedule" aria-label="Weekly service times">
+          <article class="schedule__item">
+            <span class="schedule__day">FRIDAY</span>
+            <div><h3>Friday service</h3><p>3:30 PM</p></div>
+            <span class="schedule__arrow" aria-hidden="true">↗</span>
+          </article>
+          <article class="schedule__item">
+            <span class="schedule__day">SUNDAY</span>
+            <div><h3>Morning worship</h3><p>9:00 AM – 12:00 PM</p></div>
+            <span class="schedule__arrow" aria-hidden="true">↗</span>
+          </article>
+          <article class="schedule__item">
+            <span class="schedule__day">SUNDAY</span>
+            <div><h3>Afternoon service</h3><p>3:00 PM – 7:00 PM</p></div>
+            <span class="schedule__arrow" aria-hidden="true">↗</span>
+          </article>
+          <p class="schedule__footnote">Have a question or need directions? <a href="tel:+250788482324">Get in touch with us.</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="welcome section" id="welcome" aria-labelledby="welcome-title">
+      <div class="container welcome__grid">
+        <div class="welcome__image">
+          <img src="./assets/images/founder.png" alt="Founder image" loading="lazy">
+          <span class="image-caption">A community rooted in faith</span>
+          <span class="welcome__badge" aria-hidden="true"><span>✦</span><strong>All are<br>welcome</strong></span>
+        </div>
+        <div class="welcome__copy">
+          <p class="eyebrow"><span></span> A note from our pastor</p>
+          <h2 id="welcome-title">A warm welcome<br>to <em>Beth Ammi.</em></h2>
+          <p class="welcome__lead">“Praise the Lord! We enjoy being with you, sharing the Word of God, and celebrating together.”</p>
+          <p>We invite you to join our community and continue with us on this heavenly journey. There is room for you here, and we look forward to meeting you.</p>
+          <div class="signature"><span class="signature__line"></span><span><strong>Rev. Pastor Alfred Gatabazi</strong><small>Founder &amp; Senior Pastor</small></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="belief section" aria-labelledby="belief-title">
+      <div class="container belief__inner">
+        <p class="eyebrow eyebrow--light"><span></span> What we believe</p>
+        <h2 id="belief-title">Through Christ alone<br><em>we have been saved.</em></h2>
+        <p>We believe in God as our Heavenly Father, Jesus Christ as our Lord and Savior, the Son of God, and the Holy Spirit.</p>
+        <a class="btn button button--outline" href="#welcome">Discover our church <span aria-hidden="true">↗</span></a>
+        <span class="belief__ornament" aria-hidden="true">✦</span>
+      </div>
+    </section>
+
+    <section class="stories section" id="stories" aria-labelledby="stories-title">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span></span> From our community</p><h2 id="stories-title">Faith in <em>action.</em></h2></div>
+          <a class="text-link" href="https://www.bethammicfc.org/" target="_blank" rel="noopener noreferrer">Visit our original site <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="story-grid" id="story-grid">
+          <article class="story-card story-card--feature">
+            <div class="story-card__photo story-card__photo--worship" role="img" aria-label="A worship gathering"></div>
+            <div class="story-card__body"><p class="story-card__meta">WORSHIP &amp; FELLOWSHIP <span>·</span> OCTOBER 2026</p><h3>Seven days of Holy Convocation</h3><p>A week of worship, fellowship, prayer, and reflection on the Word of God.</p><a class="story-card__link" href="stories/7-days-of-holy-convocation.html" aria-label="Read more about the Holy Convocation">Read the story <span aria-hidden="true">↗</span></a></div>
+          </article>
+          <article class="story-card">
+            <div class="story-card__photo story-card__photo--community" role="img" aria-label="People gathered together outdoors"></div>
+            <div class="story-card__body"><p class="story-card__meta">WORSHIP &amp; FELLOWSHIP <span>·</span> APRIL 2023</p><h3>Passover Sunday service</h3><p>A day of worship and fellowship as the church remembered salvation through Jesus Christ.</p><a class="story-card__link" href="stories/9th-april-2023-passover-service-in-pictures.html">Read the story <span aria-hidden="true">↗</span></a></div>
+          </article>
+          <article class="story-card">
+            <div class="story-card__photo story-card__photo--service" role="img" aria-label="A church service"></div>
+            <div class="story-card__body"><p class="story-card__meta">SUNDAY SERVICE <span>·</span> APRIL 2023</p><h3>Our first service in April</h3><p>A moment from the 2 April 2023 service at Beth Ammi Christian Fellowship Church.</p><a class="story-card__link" href="stories/1st-service-2nd-april-2023.html">Read the story <span aria-hidden="true">↗</span></a></div>
+          </article>
+        </div>
+        <p class="stories-status" id="stories-status" role="status" aria-live="polite" hidden></p>
+      </div>
+    </section>
+
+    <section class="give section" id="give" aria-labelledby="give-title">
+      <div class="give__photo" role="img" aria-label="Sunlight falling across a church"></div>
+      <div class="container give__inner">
+        <div class="give__card">
+          <p class="eyebrow"><span></span> Give with joy</p>
+          <h2 id="give-title">Be part of<br>what God is <em>doing.</em></h2>
+          <p>Your generosity helps support the ministry and the work of our church. Thank you for standing with us in prayer and giving.</p>
+          <a class="btn button button--navy" href="https://www.bethammicfc.org/donate/">Ways to give <span aria-hidden="true">↗</span></a>
+          <p class="give__note">Giving details are available on the church website.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact section" aria-labelledby="contact-title">
+      <div class="container contact__inner">
+        <div><p class="eyebrow eyebrow--light"><span></span> We would love to meet you</p><h2 id="contact-title">Your next step<br>starts <em>here.</em></h2></div>
+        <a class="btn button button--gold" href="https://wa.me/250788482324">Say hello on WhatsApp <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>

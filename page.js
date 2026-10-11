@@ -86,7 +86,7 @@ function safeLink(rawValue, pagePaths) {
     const url = new URL(rawValue, "https://www.bethammicfc.org/");
     if (url.protocol !== "http:" && url.protocol !== "https:") return "#";
     if (url.hostname === "www.bethammicfc.org" || url.hostname === "bethammicfc.org") {
-      if (url.pathname === "/" || url.pathname === "/home/") return `${siteRoot}index.html`;
+      if (url.pathname === "/" || url.pathname === "/home/") return `${siteRoot}${document.body.dataset.routeMode === "static" ? "index.html" : "index.php"}`;
       const target = pagePaths.get(url.pathname.replace(/\/?$/, "/"));
       return target || `https://www.bethammicfc.org${url.pathname}${url.search}${url.hash}`;
     }
@@ -181,7 +181,7 @@ function localPageLink(item, kind = "page") {
   }
   return kind === "post"
     ? `${siteRoot}post.php?slug=${slug}`
-    : `${siteRoot}page.html?type=page&slug=${slug}`;
+    : `${siteRoot}page.php?type=page&slug=${slug}`;
 }
 
 function addFeaturedImage(card, item) {
@@ -417,6 +417,14 @@ async function start() {
   const params = new URLSearchParams(window.location.search);
   const kind = document.body.dataset.contentKind || (params.get("type") === "post" ? "post" : "page");
   const slug = document.body.dataset.contentSlug || params.get("slug");
+  const staticRoutes = document.body.dataset.routeMode === "static";
+
+  if (!staticRoutes && /\/page\.html$/.test(window.location.pathname)) {
+    const destination = new URL(window.location.href);
+    destination.pathname = destination.pathname.replace(/page\.html$/, "page.php");
+    window.location.replace(destination.href);
+    return;
+  }
 
   try {
     const response = await fetch(`${siteRoot}site-content.json`);
@@ -425,7 +433,6 @@ async function start() {
     const asList = (items) => Array.isArray(items) ? items : Array.isArray(items?.value) ? items.value : [];
     const pages = asList(data.pages);
     let posts = asList(data.posts);
-    const staticRoutes = document.body.dataset.routeMode === "static";
     if (!staticRoutes && kind === "page" && slug === "news-and-sermons") {
       const postsResponse = await fetch(`${siteRoot}posts.php`);
       if (!postsResponse.ok) throw new Error(`Posts request failed (${postsResponse.status}).`);
@@ -444,7 +451,7 @@ async function start() {
     });
 
     if (!slug || (slug === "home" && kind === "page")) {
-      window.location.replace(`${siteRoot}index.html`);
+      window.location.replace(`${siteRoot}${staticRoutes ? "index.html" : "index.php"}`);
       return;
     }
 

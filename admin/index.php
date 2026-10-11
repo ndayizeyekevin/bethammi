@@ -272,12 +272,13 @@ $csrfToken = bethammi_admin_csrf_token();
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Church content admin | Beth Ammi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 <?php if (!$isAuthenticated): ?>
   <main class="admin-card admin-login">
-    <a class="admin-brand" href="../index.html">BETH AMMI · ADMIN</a>
+    <a class="admin-brand" href="../index.php">BETH AMMI · ADMIN</a>
     <h1>Sign in</h1>
     <p>Manage published posts, team profiles, and parish information.</p>
     <?php if ($error !== ''): ?><p class="admin-alert admin-alert--error" role="alert"><?= bethammi_escape($error) ?></p><?php endif; ?>
@@ -287,17 +288,17 @@ $csrfToken = bethammi_admin_csrf_token();
       <input type="hidden" name="action" value="login">
       <label>Username<input name="username" autocomplete="username" required></label>
       <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
-      <button class="admin-button" type="submit">Sign in</button>
+      <button class="btn admin-button" type="submit">Sign in</button>
     </form>
   </main>
 <?php else: ?>
   <main class="admin-shell">
     <header class="admin-header">
-      <div><a class="admin-brand" href="../index.html">BETH AMMI · ADMIN</a><h1>Church content</h1><p>Signed in as <?= bethammi_escape($_SESSION['admin_user']['username']) ?>.</p></div>
+      <div><a class="admin-brand" href="../index.php">BETH AMMI · ADMIN</a><h1>Church content</h1><p>Signed in as <?= bethammi_escape($_SESSION['admin_user']['username']) ?>.</p></div>
       <form method="post">
         <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
         <input type="hidden" name="action" value="logout">
-        <button class="admin-button admin-button--light" type="submit">Sign out</button>
+        <button class="btn admin-button admin-button--light" type="submit">Sign out</button>
       </form>
     </header>
     <?php if ($error !== ''): ?><p class="admin-alert admin-alert--error" role="alert"><?= bethammi_escape($error) ?></p><?php endif; ?>
@@ -306,7 +307,7 @@ $csrfToken = bethammi_admin_csrf_token();
       <?php foreach ($sections as $key => $item): ?>
         <a href="?section=<?= bethammi_escape($key) ?>"<?= $section === $key ? ' aria-current="page"' : '' ?>><?= bethammi_escape($item['label']) ?></a>
       <?php endforeach; ?>
-      <a href="../index.html" target="_blank" rel="noopener noreferrer">View website ↗</a>
+      <a href="../index.php" target="_blank" rel="noopener noreferrer">View website ↗</a>
     </nav>
     <div class="admin-card">
       <h2 class="admin-section-title"><?= $selectedRecord ? 'Edit ' . bethammi_escape($entity['singular']) : 'Add ' . bethammi_escape($entity['singular']) ?></h2>
@@ -353,8 +354,8 @@ $csrfToken = bethammi_admin_csrf_token();
         <?php endif; ?>
         <label class="admin-checkbox"><input type="checkbox" name="is_published" value="1"<?= !array_key_exists('is_published', $_POST) ? (!isset($selectedRecord['is_published']) || $selectedRecord['is_published'] ? ' checked' : '') : (isset($_POST['is_published']) ? ' checked' : '') ?>> Show on website</label>
         <div class="admin-actions">
-          <button class="admin-button" type="submit"><?= $selectedRecord ? 'Save changes' : 'Add ' . bethammi_escape($entity['singular']) ?></button>
-          <?php if ($selectedRecord): ?><a class="admin-button admin-button--light" href="?section=<?= bethammi_escape($section) ?>">Cancel edit</a><?php endif; ?>
+          <button class="btn admin-button" type="submit"><?= $selectedRecord ? 'Save changes' : 'Add ' . bethammi_escape($entity['singular']) ?></button>
+          <?php if ($selectedRecord): ?><a class="btn admin-button admin-button--light" href="?section=<?= bethammi_escape($section) ?>">Cancel edit</a><?php endif; ?>
         </div>
       </form>
     </div>
