@@ -1,4 +1,568 @@
 <?php
 
+require_once __DIR__ . '/../includes/static-pages.php';
+$staticPages = bethammi_static_pages();
 $staticPageSlug = 'women-ministries';
-require __DIR__ . '/../includes/static-page.php';
+if (!isset($staticPages[$staticPageSlug])) {
+    http_response_code(404);
+    exit('Page not found.');
+}
+$isStaticPage = true;
+$contentKind = 'page';
+$contentSlug = $staticPageSlug;
+$staticPageTitle = $staticPages[$staticPageSlug];
+$pageTitle = $staticPageTitle . ' | Beth Ammi Christian Fellowship Church';
+$pageDescription = 'Learn about ' . $staticPageTitle . ' at Beth Ammi Christian Fellowship Church.';
+$pageScripts = ['page.js'];
+require __DIR__ . '/../includes/site-head.php';
+require __DIR__ . '/../includes/site-header.php';
+?>
+<main id="main">
+  <section class="page-banner" aria-labelledby="page-title">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.php">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= bethammi_escape($staticPageTitle) ?></span></nav>
+      <p class="eyebrow eyebrow--light"><span></span><span id="page-kicker">Beth Ammi Christian Fellowship Church</span></p>
+      <h1 id="page-title"><?= bethammi_escape($staticPageTitle) ?></h1>
+      <p class="page-banner__summary" id="page-summary" hidden></p>
+    </div>
+  </section>
+  <section class="container page-layout" id="page-layout">
+    <article class="page-article">
+      <div class="remote-content" id="page-content">
+        <template id="static-page-content">
+              <div data-elementor-type="wp-post" data-elementor-id="359" class="elementor elementor-359">
+                      <section class="elementor-section elementor-top-section elementor-element elementor-element-vpo210n elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="vpo210n" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                      <div class="elementor-container elementor-column-gap-no">
+                    <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-0103c1e" data-id="0103c1e" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-dcbce22 elementor-widget elementor-widget-heading" data-id="dcbce22" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+                  <div class="elementor-widget-container">
+                    <h3 class="elementor-heading-title elementor-size-default"><b>Women Ministries</b></h3>        </div>
+                  </div>
+                  <div class="elementor-element elementor-element-07446d7 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="07446d7" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-divider">
+                <span class="elementor-divider-separator">
+                      </span>
+              </div>
+                      </div>
+                  </div>
+                  <section class="elementor-section elementor-inner-section elementor-element elementor-element-e49cb6c elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="e49cb6c" data-element_type="section" data-e-type="section">
+                      <div class="elementor-container elementor-column-gap-default">
+                    <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5f8e7d3" data-id="5f8e7d3" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-28a7a93 elementor-widget elementor-widget-heading" data-id="28a7a93" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+                  <div class="elementor-widget-container">
+                    <h5 class="elementor-heading-title elementor-size-default">About Women Ministries</h5>        </div>
+                  </div>
+                  <div class="elementor-element elementor-element-b6d042e elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="b6d042e" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-divider">
+                <span class="elementor-divider-separator">
+                      </span>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-6b6a93e elementor-widget elementor-widget-text-editor" data-id="6b6a93e" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+                  <div class="elementor-widget-container">
+                            <p class="MsoNormal">Women Ministries at Bethammi (WMB) is a ministry working in Bethammi Christian Fellowship Church that is made of Women around Bethammi Parishes.</p><p><span style="font-size: 11.0pt; line-height: 107%; font-family: 'Calibri',sans-serif; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: Calibri; mso-fareast-theme-font: minor-latin; mso-hansi-theme-font: minor-latin; mso-bidi-font-family: 'Times New Roman'; mso-bidi-theme-font: minor-bidi; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">Each Parish organizes its activities that are mainly related with Humanitarian Activities, Spiritual and Economic development.  WMB started its activities few months after the birth of Bethammi Christian Fellowship Church in 2007. This ministry has more than 1300 women around our parishes.  At Bethammi CFC, women are one of the Church Pillars and are doing a wonderful work of God</span></p>                </div>
+                  </div>
+                    </div>
+              </div>
+                  <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-52071b2" data-id="52071b2" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-e3644d8 elementor-widget elementor-widget-progress" data-id="e3644d8" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-e3644d8">
+                  Women Under Ministry      </span>
+
+              <div aria-labelledby="elementor-progress-bar-e3644d8" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="59" aria-valuetext="59% (1300 Women)">
+                <div class="elementor-progress-bar" data-max="59">
+                  <span class="elementor-progress-text">1300 Women</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                    </div>
+              </div>
+                  <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-21a9478" data-id="21a9478" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-5d4df70 elementor-widget elementor-widget-image" data-id="5d4df70" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+                  <div class="elementor-widget-container">
+                                        <img loading="lazy" decoding="async" width="900" height="600" src="https://www.bethammicfc.org/wp-content/uploads/2019/08/P1590345.jpg" class="attachment-full size-full wp-image-70" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2019/08/P1590345.jpg 900w, https://www.bethammicfc.org/wp-content/uploads/2019/08/P1590345-300x200.jpg 300w, https://www.bethammicfc.org/wp-content/uploads/2019/08/P1590345-768x512.jpg 768w, https://www.bethammicfc.org/wp-content/uploads/2019/08/P1590345-600x400.jpg 600w" sizes="(max-width: 900px) 100vw, 900px" />                              </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  <section class="elementor-section elementor-top-section elementor-element elementor-element-ec8b994 elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="ec8b994" data-element_type="section" data-e-type="section">
+                      <div class="elementor-container elementor-column-gap-default">
+                    <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-0d621cf" data-id="0d621cf" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-6ed7232 elementor-widget elementor-widget-spacer" data-id="6ed7232" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-spacer">
+                <div class="elementor-spacer-inner"></div>
+              </div>
+                      </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  <section class="elementor-section elementor-top-section elementor-element elementor-element-d1cu5sj elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="d1cu5sj" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                      <div class="elementor-container elementor-column-gap-no">
+                    <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-1a4e914" data-id="1a4e914" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-b3d6d32 elementor-widget elementor-widget-image" data-id="b3d6d32" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+                  <div class="elementor-widget-container">
+                                        <img loading="lazy" decoding="async" width="1081" height="1080" src="https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311.jpg" class="attachment-full size-full wp-image-509" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311.jpg 1081w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-150x150.jpg 150w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-300x300.jpg 300w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-768x767.jpg 768w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-1024x1023.jpg 1024w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-600x599.jpg 600w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-100x100.jpg 100w" sizes="(max-width: 1081px) 100vw, 1081px" />                              </div>
+                  </div>
+                    </div>
+              </div>
+                  <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-572841d" data-id="572841d" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-de89e1a elementor-widget elementor-widget-heading" data-id="de89e1a" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+                  <div class="elementor-widget-container">
+                    <h5 class="elementor-heading-title elementor-size-default">Visiting those who are sick at Hospitals</h5>        </div>
+                  </div>
+                  <div class="elementor-element elementor-element-81bd81a elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="81bd81a" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-divider">
+                <span class="elementor-divider-separator">
+                      </span>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-1aa2a02 elementor-widget elementor-widget-text-editor" data-id="1aa2a02" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+                  <div class="elementor-widget-container">
+                            <p style="margin-left: .5in;">Every first Monday of the week, the Bethammi Women cook delicious meal and go to Hospitals to visit those who are sick and have no means and give them food and if possible help pay for the Bills whenever possible. Not only that they share the word of God to console them and Bring hope to them.</p>                </div>
+                  </div>
+                    </div>
+              </div>
+                  <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-04080f3" data-id="04080f3" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-8e07fc0 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="8e07fc0" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-divider">
+                <span class="elementor-divider-separator">
+                      </span>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-394729a elementor-widget elementor-widget-progress" data-id="394729a" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-394729a">
+                  Hospitals in Partnership      </span>
+
+              <div aria-labelledby="elementor-progress-bar-394729a" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="55" aria-valuetext="55% (2 Hospitals)">
+                <div class="elementor-progress-bar" data-max="55">
+                  <span class="elementor-progress-text">2 Hospitals</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-d70d10d elementor-widget elementor-widget-progress" data-id="d70d10d" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-d70d10d">
+                  Times visited       </span>
+
+              <div aria-labelledby="elementor-progress-bar-d70d10d" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="55" aria-valuetext="55% (100+)">
+                <div class="elementor-progress-bar" data-max="55">
+                  <span class="elementor-progress-text">100+</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-75f1f94 elementor-widget elementor-widget-progress" data-id="75f1f94" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-75f1f94">
+                  Plates      </span>
+
+              <div aria-labelledby="elementor-progress-bar-75f1f94" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="55" aria-valuetext="55% (10K+)">
+                <div class="elementor-progress-bar" data-max="55">
+                  <span class="elementor-progress-text">10K+</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-d46a984 elementor-widget elementor-widget-progress" data-id="d46a984" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-d46a984">
+                  Bills Paid      </span>
+
+              <div aria-labelledby="elementor-progress-bar-d46a984" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="55" aria-valuetext="55% (1.5M+ Rwf)">
+                <div class="elementor-progress-bar" data-max="55">
+                  <span class="elementor-progress-text">1.5M+ Rwf</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  <section class="elementor-section elementor-top-section elementor-element elementor-element-5837775 elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="5837775" data-element_type="section" data-e-type="section">
+                      <div class="elementor-container elementor-column-gap-default">
+                    <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-1230ae4" data-id="1230ae4" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-fa805a8 elementor-widget elementor-widget-spacer" data-id="fa805a8" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-spacer">
+                <div class="elementor-spacer-inner"></div>
+              </div>
+                      </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  <section class="elementor-section elementor-top-section elementor-element elementor-element-fd14df2 elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="fd14df2" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                      <div class="elementor-container elementor-column-gap-no">
+                    <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-c7c9416" data-id="c7c9416" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-0694da7 elementor-widget elementor-widget-image" data-id="0694da7" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+                  <div class="elementor-widget-container">
+                                        <img loading="lazy" decoding="async" width="1600" height="600" src="https://www.bethammicfc.org/wp-content/uploads/2019/08/WOME.jpg" class="attachment-full size-full wp-image-77" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2019/08/WOME.jpg 1600w, https://www.bethammicfc.org/wp-content/uploads/2019/08/WOME-300x113.jpg 300w, https://www.bethammicfc.org/wp-content/uploads/2019/08/WOME-768x288.jpg 768w, https://www.bethammicfc.org/wp-content/uploads/2019/08/WOME-1024x384.jpg 1024w, https://www.bethammicfc.org/wp-content/uploads/2019/08/WOME-600x225.jpg 600w" sizes="(max-width: 1600px) 100vw, 1600px" />                              </div>
+                  </div>
+                    </div>
+              </div>
+                  <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-69d2955" data-id="69d2955" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-aeccf98 elementor-widget elementor-widget-heading" data-id="aeccf98" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+                  <div class="elementor-widget-container">
+                    <h5 class="elementor-heading-title elementor-size-default">Helping Widows</h5>        </div>
+                  </div>
+                  <div class="elementor-element elementor-element-ca13a21 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="ca13a21" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-divider">
+                <span class="elementor-divider-separator">
+                      </span>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-1f1140f elementor-widget elementor-widget-text-editor" data-id="1f1140f" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+                  <div class="elementor-widget-container">
+                            <p class="MsoNormal" style="margin-left: .5in;">widows are among those who are vulnerable that’s why Bethammi’s Women Minsitries is helping them through Humanitarian activities like: Providing to them Shelters and Foods. WMB is also helping them through the world of God that they share with them to comfort and empower them.</p>                </div>
+                  </div>
+                    </div>
+              </div>
+                  <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-a0967ee" data-id="a0967ee" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-97788c5 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="97788c5" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-divider">
+                <span class="elementor-divider-separator">
+                      </span>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-da23b9d elementor-widget elementor-widget-progress" data-id="da23b9d" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-da23b9d">
+                  Widows      </span>
+
+              <div aria-labelledby="elementor-progress-bar-da23b9d" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="17">
+                <div class="elementor-progress-bar" data-max="17">
+                  <span class="elementor-progress-text"></span>
+                            <span class="elementor-progress-percentage">17%</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-aa576f0 elementor-widget elementor-widget-progress" data-id="aa576f0" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-aa576f0">
+                  Shelters+ Clothes      </span>
+
+              <div aria-labelledby="elementor-progress-bar-aa576f0" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="64" aria-valuetext="64% (200+)">
+                <div class="elementor-progress-bar" data-max="64">
+                  <span class="elementor-progress-text">200+</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-6e48d6f elementor-widget elementor-widget-progress" data-id="6e48d6f" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-6e48d6f">
+                  Foods      </span>
+
+              <div aria-labelledby="elementor-progress-bar-6e48d6f" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="74" aria-valuetext="74% (2000 Kgs)">
+                <div class="elementor-progress-bar" data-max="74">
+                  <span class="elementor-progress-text">2000 Kgs</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  <section class="elementor-section elementor-top-section elementor-element elementor-element-0402924 elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="0402924" data-element_type="section" data-e-type="section">
+                      <div class="elementor-container elementor-column-gap-default">
+                    <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-e46fec3" data-id="e46fec3" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-1022e7b elementor-widget elementor-widget-spacer" data-id="1022e7b" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-spacer">
+                <div class="elementor-spacer-inner"></div>
+              </div>
+                      </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  <section class="elementor-section elementor-top-section elementor-element elementor-element-4277de0 elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="4277de0" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                      <div class="elementor-container elementor-column-gap-no">
+                    <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-63b18c1" data-id="63b18c1" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-e11b878 elementor-widget elementor-widget-image" data-id="e11b878" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+                  <div class="elementor-widget-container">
+                                        <img loading="lazy" decoding="async" width="2736" height="1824" src="https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880345.jpg" class="attachment-full size-full wp-image-680" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880345.jpg 2736w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880345-300x200.jpg 300w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880345-768x512.jpg 768w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880345-1024x683.jpg 1024w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880345-1620x1080.jpg 1620w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880345-600x400.jpg 600w" sizes="(max-width: 2736px) 100vw, 2736px" />                              </div>
+                  </div>
+                    </div>
+              </div>
+                  <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-b8055c7" data-id="b8055c7" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-72b1da5 elementor-widget elementor-widget-heading" data-id="72b1da5" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+                  <div class="elementor-widget-container">
+                    <h5 class="elementor-heading-title elementor-size-default">Spiritual Activities</h5>        </div>
+                  </div>
+                  <div class="elementor-element elementor-element-82653a9 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="82653a9" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-divider">
+                <span class="elementor-divider-separator">
+                      </span>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-e119682 elementor-widget elementor-widget-text-editor" data-id="e119682" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+                  <div class="elementor-widget-container">
+                            <p class="MsoNormal" style="margin-left: .5in;">At Bethammi we know that, after all, God is the First and we want to make sure that we are spiritually Growing and gaining. WMB organizes crusades, Prayers and trainings to help women grow in knowing God.</p>                </div>
+                  </div>
+                    </div>
+              </div>
+                  <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-5ff6ea7" data-id="5ff6ea7" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-26fe373 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="26fe373" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-divider">
+                <span class="elementor-divider-separator">
+                      </span>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-d4b1755 elementor-widget elementor-widget-progress" data-id="d4b1755" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-d4b1755">
+                  Crusades      </span>
+
+              <div aria-labelledby="elementor-progress-bar-d4b1755" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="66" aria-valuetext="66% (230)">
+                <div class="elementor-progress-bar" data-max="66">
+                  <span class="elementor-progress-text">230</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-6db1753 elementor-widget elementor-widget-progress" data-id="6db1753" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-6db1753">
+                  Prayers      </span>
+
+              <div aria-labelledby="elementor-progress-bar-6db1753" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="54" aria-valuetext="54% (180)">
+                <div class="elementor-progress-bar" data-max="54">
+                  <span class="elementor-progress-text">180</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  <section class="elementor-section elementor-top-section elementor-element elementor-element-31abda1 elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="31abda1" data-element_type="section" data-e-type="section">
+                      <div class="elementor-container elementor-column-gap-default">
+                    <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-ca549bd" data-id="ca549bd" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-e933acf elementor-widget elementor-widget-spacer" data-id="e933acf" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-spacer">
+                <div class="elementor-spacer-inner"></div>
+              </div>
+                      </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  <section class="elementor-section elementor-top-section elementor-element elementor-element-d137979 elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="d137979" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                      <div class="elementor-container elementor-column-gap-no">
+                    <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-2e0359c" data-id="2e0359c" data-element_type="column" data-e-type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-30630f9 elementor-widget elementor-widget-image" data-id="30630f9" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+                  <div class="elementor-widget-container">
+                                        <img loading="lazy" decoding="async" width="2736" height="1824" src="https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396.jpg" class="attachment-full size-full wp-image-690" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396.jpg 2736w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-300x200.jpg 300w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-768x512.jpg 768w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-1024x683.jpg 1024w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-1620x1080.jpg 1620w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-600x400.jpg 600w" sizes="(max-width: 2736px) 100vw, 2736px" />                              </div>
+                  </div>
+                  <div class="elementor-element elementor-element-0da7120 elementor-widget elementor-widget-image" data-id="0da7120" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+                  <div class="elementor-widget-container">
+                                        <img loading="lazy" decoding="async" width="2736" height="1824" src="https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396.jpg" class="attachment-full size-full wp-image-690" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396.jpg 2736w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-300x200.jpg 300w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-768x512.jpg 768w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-1024x683.jpg 1024w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-1620x1080.jpg 1620w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-600x400.jpg 600w" sizes="(max-width: 2736px) 100vw, 2736px" />                              </div>
+                  </div>
+                  <div class="elementor-element elementor-element-c36bbc5 elementor-widget elementor-widget-image" data-id="c36bbc5" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+                  <div class="elementor-widget-container">
+                                        <img loading="lazy" decoding="async" width="2736" height="1824" src="https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396.jpg" class="attachment-full size-full wp-image-690" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396.jpg 2736w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-300x200.jpg 300w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-768x512.jpg 768w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-1024x683.jpg 1024w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-1620x1080.jpg 1620w, https://www.bethammicfc.org/wp-content/uploads/2019/09/P8880396-600x400.jpg 600w" sizes="(max-width: 2736px) 100vw, 2736px" />                              </div>
+                  </div>
+                    </div>
+              </div>
+                  <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-ea084de" data-id="ea084de" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-fabc124 elementor-widget elementor-widget-heading" data-id="fabc124" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+                  <div class="elementor-widget-container">
+                    <h5 class="elementor-heading-title elementor-size-default">Economic Activities</h5>        </div>
+                  </div>
+                  <div class="elementor-element elementor-element-b70f0f4 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="b70f0f4" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-divider">
+                <span class="elementor-divider-separator">
+                      </span>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-c9fdc10 elementor-widget elementor-widget-text-editor" data-id="c9fdc10" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+                  <div class="elementor-widget-container">
+                            <p>Women Ministries are organizing themselves to make sure that they stay Economically stable and make sure no vulnerable women among them. Even if it still tough but they are doing great through different activities like:</p>
+          <p> </p>                </div>
+                  </div>
+                  <div class="elementor-element elementor-element-54a33a9 elementor-widget elementor-widget-text-editor" data-id="54a33a9" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+                  <div class="elementor-widget-container">
+                            <p class="MsoNormal" style="margin-left: .5in;"><b>Handcraft: </b>WMB is good at training Women to make jewelries. They are making very good and wonderful Jewelries made of simple materials. After making those, they sell them to both internal and external markets and is serving as the way of living. </p>                </div>
+                  </div>
+                    </div>
+              </div>
+                  <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-4dd0a86" data-id="4dd0a86" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-1c97873 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="1c97873" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-divider">
+                <span class="elementor-divider-separator">
+                      </span>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-31173ec elementor-widget elementor-widget-progress" data-id="31173ec" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-31173ec">
+                  Handcrafts Sold      </span>
+
+              <div aria-labelledby="elementor-progress-bar-31173ec" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="84" aria-valuetext="84% (1200+)">
+                <div class="elementor-progress-bar" data-max="84">
+                  <span class="elementor-progress-text">1200+</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-533b52f elementor-widget elementor-widget-progress" data-id="533b52f" data-element_type="widget" data-e-type="widget" data-widget_type="progress.default">
+                  <div class="elementor-widget-container">
+                          <span class="elementor-title" id="elementor-progress-bar-533b52f">
+                  Organized training      </span>
+
+              <div aria-labelledby="elementor-progress-bar-533b52f" class="elementor-progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42" aria-valuetext="42% (23)">
+                <div class="elementor-progress-bar" data-max="42">
+                  <span class="elementor-progress-text">23</span>
+                        </div>
+              </div>
+                      </div>
+                  </div>
+                  <div class="elementor-element elementor-element-7dde482 elementor-widget elementor-widget-text-editor" data-id="7dde482" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+                  <div class="elementor-widget-container">
+                            <p><span style="font-weight: bold;">Vocational Training: </span>we have different talents among us, and with a help of trainings, those talents feed their owners. WMB is providing trainings in Handcrafting, business and Tailoring. </p>                </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  <section class="elementor-section elementor-top-section elementor-element elementor-element-3805bc5 elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="3805bc5" data-element_type="section" data-e-type="section">
+                      <div class="elementor-container elementor-column-gap-default">
+                    <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-d36ede0" data-id="d36ede0" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-2c0346c elementor-widget elementor-widget-spacer" data-id="2c0346c" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
+                  <div class="elementor-widget-container">
+                        <div class="elementor-spacer">
+                <div class="elementor-spacer-inner"></div>
+              </div>
+                      </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  <section class="elementor-section elementor-top-section elementor-element elementor-element-07h5m1e elementor-section-content-middle elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="07h5m1e" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                      <div class="elementor-container elementor-column-gap-no">
+                    <div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-690b3fc7" data-id="690b3fc7" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-50b8a2e6 elementor-widget elementor-widget-heading" data-id="50b8a2e6" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+                  <div class="elementor-widget-container">
+                    <h3 class="elementor-heading-title elementor-size-default">Support Women Ministries</h3>        </div>
+                  </div>
+                    </div>
+              </div>
+                  <div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-14f9fccb" data-id="14f9fccb" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-d6de3d9 elementor-align-left elementor-mobile-align-center elementor-tablet-align-center elementor-widget elementor-widget-button" data-id="d6de3d9" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
+                  <div class="elementor-widget-container">
+                            <div class="elementor-button-wrapper">
+                    <a class="elementor-button elementor-button-link elementor-size-md" href="http://bethammicfc.org/Donate">
+                      <span class="elementor-button-content-wrapper">
+                      <span class="elementor-button-icon">
+                  <i aria-hidden="true" class="fas fa-donate"></i>      </span>
+                            <span class="elementor-button-text">Donate</span>
+                    </span>
+                    </a>
+                  </div>
+                          </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  <section class="elementor-section elementor-top-section elementor-element elementor-element-s6u73i4 elementor-section-height-min-height elementor-section-content-middle elementor-section-boxed elementor-section-height-default elementor-section-items-middle wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="s6u73i4" data-element_type="section" data-e-type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;shape_divider_top&quot;:&quot;arrow&quot;}">
+                    <div class="elementor-shape elementor-shape-top" aria-hidden="true" data-negative="false">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 10" preserveAspectRatio="none">
+            <path class="elementor-shape-fill" d="M350,10L340,0h20L350,10z"/>
+          </svg>    </div>
+                    <div class="elementor-container elementor-column-gap-no">
+                    <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-4d83afc9" data-id="4d83afc9" data-element_type="column" data-e-type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                      <div class="elementor-element elementor-element-d7f0939 elementor-widget elementor-widget-heading" data-id="d7f0939" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+                  <div class="elementor-widget-container">
+                    <h5 class="elementor-heading-title elementor-size-default">By supporting a Woman, You are supporting a Family</h5>        </div>
+                  </div>
+                    </div>
+              </div>
+                    </div>
+              </section>
+                  </div>
+
+        </template>
+      </div>
+    </article>
+    <aside class="page-sidebar" id="page-sidebar">
+            <div class="sidebar-card sidebar-card--visit">
+              <p class="eyebrow"><span></span> You are welcome</p>
+              <h2>Come worship<br>with us.</h2>
+              <p>Join the Beth Ammi community for worship, prayer, fellowship, and the Word of God.</p>
+              <a class="btn button button--navy" href="<?= bethammi_escape($siteRoot ?? '') ?>index.php#gather">Service times <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="sidebar-card sidebar-card--contact">
+              <span class="sidebar-card__label">NEED TO GET IN TOUCH?</span>
+              <a href="tel:+250788482324">+250 788 482 324</a>
+              <a href="https://wa.me/250788482324">WhatsApp us ↗</a>
+            </div>
+          </aside>
+  </section>
+</main>
+<?php require __DIR__ . '/../includes/site-footer.php'; ?>

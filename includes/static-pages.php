@@ -5,6 +5,7 @@ function bethammi_static_pages()
     return [
         'about-us' => 'About Us',
         'who-we-are' => 'Who we are',
+        'our-parishes' => 'Our Parishes',
         'ministries' => 'Ministries',
         'outreach-evangelism' => 'Outreach evangelism',
         'children-ministries' => 'Children Ministries',

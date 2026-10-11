@@ -1,9 +1,6 @@
 <?php
 
 $isPostPage = ($contentKind ?? '') === 'post';
-$isStaticPage = ($isStaticPage ?? false) === true;
-$staticPageTitle = isset($staticPageTitle) && is_string($staticPageTitle) ? $staticPageTitle : '';
-$staticPageHtml = isset($staticPageHtml) && is_string($staticPageHtml) ? $staticPageHtml : '';
 $pageError = isset($pageError) && is_string($pageError) ? $pageError : '';
 $postContentHtml = isset($postContentHtml) && is_string($postContentHtml) ? $postContentHtml : '';
 
@@ -11,9 +8,9 @@ $postContentHtml = isset($postContentHtml) && is_string($postContentHtml) ? $pos
 <main id="main">
     <section class="page-banner" aria-labelledby="page-title">
       <div class="container">
-        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="<?= bethammi_escape($siteRoot ?? '') ?>index.php">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= $isStaticPage ? bethammi_escape($staticPageTitle) : ($isPostPage && isset($post) && $post ? bethammi_escape($post['title']) : 'Explore') ?></span></nav>
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="<?= bethammi_escape($siteRoot ?? '') ?>index.php">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= $isPostPage && isset($post) && $post ? bethammi_escape($post['title']) : 'Explore' ?></span></nav>
         <p class="eyebrow eyebrow--light"><span></span><span id="page-kicker">Beth Ammi Christian Fellowship Church</span></p>
-        <h1 id="page-title"><?= $isStaticPage ? bethammi_escape($staticPageTitle) : ($isPostPage ? (isset($post) && $post ? bethammi_escape($post['title']) : 'Post unavailable') : 'Loading page…') ?></h1>
+        <h1 id="page-title"><?= $isPostPage ? (isset($post) && $post ? bethammi_escape($post['title']) : 'Post unavailable') : 'Loading page…' ?></h1>
         <p class="page-banner__summary" id="page-summary"><?= $isPostPage && isset($post) && $post ? bethammi_escape($post['short_info']) : '' ?></p>
       </div>
     </section>
@@ -21,7 +18,7 @@ $postContentHtml = isset($postContentHtml) && is_string($postContentHtml) ? $pos
     <section class="container page-layout" id="page-layout">
       <article class="page-article">
         <div class="page-meta" id="page-meta"<?= $isPostPage && isset($post) && $post ? '' : ' hidden' ?>><?= $isPostPage && isset($post) && $post ? 'Published ' . bethammi_escape(date('j F Y', strtotime($post['published_at']))) : '' ?></div>
-        <div class="remote-content" id="page-content"><?= $postContentHtml ?><?php if ($isStaticPage): ?><template id="static-page-content"><?= $staticPageHtml ?></template><?php endif; ?></div>
+        <div class="remote-content" id="page-content"><?= $postContentHtml ?></div>
       </article>
       <aside class="page-sidebar" id="page-sidebar">
         <div class="sidebar-card sidebar-card--visit">

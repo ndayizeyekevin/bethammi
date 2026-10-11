@@ -220,13 +220,13 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .remote-content table { width: 100%; border-collapse: collapse; margin-block: 20px; font-size: 12px; }
 .remote-content th, .remote-content td { padding: 10px; border: 1px solid #deded5; text-align: left; }
 .remote-content th { background: #efeee8; color: var(--navy); }
-.about-intro { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(260px, .95fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+.about-intro { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 .about-intro__copy .eyebrow, .about-purpose__card .eyebrow { margin-bottom: 13px; }
 .about-intro__copy h2, .about-belief h2, .about-purpose__card h2 { color: var(--navy); font-size: clamp(30px, 4vw, 46px); }
 .about-intro__copy h2 em, .about-purpose__card h2 em { color: #a77d46; }
 .about-intro__copy p:not(.eyebrow) { margin-top: 17px; }
 .about-intro__copy .about-intro__lead { color: #344944; font-family: var(--serif); font-size: 19px; line-height: 1.55; }
-.about-intro__image { position: relative; margin: 0; padding: 0 0 22px 22px; }
+.about-intro__image { position: relative; width: min(100%, 820px); margin: 0 auto; padding: 0 0 22px 22px; }
 .about-intro__image::before { position: absolute; inset: 22px 0 0 0; background: #e9e2d5; content: ""; }
 .about-intro__image img { position: relative; width: 100%; min-height: 290px; aspect-ratio: 1.25; object-fit: cover; }
 .about-intro__image figcaption { position: relative; padding-top: 10px; color: #7a827f; font-size: 10px; font-weight: 600; letter-spacing: .04em; }
@@ -308,6 +308,11 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .directory-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
 .directory-card { display: grid; grid-template-columns: minmax(120px, .75fr) 1fr; min-width: 0; background: var(--white); }
 .directory-card > img { width: 100%; height: 100%; min-height: 190px; object-fit: cover; background: #e5e3db; }
+.directory-grid--parishes .directory-card { display: flex; flex-direction: column; overflow: hidden; }
+.directory-grid--parishes .directory-card > img { width: 100%; height: auto; min-height: 0; aspect-ratio: 16 / 10; object-fit: cover; }
+.directory-grid--parishes .directory-card__copy h2 { margin: 0; }
+.directory-grid--parishes .directory-card__subtitle { margin-top: 10px; }
+.directory-grid--parishes .directory-card__description { margin-top: 12px; }
 .directory-card__copy { padding: 22px; }
 .directory-card__copy h2 { color: var(--navy); font-size: 21px; letter-spacing: -.035em; }
 .directory-card__subtitle { margin: 8px 0 0; color: #8b6b3b; font-size: 10px; font-weight: 700; }
@@ -429,8 +434,8 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .sidebar-card h2 { font-size: 24px; }
   .sidebar-card--visit .button { min-height: 42px; }
   .remote-content { font-size: 13px; }
-  .about-intro { grid-template-columns: 1fr; gap: 24px; }
-  .about-intro__image { order: -1; padding-left: 12px; }
+  .about-intro { gap: 24px; }
+  .about-intro__image { padding-left: 12px; }
   .about-intro__image::before { top: 12px; }
   .about-intro__image img { min-height: 190px; }
   .about-belief { margin-top: 45px; }

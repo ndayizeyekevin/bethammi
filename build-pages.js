@@ -106,7 +106,10 @@ for (const page of pages) {
   if (page.slug === "home") continue;
   let html = createStandalonePage("page", page.slug);
   if (staticPageTitles.has(page.slug)) {
-    const pageContent = await readFile(path.join(root, "page-content", `${page.slug}.html`), "utf8");
+    const pageSource = await readFile(path.join(root, "pages", `${page.slug}.php`), "utf8");
+    const pageContentMatch = pageSource.match(/<template id="static-page-content">([\s\S]*?)<\/template>/);
+    if (!pageContentMatch) throw new Error(`Could not find inline content for static page "${page.slug}".`);
+    const pageContent = pageContentMatch[1].trim();
     html = html
       .replace(
         `<body data-content-kind="page" data-content-slug="${page.slug}" data-site-root="../" data-route-mode="static">`,

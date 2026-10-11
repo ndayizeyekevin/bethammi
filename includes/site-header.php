@@ -28,7 +28,7 @@ $siteRoot = $siteRoot ?? '';
             <a href="<?= bethammi_escape($siteRoot) ?>pages/who-we-are.php">Who we are</a>
             <a href="<?= bethammi_escape($siteRoot) ?>pages/about-us.php">About us</a>
             <a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=our-staff">Our team</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=our-parishes">Our parishes</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/our-parishes.php">Our parishes</a>
           </div>
         </div>
         <div class="nav-dropdown">

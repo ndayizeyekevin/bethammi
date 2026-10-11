@@ -186,7 +186,7 @@ function localPageLink(item, kind = "page") {
 }
 
 const staticPageSlugs = new Set([
-  "about-us", "who-we-are", "ministries", "outreach-evangelism",
+  "about-us", "who-we-are", "our-parishes", "ministries", "outreach-evangelism",
   "children-ministries", "women-ministries", "ltu", "partners",
   "josh", "joan", "ep-kiramutse", "donate", "daily-bible-verses"
 ]);
@@ -326,9 +326,12 @@ function renderRelated(pages, currentSlug) {
   document.querySelector("#page-related").hidden = false;
 }
 
-function renderDirectoryCard({ title, subtitle, description, imageUrl, imageAlt }) {
+function renderDirectoryCard({ title, subtitle, description, imageUrl, imageAlt, variant = "default" }) {
   const card = document.createElement("article");
-  card.className = "directory-card";
+  const isParishCard = variant === "parish";
+  card.className = isParishCard
+    ? "card directory-card directory-card--parish h-100 border-0 shadow-sm"
+    : "directory-card";
 
   if (imageUrl) {
     const imageSource = new URL(imageUrl, window.location.href);
@@ -336,6 +339,7 @@ function renderDirectoryCard({ title, subtitle, description, imageUrl, imageAlt 
       throw new Error("A directory photo has an invalid image URL.");
     }
     const image = document.createElement("img");
+    if (isParishCard) image.className = "card-img-top";
     image.src = imageSource.href;
     image.alt = imageAlt || "";
     image.loading = "lazy";
@@ -343,21 +347,26 @@ function renderDirectoryCard({ title, subtitle, description, imageUrl, imageAlt 
   }
 
   const copy = document.createElement("div");
-  copy.className = "directory-card__copy";
+  copy.className = isParishCard ? "card-body directory-card__copy" : "directory-card__copy";
   const heading = document.createElement("h2");
+  if (isParishCard) heading.className = "card-title";
   heading.textContent = title;
   copy.append(heading);
 
   if (subtitle) {
     const label = document.createElement("p");
-    label.className = "directory-card__subtitle";
+    label.className = isParishCard
+      ? "card-text directory-card__subtitle"
+      : "directory-card__subtitle";
     label.textContent = subtitle;
     copy.append(label);
   }
 
   if (description) {
     const text = document.createElement("p");
-    text.className = "directory-card__description";
+    text.className = isParishCard
+      ? "card-text directory-card__description"
+      : "directory-card__description";
     text.textContent = description;
     copy.append(text);
   }
@@ -397,7 +406,7 @@ async function renderParishDirectory() {
   if (!Array.isArray(payload.parishes)) throw new Error("Parish response has an invalid format.");
 
   const grid = document.createElement("div");
-  grid.className = "directory-grid";
+  grid.className = "directory-grid directory-grid--parishes";
   payload.parishes.forEach((parish) => {
     const location = [parish.location, parish.region, parish.country].filter(Boolean).join(" · ");
     const details = [
@@ -410,7 +419,8 @@ async function renderParishDirectory() {
       subtitle: location,
       description: details,
       imageUrl: parish.photo_url,
-      imageAlt: parish.name
+      imageAlt: parish.name,
+      variant: "parish"
     }));
   });
   article.replaceChildren(grid);
