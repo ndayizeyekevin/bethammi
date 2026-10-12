@@ -26,7 +26,7 @@ require __DIR__ . '/../includes/site-header.php';
       <p class="page-banner__summary" id="page-summary" hidden></p>
     </div>
   </section>
-  <section class="container page-layout" id="page-layout">
+  <section class="container page-layout page-layout--partners" id="page-layout">
     <article class="page-article">
       <div class="remote-content" id="page-content">
         <template id="static-page-content">
@@ -731,20 +731,20 @@ require __DIR__ . '/../includes/site-header.php';
 
         </template>
       </div>
+      <section class="partners-followup" aria-label="Visit or contact Beth Ammi">
+        <div class="sidebar-card sidebar-card--visit">
+          <p class="eyebrow"><span></span> You are welcome</p>
+          <h2>Come worship<br>with us.</h2>
+          <p>Join the Beth Ammi community for worship, prayer, fellowship, and the Word of God.</p>
+          <a class="btn button button--navy" href="../index.php#gather">Service times <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="sidebar-card sidebar-card--contact">
+          <span class="sidebar-card__label">NEED TO GET IN TOUCH?</span>
+          <a href="tel:+250788482324">+250 788 482 324</a>
+          <a href="https://wa.me/250788482324">WhatsApp us ↗</a>
+        </div>
+      </section>
     </article>
-    <aside class="page-sidebar" id="page-sidebar">
-            <div class="sidebar-card sidebar-card--visit">
-              <p class="eyebrow"><span></span> You are welcome</p>
-              <h2>Come worship<br>with us.</h2>
-              <p>Join the Beth Ammi community for worship, prayer, fellowship, and the Word of God.</p>
-              <a class="btn button button--navy" href="<?= bethammi_escape($siteRoot ?? '') ?>index.php#gather">Service times <span aria-hidden="true">↗</span></a>
-            </div>
-            <div class="sidebar-card sidebar-card--contact">
-              <span class="sidebar-card__label">NEED TO GET IN TOUCH?</span>
-              <a href="tel:+250788482324">+250 788 482 324</a>
-              <a href="https://wa.me/250788482324">WhatsApp us ↗</a>
-            </div>
-          </aside>
   </section>
 </main>
 <?php require __DIR__ . '/../includes/site-footer.php'; ?>

@@ -81,6 +81,100 @@ function plainText(value) {
   return decodeEntities(parsed.body.textContent).replace(/\s+/g, " ").trim();
 }
 
+function initializePartnersPage(partnersArticle) {
+  const sections = [...partnersArticle.querySelectorAll(":scope > .elementor > .elementor-section")];
+  const progressWrappers = [...partnersArticle.querySelectorAll(".elementor-progress-wrapper")];
+  if (!sections.length && !progressWrappers.length) return;
+
+  partnersArticle.classList.add("partners-content");
+  let partnerIndex = 0;
+  sections.forEach((section, index) => {
+    const heading = section.querySelector(".elementor-widget-heading");
+    if (!section.querySelector(".elementor-widget-text-editor, .elementor-widget-progress")) return;
+    section.classList.add("partners-reveal");
+    section.style.setProperty("--partners-reveal-delay", `${Math.min(index * 70, 280)}ms`);
+    if (heading?.textContent.includes("Partnership With")) {
+      section.classList.add("partners-partner");
+      section.classList.add(partnerIndex % 2 ? "partners-partner--soft" : "partners-partner--plain");
+      partnerIndex += 1;
+    }
+  });
+
+  const progressAnimations = progressWrappers.map((wrapper) => {
+    const number = wrapper.querySelector(".elementor-progress-text");
+    const bar = wrapper.querySelector(".elementor-progress-bar");
+    if (!(number instanceof HTMLElement) || !(bar instanceof HTMLElement)) return null;
+
+    const finalText = number.textContent ?? "";
+    const match = finalText.match(/\d[\d,]*(?:\.\d+)?/);
+    if (!match) return null;
+    const target = Number(match[0].replaceAll(",", ""));
+    const targetWidth = Math.min(100, Math.max(0, Number(bar.dataset.max)));
+    if (!Number.isFinite(target) || !Number.isFinite(targetWidth)) return null;
+
+    const prefix = finalText.slice(0, match.index);
+    const suffix = finalText.slice((match.index ?? 0) + match[0].length);
+    const renderNumber = (value) => {
+      const formatted = new Intl.NumberFormat(undefined, {
+        maximumFractionDigits: match[0].includes(".") ? 2 : 0
+      }).format(value);
+      number.textContent = `${prefix}${formatted}${suffix}`;
+    };
+
+    return (instant = false) => {
+      if (instant) {
+        bar.style.width = `${targetWidth}%`;
+        bar.style.clipPath = "inset(0)";
+        renderNumber(target);
+        return;
+      }
+      const startTime = performance.now();
+      bar.style.width = `${targetWidth}%`;
+      bar.style.clipPath = "inset(0 100% 0 0)";
+      renderNumber(0);
+      requestAnimationFrame(() => {
+        bar.style.clipPath = "inset(0)";
+      });
+      const animate = (now) => {
+        const progress = Math.min(1, (now - startTime) / 1400);
+        const eased = 1 - ((1 - progress) ** 3);
+        renderNumber(Math.round(target * eased));
+        if (progress < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    };
+  });
+
+  const revealTargets = sections.filter((section) => section.classList.contains("partners-reveal"));
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    revealTargets.forEach((section) => section.classList.add("is-visible"));
+    progressAnimations.forEach((animate) => animate?.(prefersReducedMotion));
+    return;
+  }
+
+  const animations = new Map();
+  progressWrappers.forEach((wrapper, index) => {
+    const animate = progressAnimations[index];
+    if (animate) animations.set(wrapper, animate);
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const target = entry.target;
+      if (target instanceof HTMLElement && target.classList.contains("partners-reveal")) {
+        target.classList.add("is-visible");
+      }
+      animations.get(target)?.();
+      animations.delete(target);
+      observer.unobserve(target);
+    });
+  }, { threshold: 0.18, rootMargin: "0px 0px -30px 0px" });
+
+  revealTargets.forEach((section) => observer.observe(section));
+  animations.forEach((_animate, wrapper) => observer.observe(wrapper));
+}
+
 function safeLink(rawValue, pagePaths) {
   if (!rawValue || rawValue.startsWith("#")) return rawValue || "#";
   if (/^(mailto:|tel:)/i.test(rawValue)) return rawValue;
@@ -110,8 +204,9 @@ function cleanContent(rawHtml, pagePaths) {
     "TBODY", "TD", "TFOOT", "TH", "THEAD", "TR", "U", "UL", "VIDEO"
   ]);
   const safeAttributes = new Set([
-    "alt", "allow", "allowfullscreen", "class", "controls", "height", "href", "id",
-    "loading", "loop", "muted", "poster", "preload", "role", "rowspan", "scope",
+    "alt", "allow", "allowfullscreen", "aria-labelledby", "aria-valuemax", "aria-valuemin",
+    "aria-valuenow", "aria-valuetext", "class", "controls", "data-max", "height", "href",
+    "id", "loading", "loop", "muted", "poster", "preload", "role", "rowspan", "scope",
     "src", "colspan", "title", "width"
   ]);
   const blockedTags = new Set([
@@ -586,6 +681,9 @@ async function start() {
     });
     article.innerHTML = cleanContent(source.innerHTML, pagePaths);
     source.remove();
+    if (document.body.dataset.contentSlug === "partners") {
+      initializePartnersPage(article);
+    }
     return;
   }
 
