@@ -361,15 +361,15 @@ function createContactOptions() {
   section.className = "contact-options";
   const phone = document.createElement("a");
   phone.href = "tel:+250788482324";
-  phone.innerHTML = "<span>CALL OR TEXT</span><strong>+250 788 482 324</strong>";
+  phone.innerHTML = "<span>CALL OR TEXT</span><strong><i class=\"bi bi-telephone-fill\" aria-hidden=\"true\"></i> +250 788 482 324</strong>";
   const directions = document.createElement("a");
-  directions.href = "https://www.google.com/maps/dir//%27%27/data=!4m7!4m6!1m1!4e2!1m2!1m1!1s0x19db583c864189c9:0xf7f437395770b483!3e0?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAF";
+  directions.href = "https://maps.google.com/?cid=17866966341105267843&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAFKgSoqNcy";
   directions.target = "_blank";
   directions.rel = "noopener noreferrer";
   directions.innerHTML = "<span>FIND US</span><strong>Get directions ↗</strong>";
   const map = document.createElement("iframe");
   map.className = "contact-map";
-  map.src = "https://www.google.com/maps?q=place_id%3A0x19db583c864189c9%3A0xf7f437395770b483&output=embed";
+  map.src = "https://maps.google.com/maps?cid=17866966341105267843&output=embed";
   map.title = "Map to Beth Ammi Christian Fellowship Church";
   map.loading = "lazy";
   map.referrerPolicy = "strict-origin-when-cross-origin";

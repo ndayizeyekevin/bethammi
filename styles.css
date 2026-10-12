@@ -412,6 +412,7 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .contact-options a:hover, .contact-options a:focus-visible { transform: translateY(-3px); border-color: var(--gold); box-shadow: 0 10px 24px rgb(18 39 38 / 8%); }
 .contact-options a span { color: #8b6b3b; font-size: 8px; font-weight: 700; letter-spacing: .13em; }
 .contact-options a strong { color: var(--navy); font-size: 13px; }
+.contact-options a strong .bi { margin-right: 5px; color: #a77d46; font-size: 12px; }
 .contact-options .contact-map { grid-column: 1 / -1; width: 100%; height: clamp(260px, 38vw, 400px); border: 0; background: #e7e5dd; }
 .contact-form-wrap { margin-top: 43px; padding: clamp(23px, 4vw, 37px); background: #efeee8; }
 .contact-form__heading { margin-bottom: 23px; }
