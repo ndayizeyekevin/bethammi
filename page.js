@@ -275,6 +275,9 @@ function cleanContent(rawHtml, pagePaths) {
 }
 
 function localPageLink(item, kind = "page") {
+  if (kind === "page" && ["contact", "contact-us"].includes(item.slug)) {
+    return `${siteRoot}pages/contact-us.php`;
+  }
   if (kind === "page" && item.slug === "our-staff") {
     return `${siteRoot}pages/team.php`;
   }
@@ -292,7 +295,7 @@ function localPageLink(item, kind = "page") {
 const staticPageSlugs = new Set([
   "about-us", "who-we-are", "our-parishes", "ministries", "outreach-evangelism",
   "children-ministries", "women-ministries", "ltu", "partners",
-  "josh", "joan", "ep-kiramutse", "donate", "daily-bible-verses", "team"
+  "josh", "joan", "ep-kiramutse", "donate", "daily-bible-verses", "team", "contact-us"
 ]);
 
 function addFeaturedImage(card, item) {
@@ -755,8 +758,11 @@ async function start() {
       "news-and-sermons", "media", "contact-us", "contact", "our-staff", "our-parishes"
     ].forEach((pageSlug) => {
       const teamAlias = pageSlug === "our-staff";
+      const contactAlias = pageSlug === "contact";
       const route = teamAlias
         ? "pages/team.php"
+        : contactAlias
+          ? "pages/contact-us.php"
         : staticRoutes
           ? `pages/${pageSlug}.html`
           : staticPageSlugs.has(pageSlug)
@@ -780,6 +786,8 @@ async function start() {
           : "We couldn't load the team profiles.";
         article.replaceChildren();
       });
+    } else if (document.body.dataset.contentSlug === "contact-us") {
+      createContactOptions();
     }
     return;
   }

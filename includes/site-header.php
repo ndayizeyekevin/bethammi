@@ -53,7 +53,7 @@ $siteRoot = $siteRoot ?? '';
         </div>
         <a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=news-and-sermons">News &amp; sermons</a>
         <a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=media">Media</a>
-        <a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=contact-us">Contact</a>
+        <a href="<?= bethammi_escape($siteRoot) ?>pages/contact-us.php">Contact</a>
         <a class="nav-visit" href="<?= bethammi_escape($siteRoot) ?>pages/donate.php">Give <span aria-hidden="true">↗</span></a>
       </nav>
       <button class="btn header-login" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>

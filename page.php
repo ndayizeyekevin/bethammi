@@ -9,6 +9,10 @@ if ($contentKind === 'page' && $contentSlug === 'our-staff') {
     header('Location: pages/team.php', true, 301);
     exit;
 }
+if ($contentKind === 'page' && in_array($contentSlug, ['contact', 'contact-us'], true)) {
+    header('Location: pages/contact-us.php', true, 301);
+    exit;
+}
 
 require_once __DIR__ . '/includes/static-pages.php';
 if ($contentKind === 'page' && preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $contentSlug)) {
