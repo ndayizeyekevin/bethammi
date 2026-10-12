@@ -558,7 +558,7 @@ require __DIR__ . '/../includes/site-header.php';
                 <div class="elementor-widget-wrap elementor-element-populated">
                       <div class="elementor-element elementor-element-e4739c3 elementor-widget elementor-widget-heading" data-id="e4739c3" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
-                    <h5 class="elementor-heading-title elementor-size-default">Partnership With <b>Third Millenium</b></h5>        </div>
+                    <h5 class="elementor-heading-title elementor-size-default">Partnership With <b>Third Millenium Ministries</b></h5>        </div>
                   </div>
                   <div class="elementor-element elementor-element-a9c482b elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="a9c482b" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
                   <div class="elementor-widget-container">

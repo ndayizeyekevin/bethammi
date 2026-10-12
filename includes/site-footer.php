@@ -15,13 +15,13 @@
       <a href="<?= bethammi_escape($siteRoot) ?>pages/outreach-evangelism.php">Outreach</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/children-ministries.php">Children</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/women-ministries.php">Women</a>
-      <a href="<?= bethammi_escape($siteRoot) ?>pages/ltu.php">LTU</a>
+      <a href="<?= bethammi_escape($siteRoot) ?>pages/ltu.php">Lift Them Up</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/partners.php">Partners</a>
-      <a href="<?= bethammi_escape($siteRoot) ?>pages/our-parishes.php">Our parishes</a>
+      <a href="<?= bethammi_escape($siteRoot) ?>pages/our-parishes.php">Our Parishes</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/ep-kiramutse.php">New City Fellowship Church</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/joan.php">Joan</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/josh.php">Josh</a>
-      <a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=contact">Contact details</a>
+      <a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=contact">Contact Details</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/donate.php">Give</a>
     </div>
     <div class="container footer__bottom"><span>© <span id="year"></span> Beth Ammi Christian Fellowship Church</span><a href="#main">Back to top ↑</a></div>

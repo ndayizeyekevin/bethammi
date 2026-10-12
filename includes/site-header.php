@@ -25,20 +25,20 @@ $siteRoot = $siteRoot ?? '';
         <div class="nav-dropdown">
           <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-about">Who we are <span aria-hidden="true">⌄</span></button>
           <div class="nav-dropdown__menu" id="nav-about">
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/who-we-are.php">Who we are</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/about-us.php">About us</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=our-staff">Our team</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/our-parishes.php">Our parishes</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/who-we-are.php">Who We Are</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/about-us.php">About Us</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=our-staff">Our Team</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/our-parishes.php">Our Parishes</a>
           </div>
         </div>
         <div class="nav-dropdown">
           <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-ministries">Ministries <span aria-hidden="true">⌄</span></button>
           <div class="nav-dropdown__menu" id="nav-ministries">
             <a href="<?= bethammi_escape($siteRoot) ?>pages/ministries.php">Ministries</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/outreach-evangelism.php">Outreach evangelism</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/children-ministries.php">Children's ministry</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/women-ministries.php">Women's ministry</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/ltu.php">LTU in action</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/outreach-evangelism.php">Outreach Evangelism</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/children-ministries.php">Children's Ministry</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/women-ministries.php">Women's Ministry</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/ltu.php">LTU In Action</a>
           </div>
         </div>
         <div class="nav-dropdown">

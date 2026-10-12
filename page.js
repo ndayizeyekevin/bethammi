@@ -186,7 +186,8 @@ function safeLink(rawValue, pagePaths) {
     if (url.protocol !== "http:" && url.protocol !== "https:") return "#";
     if (url.hostname === "www.bethammicfc.org" || url.hostname === "bethammicfc.org") {
       if (url.pathname === "/" || url.pathname === "/home/") return `${siteRoot}${document.body.dataset.routeMode === "static" ? "index.html" : "index.php"}`;
-      const target = pagePaths.get(url.pathname.replace(/\/?$/, "/"));
+      const target = pagePaths.get(url.pathname)
+        ?? pagePaths.get(url.pathname.replace(/\/?$/, "/"));
       return target || `https://www.bethammicfc.org${url.pathname}${url.search}${url.hash}`;
     }
     return url.href;
@@ -679,7 +680,11 @@ async function start() {
         : staticPageSlugs.has(pageSlug)
           ? `pages/${pageSlug}.php`
           : `page.php?type=page&slug=${pageSlug}`;
-      pagePaths.set(`/${pageSlug}/`, `${siteRoot}${route}`);
+      const localRoute = `${siteRoot}${route}`;
+      pagePaths.set(`/${pageSlug}/`, localRoute);
+      pagePaths.set(`/pages/${pageSlug}.php`, localRoute);
+      pagePaths.set(`/pages/${pageSlug}.html`, localRoute);
+      pagePaths.set(`/${pageSlug}.php`, localRoute);
     });
     article.innerHTML = cleanContent(source.innerHTML, pagePaths);
     source.remove();
