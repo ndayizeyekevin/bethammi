@@ -199,6 +199,7 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .page-banner h1 { max-width: 900px; font-family: var(--display); font-size: clamp(40px, 6vw, 70px); font-weight: 600; letter-spacing: -.055em; line-height: 1.08; overflow-wrap: anywhere; }
 .page-banner__summary { max-width: 720px; margin: 16px 0 0; color: rgba(255,255,255,.72); font-size: 14px; }
 .page-layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 50px; align-items: start; padding-block: 62px 88px; }
+.page-layout--who-we-are { grid-template-columns: minmax(0, 1fr); padding-block: 42px 88px; }
 .page-layout--team { grid-template-columns: minmax(0, 1fr); }
 .page-layout[hidden] { display: none; }
 .page-layout--parishes { grid-template-columns: minmax(0, 1fr); gap: 35px; }
@@ -279,6 +280,66 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .remote-content table { width: 100%; border-collapse: collapse; margin-block: 20px; font-size: 12px; }
 .remote-content th, .remote-content td { padding: 10px; border: 1px solid #deded5; text-align: left; }
 .remote-content th { background: #efeee8; color: var(--navy); }
+.page-layout--who-we-are .page-article,
+.page-layout--who-we-are .remote-content { min-width: 0; width: 100%; }
+.page-layout--who-we-are > .page-article > .remote-content > .elementor > .elementor-element-1ef2fe8 { position: relative; z-index: 1; margin-bottom: 34px; padding: 12px; border: 1px solid #e7e3d9; background: var(--white); box-shadow: 0 10px 28px rgb(18 39 38 / 5%); }
+.page-layout--who-we-are .elementor-element-1ef2fe8 > .elementor-container { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; width: 100%; max-width: none; }
+.page-layout--who-we-are .elementor-element-1ef2fe8 > .elementor-container > .elementor-column { width: auto; min-width: 0; }
+.page-layout--who-we-are .elementor-element-1ef2fe8 .elementor-widget-wrap,
+.page-layout--who-we-are .elementor-element-1ef2fe8 .elementor-widget,
+.page-layout--who-we-are .elementor-element-1ef2fe8 .elementor-widget-container,
+.page-layout--who-we-are .elementor-element-1ef2fe8 .elementor-button-wrapper { height: 100%; }
+.page-layout--who-we-are .elementor-element-1ef2fe8 .elementor-button { display: flex; min-height: 44px; height: 100%; align-items: center; justify-content: center; padding: 8px 11px; background: #f5f3ed; color: #51615d; font-size: 10px; font-weight: 700; text-align: center; text-decoration: none; transition: background .2s ease, color .2s ease; }
+.page-layout--who-we-are .elementor-element-1ef2fe8 .elementor-button:hover,
+.page-layout--who-we-are .elementor-element-1ef2fe8 .elementor-button:focus-visible { background: var(--navy); color: var(--white); }
+.page-layout--who-we-are .elementor-element-2anqgc6 { margin-bottom: 70px; padding: clamp(20px, 3vw, 34px); border: 1px solid #e9e5db; background: var(--white); box-shadow: 0 16px 38px rgb(18 39 38 / 6%); }
+.page-layout--who-we-are .elementor-element-2anqgc6 > .elementor-container { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: stretch; gap: clamp(24px, 4vw, 55px); width: 100%; max-width: none; }
+.page-layout--who-we-are .elementor-element-2anqgc6 > .elementor-container > .elementor-column { width: auto; min-width: 0; }
+.page-layout--who-we-are .elementor-element-2anqgc6 .elementor-widget-wrap,
+.page-layout--who-we-are .elementor-element-2anqgc6 .elementor-widget-image,
+.page-layout--who-we-are .elementor-element-2anqgc6 .elementor-widget-image .elementor-widget-container { height: 100%; }
+.page-layout--who-we-are .elementor-element-2anqgc6 .elementor-widget-image img { width: 100%; height: 100%; min-height: 390px; max-height: 520px; object-fit: cover; }
+.page-layout--who-we-are .elementor-element-2anqgc6 .elementor-column:last-child > .elementor-widget-wrap { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding-block: 10px; }
+.page-layout--who-we-are .elementor-element-6d73cf3 h5 { margin: 0 0 17px; color: var(--navy); font-family: var(--display); font-size: clamp(27px, 3.6vw, 42px); font-weight: 700; letter-spacing: -.045em; line-height: 1.12; }
+.page-layout--who-we-are .elementor-element-bcc296c p { margin: 0 0 14px; color: #66716d; font-size: 13px !important; line-height: 1.85; }
+.page-layout--who-we-are .elementor-element-ea2fd50 { margin-top: 7px; }
+.page-layout--who-we-are .elementor-element-ea2fd50 .elementor-button { display: inline-flex; min-height: 46px; align-items: center; gap: 10px; padding: 0 17px; background: var(--navy); color: var(--white); font-size: 10px; font-weight: 700; text-decoration: none; }
+.page-layout--who-we-are .elementor-element-b550aad { margin: 0 0 50px; padding: clamp(23px, 4vw, 42px); border: 1px solid #e6dfd2; background: linear-gradient(145deg, #f2eee5 0%, #fff 65%, #edf2ef 100%); }
+.page-layout--who-we-are .elementor-element-b550aad > .elementor-container { display: block; width: 100%; max-width: none; }
+.page-layout--who-we-are .elementor-element-b550aad > .elementor-container > .elementor-column { width: 100%; }
+.page-layout--who-we-are .elementor-element-5c88e70 h5 { margin: 0; color: var(--navy); font-family: var(--display); font-size: clamp(27px, 3.5vw, 38px); font-weight: 700; letter-spacing: -.04em; }
+.page-layout--who-we-are .elementor-element-dfedbbd { width: 52px; margin: 11px 0 24px; }
+.page-layout--who-we-are .elementor-element-dfedbbd .elementor-divider-separator { display: block; border-top: 3px solid var(--gold); }
+.page-layout--who-we-are .elementor-element-653a9bc > .elementor-container { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; width: 100%; max-width: none; }
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-column { width: auto; min-width: 0; }
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-widget-wrap { display: flex; height: 100%; flex-direction: column; align-items: stretch; overflow: hidden; border: 1px solid #e6e3da; background: var(--white); box-shadow: 0 9px 24px rgb(18 39 38 / 5%); }
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-widget-image,
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-widget-image .elementor-widget-container { width: 100%; }
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-widget-image img { width: 100%; height: 205px; object-fit: cover; }
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-widget-heading { padding: 18px 18px 0; }
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-widget-heading h6 { margin: 0; font-family: var(--display); font-size: 17px; font-weight: 700; line-height: 1.35; }
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-widget-heading a { color: var(--navy); text-decoration: none; }
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-widget-text-editor { flex: 1; padding: 10px 18px 0; }
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-widget-text-editor p { color: #707975; font-size: 11px; line-height: 1.75; }
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-widget-button { padding: 0 18px 18px; }
+.page-layout--who-we-are .elementor-element-653a9bc .elementor-button { display: inline-flex; min-height: 36px; align-items: center; padding: 0 12px; border: 1px solid #ded5c4; color: #775d37; font-size: 9px; font-weight: 700; text-decoration: none; }
+.page-layout--who-we-are .elementor-element-bd6c862 { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin: 0; padding: 24px 26px; background: var(--navy); }
+.page-layout--who-we-are .elementor-element-bd6c862 > .elementor-container { display: flex; width: 100%; max-width: none; align-items: center; justify-content: space-between; gap: 20px; }
+.page-layout--who-we-are .elementor-element-bd6c862 > .elementor-container > .elementor-column { width: auto; }
+.page-layout--who-we-are .elementor-element-0cf2ebf h3 { margin: 0; color: var(--white); font-family: var(--display); font-size: 25px; font-weight: 700; letter-spacing: -.03em; }
+.page-layout--who-we-are .elementor-element-f44fd96 .elementor-button { display: inline-flex; min-height: 42px; align-items: center; gap: 9px; padding: 0 15px; background: var(--gold); color: var(--navy-deep); font-size: 10px; font-weight: 700; text-decoration: none; }
+.page-layout--who-we-are .elementor-element-1467dfd { margin: 0 0 70px; padding: 18px; background: #e9e5da; }
+.page-layout--who-we-are .elementor-element-1467dfd > .elementor-container { display: grid; grid-template-columns: minmax(220px, 1.25fr) repeat(3, minmax(0, 1fr)); gap: 12px; width: 100%; max-width: none; }
+.page-layout--who-we-are .elementor-element-1467dfd > .elementor-container > .elementor-column { width: auto; min-width: 0; }
+.page-layout--who-we-are .elementor-element-1467dfd .elementor-widget-image,
+.page-layout--who-we-are .elementor-element-1467dfd .elementor-widget-image .elementor-widget-container,
+.page-layout--who-we-are .elementor-element-1467dfd .elementor-widget-image img { width: 100%; height: 100%; min-height: 250px; }
+.page-layout--who-we-are .elementor-element-1467dfd .elementor-widget-image img { object-fit: cover; }
+.page-layout--who-we-are .elementor-element-1467dfd .elementor-column:not(:first-child) > .elementor-widget-wrap { display: grid; align-content: center; gap: 9px; height: 100%; padding: 16px; background: var(--white); }
+.page-layout--who-we-are .elementor-element-1467dfd .elementor-icon-box-wrapper { display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 8px 10px; background: #f8f7f3; }
+.page-layout--who-we-are .elementor-element-1467dfd .elementor-icon-box-icon { display: grid; flex: 0 0 28px; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #f0e4ce; color: #8b6b3b; }
+.page-layout--who-we-are .elementor-element-1467dfd .elementor-icon-box-title { margin: 0; font-size: 10px; font-weight: 700; line-height: 1.4; }
+.page-layout--who-we-are .elementor-element-1467dfd .elementor-icon-box-title a { color: var(--navy); text-decoration: none; }
 .about-intro { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 .about-intro__copy .eyebrow, .about-purpose__card .eyebrow { margin-bottom: 13px; }
 .about-intro__copy h2, .about-belief h2, .about-purpose__card h2 { color: var(--navy); font-size: clamp(30px, 4vw, 46px); }
@@ -475,6 +536,7 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .page-layout { grid-template-columns: minmax(0, 1fr) 235px; gap: 28px; }
   .page-layout--parishes { grid-template-columns: minmax(0, 1fr); }
   .page-layout--team { grid-template-columns: minmax(0, 1fr); }
+  .page-layout--who-we-are { grid-template-columns: minmax(0, 1fr); }
   .directory-grid--team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .page-layout--partners { grid-template-columns: minmax(0, 1fr); }
   .partners-followup { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -482,6 +544,10 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .partners-content > .elementor > .partners-partner > .elementor-container > .elementor-column:last-child { grid-column: 1 / -1; }
   .partners-content > .elementor > .partners-partner > .elementor-container > .elementor-column:last-child > .elementor-widget-wrap { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); align-items: center; gap: 15px 18px; }
   .page-layout--parishes .page-sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .page-layout--who-we-are .elementor-element-1467dfd > .elementor-container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .page-layout--who-we-are .elementor-element-1467dfd > .elementor-container > .elementor-column:first-child { grid-column: 1 / -1; }
+  .page-layout--who-we-are .elementor-element-1467dfd .elementor-widget-image img { height: 270px; }
+  .page-layout--who-we-are .elementor-element-1467dfd .elementor-column:not(:first-child) > .elementor-widget-wrap { min-height: 100%; }
   .remote-content .elementor-element-3312bfa > .elementor-container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .directory-grid { grid-template-columns: 1fr; }
@@ -555,6 +621,23 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .page-banner__summary { font-size: 12px; }
   .page-layout { grid-template-columns: 1fr; gap: 28px; padding-block: 39px 61px; }
   .page-layout--parishes { gap: 24px; }
+  .page-layout--who-we-are { padding-block: 28px 60px; }
+  .page-layout--who-we-are > .page-article > .remote-content > .elementor > .elementor-element-1ef2fe8 { margin-bottom: 24px; padding: 8px; }
+  .page-layout--who-we-are .elementor-element-1ef2fe8 > .elementor-container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .page-layout--who-we-are .elementor-element-2anqgc6 { margin-bottom: 42px; padding: 16px; }
+  .page-layout--who-we-are .elementor-element-2anqgc6 > .elementor-container { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .page-layout--who-we-are .elementor-element-2anqgc6 .elementor-widget-image img { height: auto; min-height: 0; max-height: none; aspect-ratio: 4 / 3; }
+  .page-layout--who-we-are .elementor-element-2anqgc6 .elementor-column:last-child > .elementor-widget-wrap { padding: 0 2px 4px; }
+  .page-layout--who-we-are .elementor-element-b550aad { margin-bottom: 30px; padding: 19px; }
+  .page-layout--who-we-are .elementor-element-653a9bc > .elementor-container { grid-template-columns: minmax(0, 1fr); }
+  .page-layout--who-we-are .elementor-element-653a9bc .elementor-widget-image img { height: 210px; }
+  .page-layout--who-we-are .elementor-element-bd6c862 { padding: 19px; }
+  .page-layout--who-we-are .elementor-element-1467dfd { margin-bottom: 42px; padding: 10px; }
+  .page-layout--who-we-are .elementor-element-1467dfd > .elementor-container { grid-template-columns: minmax(0, 1fr); }
+  .page-layout--who-we-are .elementor-element-1467dfd > .elementor-container > .elementor-column:first-child,
+  .page-layout--who-we-are .elementor-element-1467dfd > .elementor-container > .elementor-column:last-child:nth-child(odd) { grid-column: auto; }
+  .page-layout--who-we-are .elementor-element-1467dfd .elementor-widget-image img { height: 210px; min-height: 0; }
+  .page-layout--who-we-are .elementor-element-1467dfd .elementor-column:not(:first-child) > .elementor-widget-wrap { min-height: 0; }
   .directory-grid--team { grid-template-columns: minmax(0, 1fr); }
   .partners-followup { grid-template-columns: 1fr; gap: 14px; margin-top: 28px; }
   .partners-followup .sidebar-card { min-height: 0; padding: 22px; }

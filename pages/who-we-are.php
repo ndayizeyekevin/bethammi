@@ -26,7 +26,7 @@ require __DIR__ . '/../includes/site-header.php';
       <p class="page-banner__summary" id="page-summary" hidden></p>
     </div>
   </section>
-  <section class="container page-layout" id="page-layout">
+  <section class="container page-layout page-layout--who-we-are" id="page-layout">
     <article class="page-article">
       <div class="remote-content" id="page-content">
         <template id="static-page-content">
@@ -577,7 +577,7 @@ require __DIR__ . '/../includes/site-header.php';
                 <div class="elementor-widget-wrap elementor-element-populated">
                       <div class="elementor-element elementor-element-f3d4324 elementor-position-top elementor-widget elementor-widget-image-box" data-id="f3d4324" data-element_type="widget" data-e-type="widget" data-widget_type="image-box.default">
                   <div class="elementor-widget-container">
-                    <div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img loading="lazy" decoding="async" width="600" height="600" src="https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura.png" class="attachment-full size-full wp-image-1866" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura.png 600w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-300x300.png 300w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-150x150.png 150w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-100x100.png 100w" sizes="(max-width: 600px) 100vw, 600px" /></figure><div class="elementor-image-box-content"><h6 class="elementor-image-box-title">Mwungura Janvier</h6><p class="elementor-image-box-description">Tresurer</p></div></div>        </div>
+                    <div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img loading="lazy" decoding="async" width="600" height="600" src="https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura.png" class="attachment-full size-full wp-image-1866" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura.png 600w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-300x300.png 300w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-150x150.png 150w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-100x100.png 100w" sizes="(max-width: 600px) 100vw, 600px" /></figure><div class="elementor-image-box-content"><h6 class="elementor-image-box-title">Mwungura Janvier</h6><p class="elementor-image-box-description">Treasurer</p></div></div>        </div>
                   </div>
                     </div>
               </div>
