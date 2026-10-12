@@ -53,7 +53,7 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-e311e0e elementor-widget elementor-widget-button" data-id="e311e0e" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/our-staff/">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/team.php">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">our staff</span>
                     </span>
@@ -594,7 +594,7 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-9e8b0ba elementor-align-center elementor-widget elementor-widget-button" data-id="9e8b0ba" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/our-staff/">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/team.php">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">READ MORE  ABOUT OUR STAFF</span>
                     </span>

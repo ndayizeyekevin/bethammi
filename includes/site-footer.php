@@ -18,6 +18,7 @@
       <a href="<?= bethammi_escape($siteRoot) ?>pages/ltu.php">Lift Them Up</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/partners.php">Partners</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/our-parishes.php">Our Parishes</a>
+      <a href="<?= bethammi_escape($siteRoot) ?>pages/team.php">Our Team</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/ep-kiramutse.php">New City Fellowship Church</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/joan.php">Joan</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/josh.php">Josh</a>

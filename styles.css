@@ -199,6 +199,7 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .page-banner h1 { max-width: 900px; font-family: var(--display); font-size: clamp(40px, 6vw, 70px); font-weight: 600; letter-spacing: -.055em; line-height: 1.08; overflow-wrap: anywhere; }
 .page-banner__summary { max-width: 720px; margin: 16px 0 0; color: rgba(255,255,255,.72); font-size: 14px; }
 .page-layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 50px; align-items: start; padding-block: 62px 88px; }
+.page-layout--team { grid-template-columns: minmax(0, 1fr); }
 .page-layout[hidden] { display: none; }
 .page-layout--parishes { grid-template-columns: minmax(0, 1fr); gap: 35px; }
 .page-layout--partners { grid-template-columns: minmax(0, 1fr); }
@@ -399,6 +400,28 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .directory-grid--parishes .directory-card__detail > strong,
 .parish-details-modal__field > strong { display: block; margin-bottom: 3px; color: var(--navy); font-size: 10px; }
 .directory-grid--parishes .directory-card__description { margin: 0; }
+.team-directory-heading { display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 28px; }
+.team-directory-heading .eyebrow { margin-bottom: 13px; }
+.team-directory-heading h2 { margin: 0; color: var(--navy); font-size: clamp(33px, 4.2vw, 48px); line-height: 1.08; }
+.team-directory-heading h2 em { color: #a77d46; font-style: normal; }
+.team-directory-heading > p:last-child { max-width: 480px; margin: 14px 0 0; color: #69736f; font-size: 12px; }
+.directory-grid--team { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.directory-grid--team .directory-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e9e6dd; transition: transform .2s ease, box-shadow .2s ease; }
+.directory-grid--team .directory-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgb(29 48 43 / 10%); }
+.directory-grid--team .directory-card > img { width: 100%; height: auto; min-height: 0; aspect-ratio: 4 / 3; padding: 10px; background: #f2eee5; object-fit: contain; }
+.directory-grid--team .directory-card__copy { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 20px; }
+.directory-grid--team .directory-card__copy h2 { margin: 0; font-size: 18px; }
+.directory-grid--team .directory-card__subtitle { min-height: 15px; }
+.directory-grid--team .directory-card__description { display: -webkit-box; overflow: hidden; margin-bottom: 18px; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.team-profile-card__button { margin-top: auto; padding: 9px 12px; border: 1px solid #d7c8ad; background: transparent; color: var(--navy); font: 700 10px var(--sans); cursor: pointer; transition: background .2s ease, color .2s ease; }
+.team-profile-card__button:hover, .team-profile-card__button:focus-visible { background: var(--navy); color: var(--white); }
+.team-profile-modal .modal-header { border-bottom-color: #e9e6dd; }
+.team-profile-modal .modal-title { color: var(--navy); font-family: var(--display); font-size: 25px; }
+.team-profile-modal__image { display: block; width: min(100%, 470px); height: min(65vh, 560px); margin: 0 auto 22px; background: #f2eee5; object-fit: contain; }
+.team-profile-modal__image[hidden] { display: none; }
+.team-profile-modal__title { color: #8b6b3b; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.team-profile-modal__bio { color: #59635f; font-size: 13px; line-height: 1.8; white-space: pre-line; }
+.team-directory__empty { padding: 20px; background: #efeee8; color: #65716d; font-size: 12px; }
 .parish-details-modal__image { display: block; width: 100%; max-height: 380px; margin-bottom: 22px; object-fit: cover; }
 .parish-details-modal__image[hidden] { display: none; }
 #parish-modal-description { white-space: pre-line; }
@@ -413,6 +436,7 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .hero { min-height: 720px; }
 }
 @media (min-width: 901px) and (max-width: 1200px) {
+  .directory-grid--team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .header__inner { gap: 14px; }
   .site-nav { gap: clamp(9px, 1.2vw, 14px); }
   .site-nav > a, .nav-dropdown__toggle { font-size: 11px; }
@@ -450,6 +474,8 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .footer__social { grid-column: 3; }
   .page-layout { grid-template-columns: minmax(0, 1fr) 235px; gap: 28px; }
   .page-layout--parishes { grid-template-columns: minmax(0, 1fr); }
+  .page-layout--team { grid-template-columns: minmax(0, 1fr); }
+  .directory-grid--team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .page-layout--partners { grid-template-columns: minmax(0, 1fr); }
   .partners-followup { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .partners-content > .elementor > .partners-partner > .elementor-container { grid-template-columns: minmax(190px, .85fr) minmax(0, 1.15fr); gap: 21px; }
@@ -529,6 +555,7 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .page-banner__summary { font-size: 12px; }
   .page-layout { grid-template-columns: 1fr; gap: 28px; padding-block: 39px 61px; }
   .page-layout--parishes { gap: 24px; }
+  .directory-grid--team { grid-template-columns: minmax(0, 1fr); }
   .partners-followup { grid-template-columns: 1fr; gap: 14px; margin-top: 28px; }
   .partners-followup .sidebar-card { min-height: 0; padding: 22px; }
   .partners-followup .sidebar-card--visit .button { min-height: 48px; margin-top: 14px; }

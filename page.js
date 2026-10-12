@@ -289,7 +289,7 @@ function localPageLink(item, kind = "page") {
 const staticPageSlugs = new Set([
   "about-us", "who-we-are", "our-parishes", "ministries", "outreach-evangelism",
   "children-ministries", "women-ministries", "ltu", "partners",
-  "josh", "joan", "ep-kiramutse", "donate", "daily-bible-verses"
+  "josh", "joan", "ep-kiramutse", "donate", "daily-bible-verses", "team"
 ]);
 
 function addFeaturedImage(card, item) {
@@ -523,6 +523,82 @@ async function renderTeamDirectory() {
   }
 }
 
+async function renderTeamProfiles() {
+  const response = await fetch(`${siteRoot}team.php`);
+  if (!response.ok) throw new Error(`Team request failed (${response.status}).`);
+  const payload = await response.json();
+  if (!Array.isArray(payload.team)) throw new Error("Team response has an invalid format.");
+
+  const modalElement = document.querySelector("#teamProfileModal");
+  const modalName = document.querySelector("#team-modal-name");
+  const modalTitle = document.querySelector("#team-modal-title");
+  const modalBio = document.querySelector("#team-modal-bio");
+  const modalImage = document.querySelector("#team-modal-image");
+  if (!(modalElement instanceof HTMLElement)
+    || !(modalName instanceof HTMLElement)
+    || !(modalTitle instanceof HTMLElement)
+    || !(modalBio instanceof HTMLElement)
+    || !(modalImage instanceof HTMLImageElement)
+    || !window.bootstrap?.Modal) {
+    throw new Error("The team profile dialog could not be initialized. Please refresh the page.");
+  }
+
+  const grid = document.createElement("div");
+  grid.className = "directory-grid directory-grid--team";
+  payload.team.forEach((member, index) => {
+    const card = renderDirectoryCard({
+      title: member.name,
+      subtitle: member.title,
+      description: member.bio,
+      imageUrl: member.photo_url,
+      imageAlt: member.name,
+      variant: "team"
+    });
+    card.dataset.teamIndex = String(index);
+    const button = document.createElement("button");
+    button.className = "team-profile-card__button";
+    button.type = "button";
+    button.dataset.teamIndex = String(index);
+    button.setAttribute("aria-haspopup", "dialog");
+    button.textContent = "View profile";
+    card.querySelector(".directory-card__copy")?.append(button);
+    grid.append(card);
+  });
+
+  grid.addEventListener("click", (event) => {
+    const button = event.target instanceof Element
+      ? event.target.closest("button[data-team-index]")
+      : null;
+    if (!(button instanceof HTMLButtonElement)) return;
+
+    const member = payload.team[Number(button.dataset.teamIndex)];
+    if (!member) throw new Error("The selected team profile is unavailable.");
+    modalName.textContent = member.name;
+    modalTitle.textContent = String(member.title ?? "").trim();
+    modalTitle.hidden = !modalTitle.textContent;
+    modalBio.textContent = String(member.bio ?? "").trim();
+    modalBio.hidden = !modalBio.textContent;
+    const cardImage = button.closest(".directory-card")?.querySelector("img");
+    modalImage.hidden = !(cardImage instanceof HTMLImageElement);
+    modalImage.alt = member.name;
+    if (cardImage instanceof HTMLImageElement) {
+      modalImage.src = cardImage.src;
+    } else {
+      modalImage.removeAttribute("src");
+    }
+    window.bootstrap.Modal.getOrCreateInstance(modalElement).show();
+  });
+
+  if (payload.team.length) {
+    article.replaceChildren(grid);
+  } else {
+    const empty = document.createElement("p");
+    empty.className = "team-directory__empty";
+    empty.textContent = "Team profiles will be added soon.";
+    article.replaceChildren(empty);
+  }
+}
+
 async function renderParishDirectory() {
   const response = await fetch(`${siteRoot}parishes.php`);
   if (!response.ok) throw new Error(`Parish request failed (${response.status}).`);
@@ -690,6 +766,14 @@ async function start() {
     source.remove();
     if (document.body.dataset.contentSlug === "partners") {
       initializePartnersPage(article);
+    } else if (document.body.dataset.contentSlug === "team") {
+      await renderTeamProfiles().catch((error) => {
+        message.hidden = false;
+        message.textContent = error instanceof Error
+          ? error.message
+          : "We couldn't load the team profiles.";
+        article.replaceChildren();
+      });
     }
     return;
   }
