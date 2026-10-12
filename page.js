@@ -65,6 +65,9 @@ const archiveGrid = document.querySelector("#archive-grid");
 const archiveSearch = document.querySelector("#archive-search");
 const archiveCount = document.querySelector("#archive-count");
 const archiveEmpty = document.querySelector("#archive-empty");
+const parishSearch = document.querySelector("#parish-search");
+const parishCount = document.querySelector("#parish-directory-count");
+const parishEmpty = document.querySelector("#parish-directory-empty");
 const siteRoot = document.body.dataset.siteRoot || "";
 
 function decodeEntities(value) {
@@ -78,6 +81,102 @@ function plainText(value) {
   return decodeEntities(parsed.body.textContent).replace(/\s+/g, " ").trim();
 }
 
+function initializePartnersPage(partnersArticle) {
+  const sections = [...partnersArticle.querySelectorAll(":scope > .elementor > .elementor-section")];
+  const progressWrappers = [...partnersArticle.querySelectorAll(".elementor-progress-wrapper")];
+  if (!sections.length && !progressWrappers.length) return;
+
+  partnersArticle.classList.add("partners-content");
+  const accentCount = 7;
+  let partnerIndex = 0;
+  sections.forEach((section, index) => {
+    const heading = section.querySelector(".elementor-widget-heading");
+    if (!section.querySelector(".elementor-widget-text-editor, .elementor-widget-progress")) return;
+    section.classList.add("partners-reveal");
+    section.style.setProperty("--partners-reveal-delay", `${Math.min(index * 70, 280)}ms`);
+    if (heading?.textContent.includes("Partnership With")) {
+      section.classList.add("partners-partner");
+      section.classList.add(partnerIndex % 2 ? "partners-partner--soft" : "partners-partner--plain");
+      section.classList.add(`partners-partner--accent-${(partnerIndex % accentCount) + 1}`);
+      partnerIndex += 1;
+    }
+  });
+
+  const progressAnimations = progressWrappers.map((wrapper) => {
+    const number = wrapper.querySelector(".elementor-progress-text");
+    const bar = wrapper.querySelector(".elementor-progress-bar");
+    if (!(number instanceof HTMLElement) || !(bar instanceof HTMLElement)) return null;
+
+    const finalText = number.textContent ?? "";
+    const match = finalText.match(/\d[\d,]*(?:\.\d+)?/);
+    if (!match) return null;
+    const target = Number(match[0].replaceAll(",", ""));
+    const targetWidth = Math.min(100, Math.max(0, Number(bar.dataset.max)));
+    if (!Number.isFinite(target) || !Number.isFinite(targetWidth)) return null;
+
+    const prefix = finalText.slice(0, match.index);
+    const suffix = finalText.slice((match.index ?? 0) + match[0].length);
+    const renderNumber = (value) => {
+      const formatted = new Intl.NumberFormat(undefined, {
+        maximumFractionDigits: match[0].includes(".") ? 2 : 0
+      }).format(value);
+      number.textContent = `${prefix}${formatted}${suffix}`;
+    };
+
+    return (instant = false) => {
+      if (instant) {
+        bar.style.width = `${targetWidth}%`;
+        bar.style.clipPath = "inset(0)";
+        renderNumber(target);
+        return;
+      }
+      const startTime = performance.now();
+      bar.style.width = `${targetWidth}%`;
+      bar.style.clipPath = "inset(0 100% 0 0)";
+      renderNumber(0);
+      requestAnimationFrame(() => {
+        bar.style.clipPath = "inset(0)";
+      });
+      const animate = (now) => {
+        const progress = Math.min(1, (now - startTime) / 1400);
+        const eased = 1 - ((1 - progress) ** 3);
+        renderNumber(Math.round(target * eased));
+        if (progress < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    };
+  });
+
+  const revealTargets = sections.filter((section) => section.classList.contains("partners-reveal"));
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    revealTargets.forEach((section) => section.classList.add("is-visible"));
+    progressAnimations.forEach((animate) => animate?.(prefersReducedMotion));
+    return;
+  }
+
+  const animations = new Map();
+  progressWrappers.forEach((wrapper, index) => {
+    const animate = progressAnimations[index];
+    if (animate) animations.set(wrapper, animate);
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const target = entry.target;
+      if (target instanceof HTMLElement && target.classList.contains("partners-reveal")) {
+        target.classList.add("is-visible");
+      }
+      animations.get(target)?.();
+      animations.delete(target);
+      observer.unobserve(target);
+    });
+  }, { threshold: 0.18, rootMargin: "0px 0px -30px 0px" });
+
+  revealTargets.forEach((section) => observer.observe(section));
+  animations.forEach((_animate, wrapper) => observer.observe(wrapper));
+}
+
 function safeLink(rawValue, pagePaths) {
   if (!rawValue || rawValue.startsWith("#")) return rawValue || "#";
   if (/^(mailto:|tel:)/i.test(rawValue)) return rawValue;
@@ -87,7 +186,8 @@ function safeLink(rawValue, pagePaths) {
     if (url.protocol !== "http:" && url.protocol !== "https:") return "#";
     if (url.hostname === "www.bethammicfc.org" || url.hostname === "bethammicfc.org") {
       if (url.pathname === "/" || url.pathname === "/home/") return `${siteRoot}${document.body.dataset.routeMode === "static" ? "index.html" : "index.php"}`;
-      const target = pagePaths.get(url.pathname.replace(/\/?$/, "/"));
+      const target = pagePaths.get(url.pathname)
+        ?? pagePaths.get(url.pathname.replace(/\/?$/, "/"));
       return target || `https://www.bethammicfc.org${url.pathname}${url.search}${url.hash}`;
     }
     return url.href;
@@ -107,8 +207,9 @@ function cleanContent(rawHtml, pagePaths) {
     "TBODY", "TD", "TFOOT", "TH", "THEAD", "TR", "U", "UL", "VIDEO"
   ]);
   const safeAttributes = new Set([
-    "alt", "allow", "allowfullscreen", "class", "controls", "height", "href", "id",
-    "loading", "loop", "muted", "poster", "preload", "role", "rowspan", "scope",
+    "alt", "allow", "allowfullscreen", "aria-labelledby", "aria-valuemax", "aria-valuemin",
+    "aria-valuenow", "aria-valuetext", "class", "controls", "data-max", "height", "href",
+    "id", "loading", "loop", "muted", "poster", "preload", "role", "rowspan", "scope",
     "src", "colspan", "title", "width"
   ]);
   const blockedTags = new Set([
@@ -174,6 +275,9 @@ function cleanContent(rawHtml, pagePaths) {
 }
 
 function localPageLink(item, kind = "page") {
+  if (kind === "page" && item.slug === "our-staff") {
+    return `${siteRoot}pages/team.php`;
+  }
   const slug = encodeURIComponent(item.slug);
   if (document.body.dataset.routeMode === "static") {
     const directory = kind === "post" ? "stories" : "pages";
@@ -188,7 +292,7 @@ function localPageLink(item, kind = "page") {
 const staticPageSlugs = new Set([
   "about-us", "who-we-are", "our-parishes", "ministries", "outreach-evangelism",
   "children-ministries", "women-ministries", "ltu", "partners",
-  "josh", "joan", "ep-kiramutse", "donate", "daily-bible-verses"
+  "josh", "joan", "ep-kiramutse", "donate", "daily-bible-verses", "team"
 ]);
 
 function addFeaturedImage(card, item) {
@@ -326,7 +430,16 @@ function renderRelated(pages, currentSlug) {
   document.querySelector("#page-related").hidden = false;
 }
 
-function renderDirectoryCard({ title, subtitle, description, imageUrl, imageAlt, variant = "default" }) {
+function renderDirectoryCard({
+  title,
+  subtitle,
+  description,
+  shortInfo,
+  additionalInfo,
+  imageUrl,
+  imageAlt,
+  variant = "default"
+}) {
   const card = document.createElement("article");
   const isParishCard = variant === "parish";
   card.className = isParishCard
@@ -362,11 +475,25 @@ function renderDirectoryCard({ title, subtitle, description, imageUrl, imageAlt,
     copy.append(label);
   }
 
-  if (description) {
+  if (isParishCard) {
+    [
+      ["Short info", shortInfo],
+      ["Additional information", additionalInfo]
+    ].forEach(([label, value]) => {
+      if (!value) return;
+      const detail = document.createElement("div");
+      detail.className = "directory-card__detail";
+      const detailLabel = document.createElement("strong");
+      detailLabel.textContent = label;
+      const text = document.createElement("p");
+      text.className = "card-text directory-card__description";
+      text.textContent = value;
+      detail.append(detailLabel, text);
+      copy.append(detail);
+    });
+  } else if (description) {
     const text = document.createElement("p");
-    text.className = isParishCard
-      ? "card-text directory-card__description"
-      : "directory-card__description";
+    text.className = "directory-card__description";
     text.textContent = description;
     copy.append(text);
   }
@@ -399,30 +526,206 @@ async function renderTeamDirectory() {
   }
 }
 
+async function renderTeamProfiles() {
+  const response = await fetch(`${siteRoot}team.php`);
+  if (!response.ok) throw new Error(`Team request failed (${response.status}).`);
+  const payload = await response.json();
+  if (!Array.isArray(payload.team)) throw new Error("Team response has an invalid format.");
+
+  const modalElement = document.querySelector("#teamProfileModal");
+  const modalName = document.querySelector("#team-modal-name");
+  const modalTitle = document.querySelector("#team-modal-title");
+  const modalBio = document.querySelector("#team-modal-bio");
+  const modalImage = document.querySelector("#team-modal-image");
+  if (!(modalElement instanceof HTMLElement)
+    || !(modalName instanceof HTMLElement)
+    || !(modalTitle instanceof HTMLElement)
+    || !(modalBio instanceof HTMLElement)
+    || !(modalImage instanceof HTMLImageElement)
+    || !window.bootstrap?.Modal) {
+    throw new Error("The team profile dialog could not be initialized. Please refresh the page.");
+  }
+
+  const grid = document.createElement("div");
+  grid.className = "directory-grid directory-grid--team";
+  payload.team.forEach((member, index) => {
+    const card = renderDirectoryCard({
+      title: member.name,
+      subtitle: member.title,
+      description: member.bio,
+      imageUrl: member.photo_url,
+      imageAlt: member.name,
+      variant: "team"
+    });
+    card.dataset.teamIndex = String(index);
+    const button = document.createElement("button");
+    button.className = "team-profile-card__button";
+    button.type = "button";
+    button.dataset.teamIndex = String(index);
+    button.setAttribute("aria-haspopup", "dialog");
+    button.textContent = "View profile";
+    card.querySelector(".directory-card__copy")?.append(button);
+    grid.append(card);
+  });
+
+  grid.addEventListener("click", (event) => {
+    const button = event.target instanceof Element
+      ? event.target.closest("button[data-team-index]")
+      : null;
+    if (!(button instanceof HTMLButtonElement)) return;
+
+    const member = payload.team[Number(button.dataset.teamIndex)];
+    if (!member) throw new Error("The selected team profile is unavailable.");
+    modalName.textContent = member.name;
+    modalTitle.textContent = String(member.title ?? "").trim();
+    modalTitle.hidden = !modalTitle.textContent;
+    modalBio.textContent = String(member.bio ?? "").trim();
+    modalBio.hidden = !modalBio.textContent;
+    const cardImage = button.closest(".directory-card")?.querySelector("img");
+    modalImage.hidden = !(cardImage instanceof HTMLImageElement);
+    modalImage.alt = member.name;
+    if (cardImage instanceof HTMLImageElement) {
+      modalImage.src = cardImage.src;
+    } else {
+      modalImage.removeAttribute("src");
+    }
+    window.bootstrap.Modal.getOrCreateInstance(modalElement).show();
+  });
+
+  if (payload.team.length) {
+    article.replaceChildren(grid);
+  } else {
+    const empty = document.createElement("p");
+    empty.className = "team-directory__empty";
+    empty.textContent = "Team profiles will be added soon.";
+    article.replaceChildren(empty);
+  }
+}
+
 async function renderParishDirectory() {
   const response = await fetch(`${siteRoot}parishes.php`);
   if (!response.ok) throw new Error(`Parish request failed (${response.status}).`);
   const payload = await response.json();
   if (!Array.isArray(payload.parishes)) throw new Error("Parish response has an invalid format.");
 
+  const modalElement = document.querySelector("#parishDetailsModal");
+  const modalTitle = document.querySelector("#parish-modal-title");
+  const modalImage = document.querySelector("#parish-modal-image");
+  if (!(modalElement instanceof HTMLElement)
+    || !(modalTitle instanceof HTMLElement)
+    || !(modalImage instanceof HTMLImageElement)
+    || !window.bootstrap?.Modal) {
+    throw new Error("The parish details dialog could not be initialized. Please refresh the page.");
+  }
+
   const grid = document.createElement("div");
   grid.className = "directory-grid directory-grid--parishes";
-  payload.parishes.forEach((parish) => {
+  payload.parishes.forEach((parish, index) => {
     const location = [parish.location, parish.region, parish.country].filter(Boolean).join(" · ");
-    const details = [
-      parish.short_info,
-      parish.description,
-      parish.member_count ? `${parish.member_count} members` : ""
-    ].filter(Boolean).join("\n\n");
-    grid.append(renderDirectoryCard({
+    const shortInfo = String(parish.short_info ?? "").trim();
+    const fullDescription = String(parish.description ?? "").trim();
+    const shortPreview = fullDescription && shortInfo.length > 90
+      ? `${Array.from(shortInfo).slice(0, 87).join("").trimEnd()}…`
+      : shortInfo;
+    const additionalPreview = shortInfo && fullDescription.length > 90
+      ? `${Array.from(fullDescription).slice(0, 87).join("").trimEnd()}…`
+      : fullDescription;
+    const card = renderDirectoryCard({
       title: parish.name,
       subtitle: location,
-      description: details,
+      shortInfo: shortPreview,
+      additionalInfo: additionalPreview,
       imageUrl: parish.photo_url,
       imageAlt: parish.name,
       variant: "parish"
-    }));
+    });
+
+    const button = document.createElement("button");
+    button.className = "btn btn-sm btn-outline-dark mt-2";
+    button.type = "button";
+    button.dataset.parishIndex = String(index);
+    button.setAttribute("aria-haspopup", "dialog");
+    button.textContent = "View all information";
+    card.querySelector(".directory-card__copy")?.append(button);
+
+    grid.append(card);
   });
+
+  if (!(parishSearch instanceof HTMLInputElement)
+    || !(parishCount instanceof HTMLElement)
+    || !(parishEmpty instanceof HTMLElement)) {
+    throw new Error("The parish directory controls could not be initialized. Please refresh the page.");
+  }
+
+  const updateParishResults = () => {
+    const query = parishSearch.value.trim().toLocaleLowerCase();
+    let visibleCount = 0;
+    grid.querySelectorAll(".directory-card--parish").forEach((card, index) => {
+      const parish = payload.parishes[index];
+      const searchableText = [
+        parish.name,
+        parish.location,
+        parish.region,
+        parish.country,
+        parish.short_info,
+        parish.description
+      ].filter(Boolean).join(" ").toLocaleLowerCase();
+      const matches = searchableText.includes(query);
+      card.hidden = !matches;
+      if (matches) visibleCount += 1;
+    });
+    parishCount.textContent = query
+      ? `Showing ${visibleCount} of ${payload.parishes.length} ${payload.parishes.length === 1 ? "parish" : "parishes"}`
+      : `${payload.parishes.length} ${payload.parishes.length === 1 ? "parish" : "parishes"}`;
+    parishEmpty.textContent = payload.parishes.length
+      ? "No parishes match your search. Try another name or location."
+      : "There are no parishes to display yet.";
+    parishEmpty.hidden = visibleCount > 0;
+  };
+  parishSearch.addEventListener("input", updateParishResults);
+  updateParishResults();
+
+  grid.addEventListener("click", (event) => {
+    const target = event.target instanceof Element
+      ? event.target.closest("button[data-parish-index]")
+      : null;
+    if (!(target instanceof HTMLButtonElement)) return;
+
+    const parish = payload.parishes[Number(target.dataset.parishIndex)];
+    if (!parish) throw new Error("The selected parish information is unavailable.");
+
+    modalTitle.textContent = parish.name;
+    const cardImage = target.closest(".directory-card")?.querySelector("img");
+    modalImage.alt = parish.name;
+    modalImage.hidden = !(cardImage instanceof HTMLImageElement);
+    if (cardImage instanceof HTMLImageElement) {
+      modalImage.src = cardImage.src;
+    } else {
+      modalImage.removeAttribute("src");
+    }
+
+    const modalFields = [
+      ["#parish-modal-location", [parish.location, parish.region, parish.country].filter(Boolean).join(" · ")],
+      ["#parish-modal-short-info", parish.short_info],
+      ["#parish-modal-description", parish.description],
+      ["#parish-modal-members", parish.member_count ? `${parish.member_count} members` : ""]
+    ];
+    modalFields.forEach(([selector, value]) => {
+      const field = document.querySelector(selector);
+      if (!(field instanceof HTMLElement)) {
+        throw new Error("The parish details dialog is missing required content.");
+      }
+      const text = field.querySelector("[data-parish-field-value]") ?? field;
+      if (!(text instanceof HTMLElement)) {
+        throw new Error("The parish details dialog is missing a content field.");
+      }
+      text.textContent = String(value ?? "").trim();
+      field.hidden = text.textContent === "";
+    });
+
+    window.bootstrap.Modal.getOrCreateInstance(modalElement).show();
+  });
+
   article.replaceChildren(grid);
   if (!payload.parishes.length) {
     article.textContent = "Parish information will be added soon.";
@@ -451,15 +754,33 @@ async function start() {
       ...staticPageSlugs,
       "news-and-sermons", "media", "contact-us", "contact", "our-staff", "our-parishes"
     ].forEach((pageSlug) => {
-      const route = staticRoutes
-        ? `pages/${pageSlug}.html`
-        : staticPageSlugs.has(pageSlug)
-          ? `pages/${pageSlug}.php`
-          : `page.php?type=page&slug=${pageSlug}`;
-      pagePaths.set(`/${pageSlug}/`, `${siteRoot}${route}`);
+      const teamAlias = pageSlug === "our-staff";
+      const route = teamAlias
+        ? "pages/team.php"
+        : staticRoutes
+          ? `pages/${pageSlug}.html`
+          : staticPageSlugs.has(pageSlug)
+            ? `pages/${pageSlug}.php`
+            : `page.php?type=page&slug=${pageSlug}`;
+      const localRoute = `${siteRoot}${route}`;
+      pagePaths.set(`/${pageSlug}/`, localRoute);
+      pagePaths.set(`/pages/${pageSlug}.php`, localRoute);
+      pagePaths.set(`/pages/${pageSlug}.html`, localRoute);
+      pagePaths.set(`/${pageSlug}.php`, localRoute);
     });
     article.innerHTML = cleanContent(source.innerHTML, pagePaths);
     source.remove();
+    if (document.body.dataset.contentSlug === "partners") {
+      initializePartnersPage(article);
+    } else if (document.body.dataset.contentSlug === "team") {
+      await renderTeamProfiles().catch((error) => {
+        message.hidden = false;
+        message.textContent = error instanceof Error
+          ? error.message
+          : "We couldn't load the team profiles.";
+        article.replaceChildren();
+      });
+    }
     return;
   }
 

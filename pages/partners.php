@@ -26,7 +26,7 @@ require __DIR__ . '/../includes/site-header.php';
       <p class="page-banner__summary" id="page-summary" hidden></p>
     </div>
   </section>
-  <section class="container page-layout" id="page-layout">
+  <section class="container page-layout page-layout--partners" id="page-layout">
     <article class="page-article">
       <div class="remote-content" id="page-content">
         <template id="static-page-content">
@@ -62,7 +62,7 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-c1e3dd2 elementor-align-center elementor-widget elementor-widget-button" data-id="c1e3dd2" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/Josh">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="./josh.php">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Activity in Pictures</span>
                     </span>
@@ -156,9 +156,9 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-21b701d elementor-align-center elementor-widget elementor-widget-button" data-id="21b701d" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="http://bethammicfc.org/ltu">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="./ltu.php">
                       <span class="elementor-button-content-wrapper">
-                            <span class="elementor-button-text">LTU in Pictures</span>
+                            <span class="elementor-button-text">Activity in Pictures</span>
                     </span>
                     </a>
                   </div>
@@ -284,6 +284,11 @@ require __DIR__ . '/../includes/site-header.php';
                             <p>Bethammi has been in partnership with New City Fellowship South City Church led by Pastor Barry since 2016. They have contributed in Trainings, Nutrition program, and they helped us build a school in Nyaruguru</p>                </div>
                   </div>
                     </div>
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="./ltu.php">
+                      <span class="elementor-button-content-wrapper">
+                            <span class="elementor-button-text">Activity in Pictures</span>
+                    </span>
+                    </a>
               </div>
                   <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-87d289a" data-id="87d289a" data-element_type="column" data-e-type="column">
                 <div class="elementor-widget-wrap elementor-element-populated">
@@ -393,7 +398,7 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-0164a98 elementor-align-center elementor-widget elementor-widget-button" data-id="0164a98" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="http://bethammicfc.org/joan">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="./joan.php">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Activities in Pictures</span>
                     </span>
@@ -553,7 +558,7 @@ require __DIR__ . '/../includes/site-header.php';
                 <div class="elementor-widget-wrap elementor-element-populated">
                       <div class="elementor-element elementor-element-e4739c3 elementor-widget elementor-widget-heading" data-id="e4739c3" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
-                    <h5 class="elementor-heading-title elementor-size-default">Partnership With <b>Third Millenium</b></h5>        </div>
+                    <h5 class="elementor-heading-title elementor-size-default">Partnership With <b>Third Millenium Ministries</b></h5>        </div>
                   </div>
                   <div class="elementor-element elementor-element-a9c482b elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="a9c482b" data-element_type="widget" data-e-type="widget" data-widget_type="divider.default">
                   <div class="elementor-widget-container">
@@ -731,20 +736,20 @@ require __DIR__ . '/../includes/site-header.php';
 
         </template>
       </div>
+      <section class="partners-followup" aria-label="Visit or contact Beth Ammi">
+        <div class="sidebar-card sidebar-card--visit">
+          <p class="eyebrow"><span></span> You are welcome</p>
+          <h2>Come worship<br>with us.</h2>
+          <p>Join the Beth Ammi community for worship, prayer, fellowship, and the Word of God.</p>
+          <a class="btn button button--navy" href="../index.php#gather">Service times <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="sidebar-card sidebar-card--contact">
+          <span class="sidebar-card__label">NEED TO GET IN TOUCH?</span>
+          <a href="tel:+250788482324">+250 788 482 324</a>
+          <a href="https://wa.me/250788482324">WhatsApp us ↗</a>
+        </div>
+      </section>
     </article>
-    <aside class="page-sidebar" id="page-sidebar">
-            <div class="sidebar-card sidebar-card--visit">
-              <p class="eyebrow"><span></span> You are welcome</p>
-              <h2>Come worship<br>with us.</h2>
-              <p>Join the Beth Ammi community for worship, prayer, fellowship, and the Word of God.</p>
-              <a class="btn button button--navy" href="<?= bethammi_escape($siteRoot ?? '') ?>index.php#gather">Service times <span aria-hidden="true">↗</span></a>
-            </div>
-            <div class="sidebar-card sidebar-card--contact">
-              <span class="sidebar-card__label">NEED TO GET IN TOUCH?</span>
-              <a href="tel:+250788482324">+250 788 482 324</a>
-              <a href="https://wa.me/250788482324">WhatsApp us ↗</a>
-            </div>
-          </aside>
   </section>
 </main>
 <?php require __DIR__ . '/../includes/site-footer.php'; ?>

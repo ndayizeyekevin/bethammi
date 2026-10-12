@@ -26,7 +26,7 @@ require __DIR__ . '/../includes/site-header.php';
       <p class="page-banner__summary" id="page-summary" hidden></p>
     </div>
   </section>
-  <section class="container page-layout" id="page-layout">
+  <section class="container page-layout page-layout--who-we-are" id="page-layout">
     <article class="page-article">
       <div class="remote-content" id="page-content">
         <template id="static-page-content">
@@ -53,7 +53,7 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-e311e0e elementor-widget elementor-widget-button" data-id="e311e0e" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/our-staff/">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/team.php">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">our staff</span>
                     </span>
@@ -212,7 +212,7 @@ require __DIR__ . '/../includes/site-header.php';
                 <div class="elementor-widget-wrap elementor-element-populated">
                       <div class="elementor-element elementor-element-38eb15b elementor-widget elementor-widget-image" data-id="38eb15b" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
                   <div class="elementor-widget-container">
-                                        <img loading="lazy" decoding="async" width="1081" height="1080" src="https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311.jpg" class="attachment-full size-full wp-image-509" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311.jpg 1081w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-150x150.jpg 150w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-300x300.jpg 300w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-768x767.jpg 768w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-1024x1023.jpg 1024w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-600x599.jpg 600w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-100x100.jpg 100w" sizes="(max-width: 1081px) 100vw, 1081px" />                              </div>
+                                        <img loading="lazy" decoding="async" width="1081" height="1080" src="https://www.bethammicfc.org/wp-content/uploads/2019/08/P1590345.jpg" class="attachment-full size-full wp-image-509" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311.jpg 1081w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-150x150.jpg 150w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-300x300.jpg 300w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-768x767.jpg 768w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-1024x1023.jpg 1024w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-600x599.jpg 600w, https://www.bethammicfc.org/wp-content/uploads/2019/08/cropped-P1590311-100x100.jpg 100w" sizes="(max-width: 1081px) 100vw, 1081px" />                              </div>
                   </div>
                   <div class="elementor-element elementor-element-af35f0e elementor-widget elementor-widget-heading" data-id="af35f0e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
@@ -529,7 +529,7 @@ require __DIR__ . '/../includes/site-header.php';
                 <div class="elementor-widget-wrap elementor-element-populated">
                       <div class="elementor-element elementor-element-96f1f18 elementor-widget elementor-widget-heading" data-id="96f1f18" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
-                    <h2 class="elementor-heading-title elementor-size-default">OUR TEAM</h2>        </div>
+                    <h2 class="elementor-heading-title elementor-size-default">OUR STAFF</h2>        </div>
                   </div>
                     </div>
               </div>
@@ -577,7 +577,7 @@ require __DIR__ . '/../includes/site-header.php';
                 <div class="elementor-widget-wrap elementor-element-populated">
                       <div class="elementor-element elementor-element-f3d4324 elementor-position-top elementor-widget elementor-widget-image-box" data-id="f3d4324" data-element_type="widget" data-e-type="widget" data-widget_type="image-box.default">
                   <div class="elementor-widget-container">
-                    <div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img loading="lazy" decoding="async" width="600" height="600" src="https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura.png" class="attachment-full size-full wp-image-1866" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura.png 600w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-300x300.png 300w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-150x150.png 150w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-100x100.png 100w" sizes="(max-width: 600px) 100vw, 600px" /></figure><div class="elementor-image-box-content"><h6 class="elementor-image-box-title">Mwungura Janvier</h6><p class="elementor-image-box-description">Tresurer</p></div></div>        </div>
+                    <div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img loading="lazy" decoding="async" width="600" height="600" src="https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura.png" class="attachment-full size-full wp-image-1866" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura.png 600w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-300x300.png 300w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-150x150.png 150w, https://www.bethammicfc.org/wp-content/uploads/2023/01/Mwungura-100x100.png 100w" sizes="(max-width: 600px) 100vw, 600px" /></figure><div class="elementor-image-box-content"><h6 class="elementor-image-box-title">Mwungura Janvier</h6><p class="elementor-image-box-description">Treasurer</p></div></div>        </div>
                   </div>
                     </div>
               </div>
@@ -594,7 +594,7 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-9e8b0ba elementor-align-center elementor-widget elementor-widget-button" data-id="9e8b0ba" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/our-staff/">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/team.php">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">READ MORE  ABOUT OUR STAFF</span>
                     </span>

@@ -38,7 +38,7 @@ require __DIR__ . '/../includes/site-header.php';
                 <div class="elementor-widget-wrap elementor-element-populated">
                       <div class="elementor-element elementor-element-44316213 elementor-widget elementor-widget-heading" data-id="44316213" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
-                    <h2 class="elementor-heading-title elementor-size-default">WELCOME TO  EP KIRAMUTSE</h2>        </div>
+                    <h2 class="elementor-heading-title elementor-size-default">Welcome To  EP Kiramutse</h2>        </div>
                   </div>
                     </div>
               </div>
@@ -58,7 +58,7 @@ require __DIR__ . '/../includes/site-header.php';
                 <div class="elementor-widget-wrap elementor-element-populated">
                       <div class="elementor-element elementor-element-128fd6b6 elementor-widget elementor-widget-heading" data-id="128fd6b6" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
-                    <h2 class="elementor-heading-title elementor-size-default">EP KIRAMUTSE</h2>        </div>
+                    <h2 class="elementor-heading-title elementor-size-default">New City Fellowship Church</h2>        </div>
                   </div>
                   <div class="elementor-element elementor-element-7440438b elementor-widget elementor-widget-text-editor" data-id="7440438b" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
                   <div class="elementor-widget-container">
@@ -131,22 +131,14 @@ require __DIR__ . '/../includes/site-header.php';
                   </div>
                   <div class="elementor-element elementor-element-58d1dc elementor-widget elementor-widget-text-editor" data-id="58d1dc" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
                   <div class="elementor-widget-container">
-                            <p>We are still relying on Donations to help this school run smoothly. Donate today to support this school and the little ones</p><p> </p>                </div>
+                            <p>We are still relying on Donations to help this school run smoothly. Donate today to support this school and the little ones</p>
+                            <a class="btn btn-primary text-white mb-4 px-3" href="./donate.php"> Donate</a>
+                  </div>
                   </div>
                   <div class="elementor-element elementor-element-b6b2d5f wpr-button-icon-style-inline wpr-button-icon-position-right elementor-widget elementor-widget-wpr-button" data-id="b6b2d5f" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-button.default">
                   <div class="elementor-widget-container">
 
-
-
               <div class="wpr-button-wrap elementor-clearfix">
-              <a class="wpr-button wpr-button-effect wpr-button-none" data-text="" href="https://www.bethammicfc.org/donate/">
-
-                <span class="wpr-button-content">
-                            <span class="wpr-button-text">Donate</span>
-
-                            <span class="wpr-button-icon"><i class="fas fa-donate"></i></span>
-                        </span>
-              </a>
 
                   </div>
 
@@ -184,19 +176,13 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-ef31675 elementor-widget elementor-widget-video" data-id="ef31675" data-element_type="widget" data-e-type="widget" data-settings="{&quot;video_type&quot;:&quot;hosted&quot;,&quot;controls&quot;:&quot;yes&quot;}" data-widget_type="video.default">
                   <div class="elementor-widget-container">
                         <div class="e-hosted-video elementor-wrapper elementor-open-inline">
-                    <video class="elementor-video" src="https://www.bethammicfc.org/wp-content/uploads/2023/10/VID-20231012-WA0010.mp4" controls="" preload="metadata" controlsList="nodownload"></video>
+                    <!-- <video class="elementor-video" src="https://www.bethammicfc.org/wp-content/uploads/2023/10/VID-20231012-WA0010.mp4" controls="" preload="metadata" controlsList="nodownload"></video> -->
                   </div>
                       </div>
                   </div>
                     </div>
               </div>
-                  <div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-8f0b0a4" data-id="8f0b0a4" data-element_type="column" data-e-type="column">
-                <div class="elementor-widget-wrap elementor-element-populated">
-                      <div class="elementor-element elementor-element-d4adf2f elementor-widget elementor-widget-image" data-id="d4adf2f" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
-                  <div class="elementor-widget-container">
-                                        <img decoding="async" src="https://www.bethammicfc.org/wp-content/plugins/elementor/assets/images/placeholder.png" title="" alt="" loading="lazy" />                              </div>
-                  </div>
-                    </div>
+                  
               </div>
                     </div>
               </section>

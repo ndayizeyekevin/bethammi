@@ -75,7 +75,7 @@
       <div class="container">
         <div class="section-heading">
           <div><p class="eyebrow"><span></span> From our community</p><h2 id="stories-title">Faith in <em>action.</em></h2></div>
-          <a class="text-link" href="https://www.bethammicfc.org/" target="_blank" rel="noopener noreferrer">Visit our original site <span aria-hidden="true">↗</span></a>
+          <!-- <a class="text-link" href="https://www.bethammicfc.org/" target="_blank" rel="noopener noreferrer">Visit our original site <span aria-hidden="true">↗</span></a> -->
         </div>
         <div class="story-grid" id="story-grid">
           <article class="story-card story-card--feature">
@@ -102,7 +102,7 @@
           <p class="eyebrow"><span></span> Give with joy</p>
           <h2 id="give-title">Be part of<br>what God is <em>doing.</em></h2>
           <p>Your generosity helps support the ministry and the work of our church. Thank you for standing with us in prayer and giving.</p>
-          <a class="btn button button--navy" href="https://www.bethammicfc.org/donate/">Ways to give <span aria-hidden="true">↗</span></a>
+          <a class="btn button button--navy" href="./pages/donate.php">Ways to give <span aria-hidden="true">↗</span></a>
           <p class="give__note">Giving details are available on the church website.</p>
         </div>
       </div>
