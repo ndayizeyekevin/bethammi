@@ -54,7 +54,7 @@ require __DIR__ . '/../includes/site-header.php';
                   </div>
                   <div class="elementor-element elementor-element-6a30081 elementor-widget elementor-widget-text-editor" data-id="6a30081" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
                   <div class="elementor-widget-container">
-                            <p><span style="white-space: pre-wrap;">To reach a lot of people of people, With the Help of different ministries: (Currently we are working with <a href="https://www.bethammicfc.org/Josh/">God&#8217;s Beloved Ministries</a> and </span><a href="http://www.bethammicfc.org/joan/" target="_blank" rel="noopener">Joan Hunter Ministries</a><span style="white-space: pre-wrap;">) </span></p><p><span style="white-space: pre-wrap;">Bethammi CFC is working with these ministries to organize open air crusades and Conferences.</span></p>                </div>
+                            <p><span style="white-space: pre-wrap;">To reach a lot of people of people, With the Help of different ministries: (Currently we are working with <a href="./josh.php">God&#8217;s Beloved Ministries</a> and </span><a href="./joan.php" target="_blank" rel="noopener">Joan Hunter Ministries</a><span style="white-space: pre-wrap;">) </span></p><p><span style="white-space: pre-wrap;">Bethammi CFC is working with these ministries to organize open air crusades and Conferences.</span></p>                </div>
                   </div>
                     </div>
               </div>
