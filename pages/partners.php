@@ -62,7 +62,7 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-c1e3dd2 elementor-align-center elementor-widget elementor-widget-button" data-id="c1e3dd2" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/Josh">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="./josh.php">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Activity in Pictures</span>
                     </span>
@@ -156,9 +156,9 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-21b701d elementor-align-center elementor-widget elementor-widget-button" data-id="21b701d" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="http://bethammicfc.org/ltu">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="./ltu.php">
                       <span class="elementor-button-content-wrapper">
-                            <span class="elementor-button-text">LTU in Pictures</span>
+                            <span class="elementor-button-text">Activity in Pictures</span>
                     </span>
                     </a>
                   </div>
@@ -284,6 +284,11 @@ require __DIR__ . '/../includes/site-header.php';
                             <p>Bethammi has been in partnership with New City Fellowship South City Church led by Pastor Barry since 2016. They have contributed in Trainings, Nutrition program, and they helped us build a school in Nyaruguru</p>                </div>
                   </div>
                     </div>
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="./ltu.php">
+                      <span class="elementor-button-content-wrapper">
+                            <span class="elementor-button-text">Activity in Pictures</span>
+                    </span>
+                    </a>
               </div>
                   <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-87d289a" data-id="87d289a" data-element_type="column" data-e-type="column">
                 <div class="elementor-widget-wrap elementor-element-populated">
@@ -393,7 +398,7 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-0164a98 elementor-align-center elementor-widget elementor-widget-button" data-id="0164a98" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="http://bethammicfc.org/joan">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="./joan.php">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Activities in Pictures</span>
                     </span>

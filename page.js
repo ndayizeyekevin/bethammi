@@ -87,6 +87,7 @@ function initializePartnersPage(partnersArticle) {
   if (!sections.length && !progressWrappers.length) return;
 
   partnersArticle.classList.add("partners-content");
+  const accentCount = 7;
   let partnerIndex = 0;
   sections.forEach((section, index) => {
     const heading = section.querySelector(".elementor-widget-heading");
@@ -96,6 +97,7 @@ function initializePartnersPage(partnersArticle) {
     if (heading?.textContent.includes("Partnership With")) {
       section.classList.add("partners-partner");
       section.classList.add(partnerIndex % 2 ? "partners-partner--soft" : "partners-partner--plain");
+      section.classList.add(`partners-partner--accent-${(partnerIndex % accentCount) + 1}`);
       partnerIndex += 1;
     }
   });

@@ -27,7 +27,7 @@ const staticPageTitles = new Map([
   ["partners", "Partners"],
   ["josh", "Josh"],
   ["joan", "Joan"],
-  ["ep-kiramutse", "EP Kiramutse"],
+  ["ep-kiramutse", "New City Fellowship Church"],
   ["donate", "Donate"],
   ["daily-bible-verses", "Daily Bible verses"],
 ]);

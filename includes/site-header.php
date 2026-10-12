@@ -47,7 +47,8 @@ $siteRoot = $siteRoot ?? '';
             <a href="<?= bethammi_escape($siteRoot) ?>pages/partners.php">About our partners</a>
             <a href="<?= bethammi_escape($siteRoot) ?>pages/josh.php">God's Beloved Ministries</a>
             <a href="<?= bethammi_escape($siteRoot) ?>pages/joan.php">Joan Hunter Ministries</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/ep-kiramutse.php">EP Kiramutse</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/ltu.php">Lift Them Up</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/ep-kiramutse.php">New City Fellowship Church</a>
           </div>
         </div>
         <a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=news-and-sermons">News &amp; sermons</a>
