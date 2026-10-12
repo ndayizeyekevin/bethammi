@@ -20,7 +20,7 @@ require __DIR__ . '/../includes/site-header.php';
 <main id="main">
   <section class="page-banner" aria-labelledby="page-title">
     <div class="container">
-      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.php">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= bethammi_escape($staticPageTitle) ?></span></nav>
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= bethammi_escape($staticPageTitle) ?></span></nav>
       <p class="eyebrow eyebrow--light"><span></span><span id="page-kicker">Beth Ammi Christian Fellowship Church</span></p>
       <h1 id="page-title"><?= bethammi_escape($staticPageTitle) ?></h1>
       <p class="page-banner__summary" id="page-summary" hidden></p>
@@ -54,7 +54,7 @@ require __DIR__ . '/../includes/site-header.php';
                   </div>
                   <div class="elementor-element elementor-element-6a30081 elementor-widget elementor-widget-text-editor" data-id="6a30081" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
                   <div class="elementor-widget-container">
-                            <p><span style="white-space: pre-wrap;">To reach a lot of people of people, With the Help of different ministries: (Currently we are working with <a href="./josh.php">God&#8217;s Beloved Ministries</a> and </span><a href="./joan.php" target="_blank" rel="noopener">Joan Hunter Ministries</a><span style="white-space: pre-wrap;">) </span></p><p><span style="white-space: pre-wrap;">Bethammi CFC is working with these ministries to organize open air crusades and Conferences.</span></p>                </div>
+                            <p><span style="white-space: pre-wrap;">To reach a lot of people of people, With the Help of different ministries: (Currently we are working with <a href="./josh">God&#8217;s Beloved Ministries</a> and </span><a href="./joan" target="_blank" rel="noopener">Joan Hunter Ministries</a><span style="white-space: pre-wrap;">) </span></p><p><span style="white-space: pre-wrap;">Bethammi CFC is working with these ministries to organize open air crusades and Conferences.</span></p>                </div>
                   </div>
                     </div>
               </div>

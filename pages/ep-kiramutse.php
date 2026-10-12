@@ -20,7 +20,7 @@ require __DIR__ . '/../includes/site-header.php';
 <main id="main">
   <section class="page-banner" aria-labelledby="page-title">
     <div class="container">
-      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.php">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= bethammi_escape($staticPageTitle) ?></span></nav>
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= bethammi_escape($staticPageTitle) ?></span></nav>
       <p class="eyebrow eyebrow--light"><span></span><span id="page-kicker">Beth Ammi Christian Fellowship Church</span></p>
       <h1 id="page-title"><?= bethammi_escape($staticPageTitle) ?></h1>
       <p class="page-banner__summary" id="page-summary" hidden></p>
@@ -132,7 +132,7 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-58d1dc elementor-widget elementor-widget-text-editor" data-id="58d1dc" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
                   <div class="elementor-widget-container">
                             <p>We are still relying on Donations to help this school run smoothly. Donate today to support this school and the little ones</p>
-                            <a class="btn btn-primary text-white mb-4 px-3" href="./donate.php"> Donate</a>
+                            <a class="btn btn-primary text-white mb-4 px-3" href="./donate"> Donate</a>
                   </div>
                   </div>
                   <div class="elementor-element elementor-element-b6b2d5f wpr-button-icon-style-inline wpr-button-icon-position-right elementor-widget elementor-widget-wpr-button" data-id="b6b2d5f" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-button.default">

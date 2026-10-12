@@ -14,7 +14,7 @@ require __DIR__ . '/../includes/site-header.php';
 <main id="main">
   <section class="page-banner" aria-labelledby="page-title">
     <div class="container">
-      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.php">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= bethammi_escape($staticPageTitle) ?></span></nav>
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= bethammi_escape($staticPageTitle) ?></span></nav>
       <p class="eyebrow eyebrow--light"><span></span><span id="page-kicker">Beth Ammi Christian Fellowship Church</span></p>
       <h1 id="page-title"><?= bethammi_escape($staticPageTitle) ?></h1>
       <p class="page-banner__summary" id="page-summary"><?= bethammi_escape($pageDescription) ?></p>
@@ -47,7 +47,7 @@ require __DIR__ . '/../includes/site-header.php';
         <p class="eyebrow"><span></span> You are welcome</p>
         <h2>Come worship<br>with us.</h2>
         <p>Join the Beth Ammi community for worship, prayer, fellowship, and the Word of God.</p>
-        <a class="btn button button--navy" href="../index.php#gather">Service times <span aria-hidden="true">↗</span></a>
+        <a class="btn button button--navy" href="../index#gather">Service times <span aria-hidden="true">↗</span></a>
       </div>
       <div class="sidebar-card sidebar-card--contact">
         <span class="sidebar-card__label">NEED TO GET IN TOUCH?</span>

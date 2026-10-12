@@ -20,7 +20,7 @@ require __DIR__ . '/../includes/site-header.php';
 <main id="main">
   <section class="page-banner" aria-labelledby="page-title">
     <div class="container">
-      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.php">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= bethammi_escape($staticPageTitle) ?></span></nav>
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= bethammi_escape($staticPageTitle) ?></span></nav>
       <p class="eyebrow eyebrow--light"><span></span><span id="page-kicker">Beth Ammi Christian Fellowship Church</span></p>
       <h1 id="page-title"><?= bethammi_escape($staticPageTitle) ?></h1>
       <p class="page-banner__summary" id="page-summary" hidden></p>
@@ -53,7 +53,7 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-e311e0e elementor-widget elementor-widget-button" data-id="e311e0e" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/team.php">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/team">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">our staff</span>
                     </span>
@@ -594,7 +594,7 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-9e8b0ba elementor-align-center elementor-widget elementor-widget-button" data-id="9e8b0ba" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/team.php">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/team">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">READ MORE  ABOUT OUR STAFF</span>
                     </span>

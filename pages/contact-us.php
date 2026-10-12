@@ -15,7 +15,7 @@ require __DIR__ . '/../includes/site-header.php';
 <main id="main">
   <section class="page-banner" aria-labelledby="page-title">
     <div class="container">
-      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.php">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= bethammi_escape($staticPageTitle) ?></span></nav>
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index">Home</a><span aria-hidden="true">/</span><span id="breadcrumb-label"><?= bethammi_escape($staticPageTitle) ?></span></nav>
       <p class="eyebrow eyebrow--light"><span></span><span id="page-kicker">Beth Ammi Christian Fellowship Church</span></p>
       <h1 id="page-title"><?= bethammi_escape($staticPageTitle) ?></h1>
       <p class="page-banner__summary" id="page-summary"><?= bethammi_escape($pageDescription) ?></p>
