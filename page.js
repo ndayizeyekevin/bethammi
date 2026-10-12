@@ -275,6 +275,9 @@ function cleanContent(rawHtml, pagePaths) {
 }
 
 function localPageLink(item, kind = "page") {
+  if (kind === "page" && item.slug === "our-staff") {
+    return `${siteRoot}pages/team.php`;
+  }
   const slug = encodeURIComponent(item.slug);
   if (document.body.dataset.routeMode === "static") {
     const directory = kind === "post" ? "stories" : "pages";
@@ -751,11 +754,14 @@ async function start() {
       ...staticPageSlugs,
       "news-and-sermons", "media", "contact-us", "contact", "our-staff", "our-parishes"
     ].forEach((pageSlug) => {
-      const route = staticRoutes
-        ? `pages/${pageSlug}.html`
-        : staticPageSlugs.has(pageSlug)
-          ? `pages/${pageSlug}.php`
-          : `page.php?type=page&slug=${pageSlug}`;
+      const teamAlias = pageSlug === "our-staff";
+      const route = teamAlias
+        ? "pages/team.php"
+        : staticRoutes
+          ? `pages/${pageSlug}.html`
+          : staticPageSlugs.has(pageSlug)
+            ? `pages/${pageSlug}.php`
+            : `page.php?type=page&slug=${pageSlug}`;
       const localRoute = `${siteRoot}${route}`;
       pagePaths.set(`/${pageSlug}/`, localRoute);
       pagePaths.set(`/pages/${pageSlug}.php`, localRoute);
