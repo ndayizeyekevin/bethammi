@@ -5,7 +5,7 @@
         <span class="brand__words"><strong>BETH AMMI</strong><small>CHRISTIAN FELLOWSHIP CHURCH</small></span>
       </a>
       <p>A place to worship, grow, and belong.<br>We look forward to seeing you.</p>
-      <div class="footer__contact"><span>GET IN TOUCH</span><a href="tel:+250788482324">+250 788 482 324</a><a href="https://wa.me/250788482324">WhatsApp us ↗</a><a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=contact-us">Contact us ↗</a></div>
+      <div class="footer__contact"><span>GET IN TOUCH</span><a href="tel:+250788482324">+250 788 482 324</a><a href="https://wa.me/250788482324">WhatsApp us ↗</a><a href="<?= bethammi_escape($siteRoot) ?>pages/contact-us.php">Contact us ↗</a></div>
       <div class="footer__social"><span>FOLLOW ALONG</span><a href="https://www.facebook.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook" aria-hidden="true"></i>Facebook ↗</a><a href="https://www.twitter.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter-x" aria-hidden="true"></i>Twitter ↗</a><a href="https://www.instagram.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram" aria-hidden="true"></i>Instagram ↗</a><a href="https://www.youtube.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-youtube" aria-hidden="true"></i>YouTube ↗</a><a href="https://wa.me/250788482324" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp" aria-hidden="true"></i>WhatsApp ↗</a><a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=media">Media library ↗</a></div>
     </div>
     <div class="container footer__directory">
@@ -22,7 +22,7 @@
       <a href="<?= bethammi_escape($siteRoot) ?>pages/ep-kiramutse.php">New City Fellowship Church</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/joan.php">Joan</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/josh.php">Josh</a>
-      <a href="<?= bethammi_escape($siteRoot) ?>page.php?type=page&amp;slug=contact">Contact Details</a>
+      <a href="<?= bethammi_escape($siteRoot) ?>pages/contact-us.php">Contact Details</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/donate.php">Give</a>
     </div>
     <div class="container footer__bottom"><span>© <span id="year"></span> Beth Ammi Christian Fellowship Church</span><a href="#main">Back to top ↑</a></div>
