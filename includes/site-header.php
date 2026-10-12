@@ -45,8 +45,8 @@ $siteRoot = $siteRoot ?? '';
           <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-partners">Partners <span aria-hidden="true">⌄</span></button>
           <div class="nav-dropdown__menu" id="nav-partners">
             <a href="<?= bethammi_escape($siteRoot) ?>pages/partners.php">About our partners</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/josh.php">Josh</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/joan.php">Joan</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/josh.php">God's Beloved Ministries</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/joan.php">Joan Hunter Ministries</a>
             <a href="<?= bethammi_escape($siteRoot) ?>pages/ep-kiramutse.php">EP Kiramutse</a>
           </div>
         </div>
