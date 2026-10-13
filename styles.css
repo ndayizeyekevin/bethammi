@@ -195,6 +195,22 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .admin-login-modal__form .form-control { min-height: 45px; border-color: #d5d3ca; border-radius: 0; font: 13px var(--sans); }
 .admin-login-modal__form .form-control:focus { border-color: #a77d46; box-shadow: 0 0 0 .2rem rgba(167,125,70,.16); }
 .admin-login-modal__form .button { justify-self: start; margin-top: 13px; border: 0; }
+.donate-modal { border: 1px solid rgba(18,52,59,.12); border-radius: 0; box-shadow: 0 24px 80px rgba(8,28,32,.22); }
+.donate-modal .modal-header { align-items: flex-start; padding: 28px 30px 20px; border-bottom: 0; }
+.donate-modal .eyebrow { margin: 0 0 8px; color: #8e744b; font-size: 9px; }
+.donate-modal .modal-title { max-width: 560px; color: var(--navy); font-family: var(--display); font-size: clamp(25px, 4vw, 34px); font-weight: 700; letter-spacing: -.04em; line-height: 1.2; }
+.donate-modal__description { margin: 9px 0 0; color: var(--muted); font-size: 12px; }
+.donate-modal .modal-body { padding: 0 30px 30px; }
+.donate-modal__methods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.donate-method { min-width: 0; padding: 18px; border: 1px solid #e6e3da; background: #fbfaf7; }
+.donate-method__icon { display: inline-block; margin-bottom: 13px; color: #a77d46; font-size: 20px; }
+.donate-method h3 { margin: 0 0 8px; color: var(--navy); font-family: var(--display); font-size: 15px; font-weight: 700; }
+.donate-method p { margin: 0 0 8px; color: #66716d; font-size: 11px; line-height: 1.7; }
+.donate-method p:last-child { margin-bottom: 0; }
+.donate-method a { color: #765b35; font-size: 11px; font-weight: 700; text-underline-offset: 3px; }
+.donate-modal__footer { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 16px; padding: 17px 18px; background: #efeee8; }
+.donate-modal__footer p { margin: 0; color: #596762; font-size: 11px; }
+.donate-modal__footer .button { flex: 0 0 auto; border: 0; }
 .footer__bottom { display: flex; justify-content: space-between; gap: 20px; padding-block: 16px 20px; border-top: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.48); font-size: 9px; }
 .footer__bottom a { color: var(--gold-light); text-decoration: none; }
 .footer__directory { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding-block: 0 22px; }
@@ -724,6 +740,13 @@ body[data-content-slug="media"] #page-content .elementor-screen-only { position:
   .brand__words strong { font-size: 15px; }
   .brand__words small { font-size: 7px; }
   .header-login { order: 2; min-width: 68px; min-height: 38px; padding: 8px 12px; font-size: 11px; }
+  .donate-modal .modal-header { padding: 23px 20px 16px; }
+  .donate-modal .modal-body { padding: 0 20px 20px; }
+  .donate-modal__methods { grid-template-columns: 1fr; gap: 9px; }
+  .donate-method { padding: 15px; }
+  .donate-method__icon { margin-bottom: 7px; }
+  .donate-modal__footer { align-items: stretch; flex-direction: column; gap: 12px; }
+  .donate-modal__footer .button { width: 100%; }
   .menu-toggle { order: 3; }
   .menu-toggle { width: 42px; height: 42px; display: flex; flex-direction: column; justify-content: center; gap: 5px; align-items: center; border: 1px solid rgba(18,52,59,.2); background: transparent; color: var(--navy); cursor: pointer; }
   .menu-toggle span { width: 17px; height: 1px; background: currentColor; transition: transform .2s ease; }
