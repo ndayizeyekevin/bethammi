@@ -92,5 +92,22 @@ if (menuButton && navigation) {
   });
 }
 
+const scrollTopButton = document.querySelector(".floating-action--top");
+const toggleScrollTopButton = () => {
+  if (!scrollTopButton) return;
+
+  const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPosition = window.scrollY || window.pageYOffset;
+  const showAfterHalfPage = scrollableHeight > 0 && scrollPosition >= scrollableHeight * 0.5;
+
+  scrollTopButton.classList.toggle("is-visible", showAfterHalfPage);
+  scrollTopButton.toggleAttribute("hidden", !showAfterHalfPage);
+};
+
+if (scrollTopButton) {
+  toggleScrollTopButton();
+  window.addEventListener("scroll", toggleScrollTopButton, { passive: true });
+}
+
 const year = document.querySelector("#year");
 if (year) year.textContent = String(new Date().getFullYear());
