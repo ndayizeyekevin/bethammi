@@ -215,6 +215,10 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .partners-followup .sidebar-card--contact a { font-size: 13px; }
 .partners-followup .sidebar-card--contact a:hover { color: var(--gold-light); text-decoration: underline; text-underline-offset: 4px; }
 .page-article { min-width: 0; }
+.ltu-gallery.gallery-columns-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 0; }
+.ltu-gallery .gallery-item { width: auto; margin: 0; }
+.ltu-gallery .gallery-icon a { display: block; }
+.ltu-gallery .gallery-icon img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
 .partners-content > .elementor > .partners-partner { position: relative; margin-block: 20px; padding: clamp(22px, 3.2vw, 42px); overflow: hidden; border: 1px solid rgba(18,52,59,.09); border-radius: 8px; background: var(--white); box-shadow: 0 12px 32px rgba(18,39,38,.055); transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease; }
 .partners-content > .elementor > .partners-partner::before { position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--partner-accent); content: ""; }
 .partners-content > .elementor > .partners-partner--soft { background: linear-gradient(115deg, #f5f2ea 0%, #fff 54%); }
@@ -549,6 +553,7 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .footer__top { grid-template-columns: 1.1fr 1fr 1fr; }
   .footer__social { grid-column: 3; }
   .page-layout { grid-template-columns: minmax(0, 1fr) 235px; gap: 28px; }
+  .ltu-gallery.gallery-columns-4 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .page-layout--parishes { grid-template-columns: minmax(0, 1fr); }
   .page-layout--team { grid-template-columns: minmax(0, 1fr); }
   .page-layout--who-we-are { grid-template-columns: minmax(0, 1fr); }
@@ -635,6 +640,7 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .page-banner h1 { font-size: clamp(38px, 10vw, 55px); }
   .page-banner__summary { font-size: 12px; }
   .page-layout { grid-template-columns: 1fr; gap: 28px; padding-block: 39px 61px; }
+  .ltu-gallery.gallery-columns-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .page-layout--parishes { gap: 24px; }
   .page-layout--who-we-are { padding-block: 28px 60px; }
   .page-layout--who-we-are > .page-article > .remote-content > .elementor > .elementor-element-1ef2fe8 { margin-bottom: 24px; padding: 8px; }
