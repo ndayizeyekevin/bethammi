@@ -4,6 +4,7 @@ http_response_code(404);
 $pageTitle = 'Page not found | Beth Ammi Christian Fellowship Church';
 $pageDescription = 'The page you are looking for could not be found.';
 
+
 require __DIR__ . '/includes/site-head.php';
 require __DIR__ . '/includes/site-header.php';
 ?>
