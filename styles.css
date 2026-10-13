@@ -215,6 +215,35 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .partners-followup .sidebar-card--contact a { font-size: 13px; }
 .partners-followup .sidebar-card--contact a:hover { color: var(--gold-light); text-decoration: underline; text-underline-offset: 4px; }
 .page-article { min-width: 0; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-fx0y08u { margin: 0 0 44px; padding: clamp(22px, 3.5vw, 42px); border: 1px solid #e2e5dc; background: linear-gradient(125deg, #f1f2eb 0%, #fff 72%); }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-fx0y08u > .elementor-container { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(24px, 4vw, 48px); align-items: center; width: 100%; max-width: none; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-fx0y08u .elementor-background-overlay { display: none; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-fx0y08u .elementor-column { width: auto; min-width: 0; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-fx0y08u .elementor-image-box-title { margin: 0 0 14px; color: var(--navy); font-family: var(--display); font-size: clamp(25px, 3vw, 36px); line-height: 1.2; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-fx0y08u .elementor-image-box-description { color: #5f6b66; font-size: 14px; line-height: 1.8; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-fx0y08u .elementor-widget-image img { display: block; width: 100%; height: 340px; object-fit: cover; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds { margin: 42px 0; padding: clamp(20px, 3vw, 32px); background: #eaf0eb; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds > .elementor-container { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; width: 100%; max-width: none; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds > .elementor-container > .elementor-column { width: auto; min-width: 0; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds > .elementor-container > .elementor-column:first-child { grid-column: 1 / -1; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds > .elementor-container > .elementor-column:first-child .elementor-widget-wrap { padding: 0 0 6px; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds .elementor-heading-title { margin: 0; color: var(--navy); font-family: var(--display); font-size: 28px; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds .elementor-column:not(:first-child) .elementor-widget-wrap { height: 100%; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds .elementor-counter { display: grid; min-height: 164px; height: 100%; align-content: center; gap: 17px; padding: 23px; border-top: 3px solid #39776c; background: #fff; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds .elementor-column:nth-child(3) .elementor-counter { border-top-color: #bd8b49; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds .elementor-column:nth-child(4) .elementor-counter { border-top-color: #587b9b; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds .elementor-counter-title { color: #61706a; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds .elementor-counter-number-wrapper { display: flex; align-items: baseline; color: var(--navy); font-variant-numeric: tabular-nums; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds .elementor-counter-number { font-family: var(--display); font-size: clamp(30px, 3.5vw, 44px); font-weight: 700; line-height: 1; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-9c477d7 { margin: 0 0 18px; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-9c477d7 .elementor-heading-title { margin: 0; color: var(--navy); font-family: var(--display); font-size: 27px; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 .elementor-element-ab66c48,
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 .elementor-element-0412a3d { display: none; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-raifkhq .elementor-background-overlay { display: none; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-raifkhq > .elementor-container { width: 100%; max-width: none; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 .elementor-image-carousel.swiper-wrapper { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; transform: none !important; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 .swiper-slide { width: auto !important; margin: 0 !important; }
+body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 .swiper-slide-image { display: block; width: 100%; height: clamp(190px, 22vw, 270px); object-fit: cover; }
 .ltu-gallery.gallery-columns-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 0; }
 .ltu-gallery .gallery-item { width: auto; margin: 0; }
 .ltu-gallery .gallery-icon a { display: block; }
@@ -562,6 +591,9 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .footer__social { grid-column: 3; }
   .page-layout { grid-template-columns: minmax(0, 1fr) 235px; gap: 28px; }
   .ltu-gallery.gallery-columns-4 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-fx0y08u > .elementor-container { grid-template-columns: minmax(0, 1fr); }
+  body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds > .elementor-container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 .elementor-image-carousel.swiper-wrapper { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .page-layout--parishes { grid-template-columns: minmax(0, 1fr); }
   .page-layout--team { grid-template-columns: minmax(0, 1fr); }
   .page-layout--who-we-are { grid-template-columns: minmax(0, 1fr); }
@@ -652,6 +684,12 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .ltu-lightbox { width: calc(100% - 16px); padding: 44px 8px 12px; }
   .ltu-lightbox[open] { grid-template-columns: 36px minmax(0, 1fr) 36px; gap: 6px; }
   .ltu-lightbox__navigate { width: 34px; height: 44px; }
+  body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-fx0y08u { padding: 18px; }
+  body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-fx0y08u .elementor-widget-image img { height: 240px; }
+  body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds > .elementor-container { grid-template-columns: minmax(0, 1fr); }
+  body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 > .elementor-element-ptmngds > .elementor-container > .elementor-column:first-child { grid-column: auto; }
+  body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 .elementor-image-carousel.swiper-wrapper { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  body[data-content-slug="outreach-evangelism"] #page-content > .elementor-2110 .swiper-slide-image { height: 190px; }
   .page-layout--parishes { gap: 24px; }
   .page-layout--who-we-are { padding-block: 28px 60px; }
   .page-layout--who-we-are > .page-article > .remote-content > .elementor > .elementor-element-1ef2fe8 { margin-bottom: 24px; padding: 8px; }

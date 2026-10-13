@@ -83,9 +83,9 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-c515849 elementor-widget elementor-widget-counter" data-id="c515849" data-element_type="widget" data-e-type="widget" data-widget_type="counter.default">
                   <div class="elementor-widget-container">
                         <div class="elementor-counter">
-                <div class="elementor-counter-title">Open air Crusades organized</div>      <div class="elementor-counter-number-wrapper">
+                <div class="elementor-counter-title">Open-air crusades organized</div>      <div class="elementor-counter-number-wrapper">
                   <span class="elementor-counter-number-prefix"></span>
-                  <span class="elementor-counter-number" data-duration="2000" data-to-value="30" data-from-value="1" data-delimiter=",">1</span>
+                  <span class="elementor-counter-number" data-duration="2000" data-to-value="30" data-from-value="1" data-delimiter=",">30</span>
                   <span class="elementor-counter-number-suffix">+</span>
                 </div>
               </div>
@@ -98,10 +98,10 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-8129cec elementor-widget elementor-widget-counter" data-id="8129cec" data-element_type="widget" data-e-type="widget" data-widget_type="counter.default">
                   <div class="elementor-widget-container">
                         <div class="elementor-counter">
-                <div class="elementor-counter-title">Attendance so far</div>      <div class="elementor-counter-number-wrapper">
+                <div class="elementor-counter-title">People reached</div>      <div class="elementor-counter-number-wrapper">
                   <span class="elementor-counter-number-prefix"></span>
-                  <span class="elementor-counter-number" data-duration="2000" data-to-value="2000000" data-from-value="1" data-delimiter=",">1</span>
-                  <span class="elementor-counter-number-suffix"></span>
+                  <span class="elementor-counter-number" data-duration="2000" data-to-value="2000000" data-from-value="1" data-delimiter=",">2,000,000</span>
+                  <span class="elementor-counter-number-suffix">+</span>
                 </div>
               </div>
                       </div>
@@ -113,9 +113,9 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-ca90815 elementor-widget elementor-widget-counter" data-id="ca90815" data-element_type="widget" data-e-type="widget" data-widget_type="counter.default">
                   <div class="elementor-widget-container">
                         <div class="elementor-counter">
-                <div class="elementor-counter-title">Conferences Organized</div>      <div class="elementor-counter-number-wrapper">
+                <div class="elementor-counter-title">Conferences organized</div>      <div class="elementor-counter-number-wrapper">
                   <span class="elementor-counter-number-prefix"></span>
-                  <span class="elementor-counter-number" data-duration="2000" data-to-value="40" data-from-value="" data-delimiter=","></span>
+                  <span class="elementor-counter-number" data-duration="2000" data-to-value="40" data-from-value="" data-delimiter=",">40</span>
                   <span class="elementor-counter-number-suffix">+</span>
                 </div>
               </div>
