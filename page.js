@@ -837,29 +837,29 @@ function initializeGalleryLightbox(gallery) {
   if (!links.length) return;
 
   const dialog = document.createElement("dialog");
-  dialog.className = "ltu-lightbox";
+  dialog.className = "gallery-lightbox";
   dialog.setAttribute("aria-label", "LTU photo gallery");
 
   const closeButton = document.createElement("button");
-  closeButton.className = "ltu-lightbox__close";
+  closeButton.className = "gallery-lightbox__close";
   closeButton.type = "button";
   closeButton.setAttribute("aria-label", "Close image viewer");
   closeButton.textContent = "Close";
 
   const previousButton = document.createElement("button");
-  previousButton.className = "ltu-lightbox__navigate";
+  previousButton.className = "gallery-lightbox__navigate";
   previousButton.type = "button";
   previousButton.setAttribute("aria-label", "Previous image");
   previousButton.textContent = "←";
 
   const nextButton = document.createElement("button");
-  nextButton.className = "ltu-lightbox__navigate";
+  nextButton.className = "gallery-lightbox__navigate";
   nextButton.type = "button";
   nextButton.setAttribute("aria-label", "Next image");
   nextButton.textContent = "→";
 
   const figure = document.createElement("figure");
-  figure.className = "ltu-lightbox__figure";
+  figure.className = "gallery-lightbox__figure";
   const image = document.createElement("img");
   const caption = document.createElement("figcaption");
   caption.setAttribute("aria-live", "polite");
@@ -950,6 +950,14 @@ async function start() {
     source.remove();
     if (document.body.dataset.contentSlug === "ltu") {
       initializeGalleryLightbox(article.querySelector(".ltu-gallery"));
+    } else if (document.body.dataset.contentSlug === "children-ministries") {
+      initializeGalleryLightbox(article.querySelector(".children-gallery"));
+      article.querySelectorAll(".elementor-progress-bar[data-max]").forEach((bar) => {
+        const maximum = Number(bar.dataset.max);
+        if (Number.isFinite(maximum)) {
+          bar.style.width = `${Math.min(100, Math.max(0, maximum))}%`;
+        }
+      });
     }
     if (document.body.dataset.contentSlug === "partners") {
       initializePartnersPage(article);
