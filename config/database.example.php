@@ -5,6 +5,6 @@ return [
     'port' => 3306,
     'database' => 'bethammi_redesign',
     'username' => 'root',
-    'password' => '',
+    'password' => '3FjyEVQo',
     'charset' => 'utf8mb4',
 ];

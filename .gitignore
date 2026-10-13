@@ -1,2 +1,3 @@
 /dist/
 /config/database.local.php
+/config/database.example.php

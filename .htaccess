@@ -23,3 +23,5 @@ Options -MultiViews
   RewriteCond %{REQUEST_FILENAME}.html -f
   RewriteRule ^(.+?)/?$ $1.html [L]
 </IfModule>
+
+ErrorDocument 404 /bethammi/404.php
