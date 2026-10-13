@@ -96,17 +96,18 @@ const scrollTopButton = document.querySelector(".floating-action--top");
 const toggleScrollTopButton = () => {
   if (!scrollTopButton) return;
 
-  const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
   const scrollPosition = window.scrollY || window.pageYOffset;
-  const showAfterHalfPage = scrollableHeight > 0 && scrollPosition >= scrollableHeight * 0.5;
+  const triggerOffset = Math.min(window.innerHeight * 0.35, 320);
+  const shouldShow = scrollPosition >= triggerOffset;
 
-  scrollTopButton.classList.toggle("is-visible", showAfterHalfPage);
-  scrollTopButton.toggleAttribute("hidden", !showAfterHalfPage);
+  scrollTopButton.classList.toggle("is-visible", shouldShow);
+  scrollTopButton.toggleAttribute("hidden", !shouldShow);
 };
 
 if (scrollTopButton) {
   toggleScrollTopButton();
   window.addEventListener("scroll", toggleScrollTopButton, { passive: true });
+  window.addEventListener("resize", toggleScrollTopButton, { passive: true });
 }
 
 const year = document.querySelector("#year");

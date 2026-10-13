@@ -1,7 +1,7 @@
 <?php
 
 $pageDescription = 'Explore Beth Ammi Christian Fellowship Church, our ministries, community, news, sermons, and ways to connect.';
-$pageScripts = ['page.js'];
+$pageScripts = ['script.js', 'page.js'];
 $contentKind = isset($_GET['type']) && $_GET['type'] === 'post' ? 'post' : 'page';
 $contentSlug = isset($_GET['slug']) && is_string($_GET['slug']) ? $_GET['slug'] : '';
 
