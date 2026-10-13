@@ -81,14 +81,18 @@ require __DIR__ . '/../includes/site-header.php';
     <?php if ($post !== null): ?>
     <section class="container page-layout post-page-layout">
       <article class="page-article post-article">
-        <div class="page-meta">Published <?= bethammi_escape(date('j F Y', strtotime($post['published_at']))) ?></div>
         <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
         <img class="post-featured-image" src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>">
         <?php endif; ?>
+        <div class="page-meta">Published <?= bethammi_escape(date('j F Y', strtotime($post['published_at']))) ?></div>
+        <h2 class="post-article__title"><?= bethammi_escape($post['title']) ?></h2>
+        <?php if ($post['short_info'] !== ''): ?>
+        <p class="post-article__summary"><?= bethammi_escape($post['short_info']) ?></p>
+        <?php endif; ?>
+        <div class="remote-content"><?= $postContentHtml ?></div>
         <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
         <a class="youtube-video-link post-youtube-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch this message on YouTube <span aria-hidden="true">↗</span></a>
         <?php endif; ?>
-        <div class="remote-content"><?= $postContentHtml ?></div>
       </article>
       <aside class="page-sidebar">
         <div class="sidebar-card sidebar-card--visit">

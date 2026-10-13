@@ -151,7 +151,7 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .youtube-video-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 .youtube-video-link span { color: #a33a30; font-size: 13px; }
 .youtube-video-link:hover span, .youtube-video-link:focus-visible span { color: inherit; }
-.post-youtube-link { margin: 0 0 24px; }
+.post-youtube-link { margin: 20px 0 0; }
 .story-card--quote { position: relative; justify-content: center; padding: 31px; background: var(--navy); color: var(--white); }
 .quote-mark { color: var(--gold); font-family: var(--serif); font-size: 62px; line-height: .7; }
 .story-card--quote blockquote { margin: 21px 0; font-family: var(--serif); font-size: 22px; line-height: 1.4; }
@@ -553,7 +553,9 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
 .posts-archive .archive-card__body > p:not(.story-card__meta) { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-height: 1.7; }
 .post-page-layout { grid-template-columns: minmax(0, 1fr) 260px; gap: 38px; }
 .post-article { min-width: 0; padding: clamp(20px, 3vw, 38px); border: 1px solid #e6e3da; background: var(--white); }
-.post-article .page-meta { margin-bottom: 22px; }
+.post-article .page-meta { margin: 0 0 14px; padding: 0; border: 0; }
+.post-article__title { margin: 0 0 14px; color: var(--navy); font-family: var(--display); font-size: 31px; font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+.post-article__summary { max-width: 760px; margin: 0 0 24px; color: #61706a; font-size: 15px; line-height: 1.75; }
 .post-article .post-featured-image { max-height: 500px; background: #efeee8; object-fit: contain; }
 .post-article .remote-content { max-width: 760px; margin-inline: auto; line-height: 1.9; }
 .post-article .remote-content h2,
@@ -760,6 +762,8 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
   .page-layout { grid-template-columns: 1fr; gap: 28px; padding-block: 39px 61px; }
   .post-page-layout { gap: 18px; padding-block: 30px 50px; }
   .post-article { padding: 18px; }
+  .post-article__title { font-size: 25px; }
+  .post-article__summary { font-size: 13px; }
   .post-article .post-featured-image { max-height: 360px; margin-bottom: 19px; }
   .ltu-gallery.gallery-columns-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .elementor-element-szl7ac5 { padding: 18px; }
