@@ -10,7 +10,7 @@ $post = null;
 $posts = [];
 $pageError = '';
 $isSinglePost = isset($_GET['slug']) || isset($_GET['id']);
-$pageScripts = $isSinglePost ? [] : ['posts-archive.js'];
+$pageScripts = $isSinglePost ? ['script.js'] : ['script.js', 'posts-archive.js'];
 
 try {
     if ($isSinglePost) {
