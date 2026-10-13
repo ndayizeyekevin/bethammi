@@ -54,8 +54,8 @@
         <div class="welcome__copy">
           <p class="eyebrow"><span></span> A note from our pastor</p>
           <h2 id="welcome-title">A warm welcome<br>to <em>Beth Ammi.</em></h2>
-          <p class="welcome__lead">“Praise the Lord! We enjoy being with you, sharing the Word of God, and celebrating together.”</p>
-          <p>We invite you to join our community and continue with us on this heavenly journey. There is room for you here, and we look forward to meeting you.</p>
+          <p class="welcome__lead text-justify">“Welcome to Beth Ammi Christian Fellowship Church, my brother and sister! Praise the Lord! We enjoy being with you, sharing the Word of God and celebrating together. May God bless you!”</p>
+          <p class="text-justify">Join our community and continue with us on this heavenly journey, as there is eternal life for those who believe in Jesus Christ, and there is no condemnation for them because they are princes and princesses of the heavenly kingdom.</p>
           <div class="signature"><span class="signature__line"></span><span><strong>Rev. Pastor Alfred Gatabazi</strong><small>Founder &amp; Senior Pastor</small></span></div>
         </div>
       </div>
