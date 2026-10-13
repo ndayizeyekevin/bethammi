@@ -18,6 +18,11 @@ function bethammi_json_response(array $payload, $status = 200)
 }
 
 try {
+    if (isset($_GET['slug']) && isset($_GET['id'])) {
+        bethammi_json_response(['error' => 'Choose a post by slug or ID, not both.'], 400);
+        exit;
+    }
+
     if (isset($_GET['slug'])) {
         $slug = is_string($_GET['slug']) ? $_GET['slug'] : '';
         if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug)) {
@@ -26,6 +31,24 @@ try {
         }
 
         $post = bethammi_post_by_slug($slug);
+        if ($post === null) {
+            bethammi_json_response(['error' => 'Post not found.'], 404);
+            exit;
+        }
+
+        bethammi_json_response(bethammi_post_response($post, true));
+        exit;
+    }
+
+    if (isset($_GET['id'])) {
+        $idValue = is_string($_GET['id']) ? $_GET['id'] : '';
+        $id = filter_var($idValue, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        if ($id === false) {
+            bethammi_json_response(['error' => 'Invalid post ID.'], 400);
+            exit;
+        }
+
+        $post = bethammi_post_by_id($id);
         if ($post === null) {
             bethammi_json_response(['error' => 'Post not found.'], 404);
             exit;

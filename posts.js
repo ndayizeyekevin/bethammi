@@ -17,7 +17,7 @@ function postLink(post) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug ?? "")) {
     throw new Error("A post has an invalid URL slug.");
   }
-  return `post.php?slug=${encodeURIComponent(post.slug)}`;
+  return `pages/posts?slug=${encodeURIComponent(post.slug)}`;
 }
 
 function createPostCard(post, index) {
@@ -72,10 +72,13 @@ function createPostCard(post, index) {
 }
 
 async function loadFeaturedPosts() {
-  if (!storyGrid || document.body.dataset.routeMode === "static") return;
+  if (!storyGrid || storyGrid.dataset.postsLoaded === "true" || document.body.dataset.routeMode === "static") return;
+
+  storiesStatus.textContent = "Loading the latest stories…";
+  storiesStatus.hidden = false;
 
   try {
-    const response = await fetch("posts.php?limit=3");
+    const response = await fetch("posts?limit=6");
     if (!response.ok) throw new Error(`Posts request failed (${response.status}).`);
     const payload = await response.json();
     if (!Array.isArray(payload.posts)) throw new Error("Posts response has an invalid format.");
@@ -84,12 +87,12 @@ async function loadFeaturedPosts() {
     storyGrid.replaceChildren(...cards);
     if (!cards.length) {
       storiesStatus.textContent = "There are no stories to show right now.";
-      storiesStatus.hidden = false;
+    } else {
+      storiesStatus.hidden = true;
     }
   } catch (error) {
     console.error("Featured posts could not be loaded.", error);
-    storiesStatus.textContent = "We couldn't refresh the stories. Showing the featured stories instead.";
-    storiesStatus.hidden = false;
+    storiesStatus.textContent = "We couldn't load the latest stories right now. Please try again later.";
   }
 }
 

@@ -286,7 +286,10 @@ function localPageLink(item, kind = "page") {
     const directory = kind === "post" ? "stories" : "pages";
     return `${siteRoot}${directory}/${slug}.html`;
   }
-  if (kind === "post") return `${siteRoot}post?slug=${slug}`;
+  if (kind === "page" && item.slug === "news-and-sermons") {
+    return `${siteRoot}pages/posts`;
+  }
+  if (kind === "post") return `${siteRoot}pages/posts?slug=${slug}`;
   return staticPageSlugs.has(item.slug)
     ? `${siteRoot}pages/${slug}`
     : `${siteRoot}page?type=page&slug=${slug}`;

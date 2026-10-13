@@ -13,6 +13,10 @@ if ($contentKind === 'page' && in_array($contentSlug, ['contact', 'contact-us'],
     header('Location: pages/contact-us', true, 301);
     exit;
 }
+if ($contentKind === 'page' && $contentSlug === 'news-and-sermons') {
+    header('Location: pages/posts', true, 301);
+    exit;
+}
 
 require_once __DIR__ . '/includes/static-pages.php';
 if ($contentKind === 'page' && preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $contentSlug)) {

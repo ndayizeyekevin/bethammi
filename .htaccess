@@ -2,7 +2,7 @@ Options -MultiViews
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /bethammi-redesign/
+  RewriteBase /bethammi/
 
   # Redirect browser requests for PHP pages to their extensionless URL.
   RewriteCond %{REQUEST_METHOD} ^(?:GET|HEAD)$

@@ -51,7 +51,7 @@ $siteRoot = $siteRoot ?? '';
             <a href="<?= bethammi_escape($siteRoot) ?>pages/ep-kiramutse">New City Fellowship Church</a>
           </div>
         </div>
-        <a href="<?= bethammi_escape($siteRoot) ?>page?type=page&amp;slug=news-and-sermons">News &amp; sermons</a>
+        <a href="<?= bethammi_escape($siteRoot) ?>pages/posts">News &amp; sermons</a>
         <a href="<?= bethammi_escape($siteRoot) ?>page?type=page&amp;slug=media">Media</a>
         <a href="<?= bethammi_escape($siteRoot) ?>pages/contact-us">Contact</a>
         <a class="nav-visit" href="<?= bethammi_escape($siteRoot) ?>pages/donate">Give <span aria-hidden="true">↗</span></a>

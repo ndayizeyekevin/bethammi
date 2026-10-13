@@ -25,7 +25,7 @@ $postContentHtml = isset($postContentHtml) && is_string($postContentHtml) ? $pos
           <p class="eyebrow"><span></span> You are welcome</p>
           <h2>Come worship<br>with us.</h2>
           <p>Join the Beth Ammi community for worship, prayer, fellowship, and the Word of God.</p>
-          <a class="btn button button--navy" href="<?= bethammi_escape($siteRoot ?? '') ?>index.php#gather">Service times <span aria-hidden="true">↗</span></a>
+          <a class="btn button button--navy" href="<?= bethammi_escape($siteRoot ?? '') ?>index#gather">Service times <span aria-hidden="true">↗</span></a>
         </div>
         <div class="sidebar-card sidebar-card--contact">
           <span class="sidebar-card__label">NEED TO GET IN TOUCH?</span>
