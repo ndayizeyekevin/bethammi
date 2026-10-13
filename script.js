@@ -1,6 +1,37 @@
 const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector("#site-nav");
 
+function markActiveNavigationLink() {
+  if (!navigation) return;
+
+  const normalizePath = (pathname) => {
+    const path = pathname
+      .replace(/\/index(?:\.php|\.html)?$/i, "/")
+      .replace(/\.php$/i, "")
+      .replace(/\/+$/, "");
+    return path || "/";
+  };
+  const routeKey = (url) => {
+    const slug = url.searchParams.get("slug");
+    if (url.searchParams.get("type") === "page" && slug) return `page:${slug}`;
+    return `path:${normalizePath(url.pathname)}`;
+  };
+  const currentUrl = new URL(window.location.href);
+  const currentRoute = routeKey(currentUrl);
+
+  navigation.querySelectorAll("a").forEach((link) => {
+    const linkUrl = new URL(link.href, window.location.href);
+    if (linkUrl.origin !== currentUrl.origin || routeKey(linkUrl) !== currentRoute) return;
+
+    link.setAttribute("aria-current", "page");
+    link.closest(".nav-dropdown")?.classList.add("is-active");
+    link.closest(".nav-dropdown")?.querySelector(".nav-dropdown__toggle")
+      ?.setAttribute("aria-current", "true");
+  });
+}
+
+markActiveNavigationLink();
+
 if (document.body.dataset.routeMode !== "static" && /\/index\.html$/.test(window.location.pathname)) {
   const destination = new URL(window.location.href);
   destination.pathname = destination.pathname.replace(/index\.html$/, "index.php");
