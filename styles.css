@@ -933,3 +933,10 @@ body[data-content-slug="media"] #page-content .elementor-screen-only { position:
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+
+.text-justify { text-align: justify; }
+
+p {
+  text-align: justify !important;
+}
