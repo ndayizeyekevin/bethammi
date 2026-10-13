@@ -122,7 +122,7 @@ require __DIR__ . '/../includes/site-header.php';
         <?php foreach ($posts as $post): ?>
         <article class="archive-card" data-search="<?= bethammi_escape(mb_strtolower($post['title'] . ' ' . $post['short_info'] . ' ' . $post['published_at'], 'UTF-8')) ?>">
           <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
-          <div class="archive-card__image"><img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy"></div>
+          <div class="archive-card__image"><a href="posts?slug=<?= rawurlencode($post['slug']) ?>"><img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy"></a></div>
           <?php else: ?>
           <div class="archive-card__image" aria-hidden="true"></div>
           <?php endif; ?>

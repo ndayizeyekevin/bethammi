@@ -82,7 +82,7 @@
           <article class="story-card<?= $index === 0 ? ' story-card--feature' : '' ?>">
             <div class="story-card__photo">
               <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
-              <img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy">
+              <a href="pages/posts?slug=<?= rawurlencode($post['slug']) ?>"><img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy"></a>
               <?php endif; ?>
             </div>
             <div class="story-card__body">
