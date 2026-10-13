@@ -82,13 +82,16 @@
           <article class="story-card<?= $index === 0 ? ' story-card--feature' : '' ?>">
             <div class="story-card__photo">
               <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
-              <img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy">
+              <a href="pages/posts?slug=<?= rawurlencode($post['slug']) ?>"><img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy"></a>
               <?php endif; ?>
             </div>
             <div class="story-card__body">
               <p class="story-card__meta">FROM OUR CHURCH <span>·</span> <?= bethammi_escape(strtoupper(date('F Y', strtotime($post['published_at'])))) ?></p>
               <h3><?= bethammi_escape($post['title']) ?></h3>
               <p><?= bethammi_escape($post['short_info']) ?></p>
+              <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
+              <a class="youtube-video-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>
+              <?php endif; ?>
               <a class="story-card__link" href="pages/posts?slug=<?= rawurlencode($post['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
             </div>
           </article>
@@ -108,7 +111,7 @@
           <p class="eyebrow"><span></span> Give with joy</p>
           <h2 id="give-title">Be part of<br>what God is <em>doing.</em></h2>
           <p>Your generosity helps support the ministry and the work of our church. Thank you for standing with us in prayer and giving.</p>
-          <a class="btn button button--navy" href="./pages/donate">Ways to give <span aria-hidden="true">↗</span></a>
+          <a class="btn button button--navy" href="./pages/donate" data-bs-toggle="modal" data-bs-target="#donateModal" aria-haspopup="dialog">Ways to give <span aria-hidden="true">↗</span></a>
           <p class="give__note">Giving details are available on the church website.</p>
         </div>
       </div>

@@ -1,6 +1,37 @@
 const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector("#site-nav");
 
+function markActiveNavigationLink() {
+  if (!navigation) return;
+
+  const normalizePath = (pathname) => {
+    const path = pathname
+      .replace(/\/index(?:\.php|\.html)?$/i, "/")
+      .replace(/\.php$/i, "")
+      .replace(/\/+$/, "");
+    return path || "/";
+  };
+  const routeKey = (url) => {
+    const slug = url.searchParams.get("slug");
+    if (url.searchParams.get("type") === "page" && slug) return `page:${slug}`;
+    return `path:${normalizePath(url.pathname)}`;
+  };
+  const currentUrl = new URL(window.location.href);
+  const currentRoute = routeKey(currentUrl);
+
+  navigation.querySelectorAll("a").forEach((link) => {
+    const linkUrl = new URL(link.href, window.location.href);
+    if (linkUrl.origin !== currentUrl.origin || routeKey(linkUrl) !== currentRoute) return;
+
+    link.setAttribute("aria-current", "page");
+    link.closest(".nav-dropdown")?.classList.add("is-active");
+    link.closest(".nav-dropdown")?.querySelector(".nav-dropdown__toggle")
+      ?.setAttribute("aria-current", "true");
+  });
+}
+
+markActiveNavigationLink();
+
 if (document.body.dataset.routeMode !== "static" && /\/index\.html$/.test(window.location.pathname)) {
   const destination = new URL(window.location.href);
   destination.pathname = destination.pathname.replace(/index\.html$/, "index.php");
@@ -36,8 +67,10 @@ if (menuButton && navigation) {
   });
 
   navigation.addEventListener("click", (event) => {
-    const link = event.target instanceof Element ? event.target.closest("a") : null;
-    if (link && window.matchMedia("(max-width: 1050px)").matches) {
+    const target = event.target instanceof Element ? event.target : null;
+    const link = target?.closest("a");
+    const navLogin = target?.closest(".nav-login");
+    if ((link || navLogin) && window.matchMedia("(max-width: 1050px)").matches) {
       menuButton.setAttribute("aria-expanded", "false");
       menuButton.setAttribute("aria-label", "Open navigation");
       navigation.classList.remove("is-open");

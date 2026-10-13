@@ -10,7 +10,7 @@ $sections = [
         'label' => 'Posts',
         'singular' => 'Post',
         'table' => 'posts',
-        'fields' => ['title', 'slug', 'published_at', 'featured_image_url', 'short_info', 'description', 'is_published'],
+        'fields' => ['title', 'slug', 'published_at', 'featured_image_url', 'youtube_url', 'short_info', 'description', 'is_published'],
     ],
     'team' => [
         'label' => 'Team',
@@ -144,6 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($values['slug'] === '') $values['slug'] = bethammi_slugify($values['title']);
                     $values['published_at'] = trim(bethammi_admin_input('published_at'));
                     $values['featured_image_url'] = trim(bethammi_admin_input('featured_image_url'));
+                    $values['youtube_url'] = trim(bethammi_admin_input('youtube_url'));
                     $values['short_info'] = trim(bethammi_admin_input('short_info'));
                     $values['description'] = trim(bethammi_admin_input('description'));
                     $date = DateTime::createFromFormat('!Y-m-d', $values['published_at']);
@@ -161,6 +162,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     if (!bethammi_valid_image_url($values['featured_image_url'])) {
                         throw new InvalidArgumentException('Enter a valid http(s) image URL or a site-relative image path.');
+                    }
+                    if (!bethammi_valid_youtube_url($values['youtube_url'])) {
+                        throw new InvalidArgumentException('Enter a valid HTTPS YouTube video, Shorts, or live URL.');
                     }
                 } elseif ($section === 'team') {
                     $values['name'] = trim(bethammi_admin_input('name'));
@@ -264,7 +268,7 @@ if ($isAuthenticated && $adminPage !== 'dashboard') {
         }
         $orderBy = $section === 'posts' ? 'published_at DESC, id DESC' : 'sort_order ASC, id DESC';
         $listColumns = [
-            'posts' => 'id, title, slug, published_at, featured_image_url, is_published',
+            'posts' => 'id, title, slug, published_at, featured_image_url, youtube_url, is_published',
             'team' => 'id, name, title, photo_url, is_published',
             'parishes' => 'id, name, country, location, photo_url, is_published',
         ];

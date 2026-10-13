@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS posts (
     title VARCHAR(255) NOT NULL,
     published_at DATE NOT NULL,
     featured_image_url VARCHAR(2048) NOT NULL DEFAULT '',
+    youtube_url VARCHAR(2048) NOT NULL DEFAULT '',
     short_info VARCHAR(500) NOT NULL DEFAULT '',
     description MEDIUMTEXT NOT NULL,
     is_published TINYINT(1) NOT NULL DEFAULT 1,

@@ -38,7 +38,7 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-ccc1131 elementor-widget elementor-widget-button" data-id="ccc1131" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/about-us/">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/about-us">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">About Us</span>
                     </span>
@@ -68,7 +68,7 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-9b1e76e elementor-widget elementor-widget-button" data-id="9b1e76e" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/our-parishes/">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/our-parishes">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Parishes</span>
                     </span>
@@ -83,7 +83,7 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-178b25f elementor-widget elementor-widget-button" data-id="178b25f" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/ministries/">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/ministries">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Ministries</span>
                     </span>
@@ -98,7 +98,7 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-32907ff elementor-widget elementor-widget-button" data-id="32907ff" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/partners">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/partners">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Partners</span>
                     </span>
@@ -113,11 +113,11 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-ab272bc elementor-widget elementor-widget-button" data-id="ab272bc" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/media/">
+                    <!-- <a class="elementor-button elementor-button-link elementor-size-sm" href="../page?type=page&amp;slug=media">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Media</span>
                     </span>
-                    </a>
+                    </a> -->
                   </div>
                           </div>
                   </div>
@@ -148,7 +148,7 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-ea2fd50 elementor-widget elementor-widget-button" data-id="ea2fd50" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/about-us/">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/about-us">
                       <span class="elementor-button-content-wrapper">
                       <span class="elementor-button-icon">
                   <i aria-hidden="true" class="fas fa-arrow-right"></i>      </span>
@@ -189,7 +189,7 @@ require __DIR__ . '/../includes/site-header.php';
                   </div>
                   <div class="elementor-element elementor-element-196681f elementor-widget elementor-widget-heading" data-id="196681f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
-                    <h6 class="elementor-heading-title elementor-size-default"><a href="https://www.bethammicfc.org/children-ministries/"><b>Children Ministries</b></a></h6>        </div>
+                    <h6 class="elementor-heading-title elementor-size-default"><a href="../pages/children-ministries"><b>Children Ministries</b></a></h6>        </div>
                   </div>
                   <div class="elementor-element elementor-element-80986f5 elementor-widget elementor-widget-text-editor" data-id="80986f5" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
                   <div class="elementor-widget-container">
@@ -198,7 +198,7 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-058e713 elementor-align-center elementor-widget elementor-widget-button" data-id="058e713" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/children-ministries/">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/children-ministries">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Click here</span>
                     </span>
@@ -216,7 +216,7 @@ require __DIR__ . '/../includes/site-header.php';
                   </div>
                   <div class="elementor-element elementor-element-af35f0e elementor-widget elementor-widget-heading" data-id="af35f0e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
-                    <h6 class="elementor-heading-title elementor-size-default"><a href="https://www.bethammicfc.org/women-ministries/"><b>Women Ministries</b></a></h6>        </div>
+                    <h6 class="elementor-heading-title elementor-size-default"><a href="../pages/women-ministries"><b>Women Ministries</b></a></h6>        </div>
                   </div>
                   <div class="elementor-element elementor-element-47e7aba elementor-widget elementor-widget-text-editor" data-id="47e7aba" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
                   <div class="elementor-widget-container">
@@ -225,7 +225,7 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-47c9b75 elementor-align-center elementor-widget elementor-widget-button" data-id="47c9b75" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/women-ministries/">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/women-ministries">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Click here</span>
                     </span>
@@ -243,7 +243,7 @@ require __DIR__ . '/../includes/site-header.php';
                   </div>
                   <div class="elementor-element elementor-element-18228e7 elementor-widget elementor-widget-heading" data-id="18228e7" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
-                    <h6 class="elementor-heading-title elementor-size-default"><a href="https://www.bethammicfc.org/outreach-evangelism"><b>Outreach Evangelism</b></a></h6>        </div>
+                    <h6 class="elementor-heading-title elementor-size-default"><a href="../pages/outreach-evangelism"><b>Outreach Evangelism</b></a></h6>        </div>
                   </div>
                   <div class="elementor-element elementor-element-6e1c0ad elementor-widget elementor-widget-text-editor" data-id="6e1c0ad" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
                   <div class="elementor-widget-container">
@@ -252,7 +252,7 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-bbfdfb9 elementor-align-center elementor-widget elementor-widget-button" data-id="bbfdfb9" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.bethammicfc.org/outreach-evangelism">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/outreach-evangelism">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Click here</span>
                     </span>
@@ -279,7 +279,7 @@ require __DIR__ . '/../includes/site-header.php';
                   <div class="elementor-element elementor-element-f44fd96 elementor-align-center elementor-mobile-align-center elementor-tablet-align-left elementor-widget elementor-widget-button" data-id="f44fd96" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                   <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-md" href="http://bethammicfc.org/our-parishes">
+                    <a class="elementor-button elementor-button-link elementor-size-md" href="../pages/our-parishes">
                       <span class="elementor-button-content-wrapper">
                       <span class="elementor-button-icon">
                   <i aria-hidden="true" class="fas fa-church"></i>      </span>
@@ -312,14 +312,14 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-icon-box-wrapper">
 
                       <div class="elementor-icon-box-icon">
-                  <a href="https://www.bethammicfc.org/our-parishes/" class="elementor-icon" tabindex="-1" aria-label="Kabuga Parish">
+                  <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Kabuga Parish">
                   <i aria-hidden="true" class="fas fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
 
                             <h6 class="elementor-icon-box-title">
-                      <a href="https://www.bethammicfc.org/our-parishes/" >
+                      <a href="../pages/our-parishes" >
                         Kabuga Parish            </a>
                     </h6>
 
@@ -334,14 +334,14 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-icon-box-wrapper">
 
                       <div class="elementor-icon-box-icon">
-                  <a href="https://www.bethammicfc.org/our-parishes/" class="elementor-icon" tabindex="-1" aria-label="Gahanga Parish">
+                  <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Gahanga Parish">
                   <i aria-hidden="true" class="fas fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
 
                             <h6 class="elementor-icon-box-title">
-                      <a href="https://www.bethammicfc.org/our-parishes/" >
+                      <a href="../pages/our-parishes" >
                         Gahanga Parish            </a>
                     </h6>
 
@@ -356,14 +356,14 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-icon-box-wrapper">
 
                       <div class="elementor-icon-box-icon">
-                  <a href="https://www.bethammicfc.org/our-parishes/" class="elementor-icon" tabindex="-1" aria-label="Muyumbu Parish">
+                  <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Muyumbu Parish">
                   <i aria-hidden="true" class="fas fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
 
                             <h6 class="elementor-icon-box-title">
-                      <a href="https://www.bethammicfc.org/our-parishes/" >
+                      <a href="../pages/our-parishes" >
                         Muyumbu Parish            </a>
                     </h6>
 
@@ -383,14 +383,14 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-icon-box-wrapper">
 
                       <div class="elementor-icon-box-icon">
-                  <a href="https://www.bethammicfc.org/our-parishes/" class="elementor-icon" tabindex="-1" aria-label="Runingu Parish">
+                  <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Runingu Parish">
                   <i aria-hidden="true" class="fas fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
 
                             <h6 class="elementor-icon-box-title">
-                      <a href="https://www.bethammicfc.org/our-parishes/" >
+                      <a href="../pages/our-parishes" >
                         Runingu Parish            </a>
                     </h6>
 
@@ -405,14 +405,14 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-icon-box-wrapper">
 
                       <div class="elementor-icon-box-icon">
-                  <a href="https://www.bethammicfc.org/our-parishes/" class="elementor-icon" tabindex="-1" aria-label="Luvungi Parish">
+                  <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Luvungi Parish">
                   <i aria-hidden="true" class="fas fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
 
                             <h6 class="elementor-icon-box-title">
-                      <a href="https://www.bethammicfc.org/our-parishes/" >
+                      <a href="../pages/our-parishes" >
                         Luvungi Parish            </a>
                     </h6>
 
@@ -427,14 +427,14 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-icon-box-wrapper">
 
                       <div class="elementor-icon-box-icon">
-                  <a href="https://www.bethammicfc.org/our-parishes/" class="elementor-icon" tabindex="-1" aria-label="Mutarule Parish">
+                  <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Mutarule Parish">
                   <i aria-hidden="true" class="fas fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
 
                             <h6 class="elementor-icon-box-title">
-                      <a href="https://www.bethammicfc.org/our-parishes/" >
+                      <a href="../pages/our-parishes" >
                         Mutarule Parish            </a>
                     </h6>
 
@@ -454,14 +454,14 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-icon-box-wrapper">
 
                       <div class="elementor-icon-box-icon">
-                  <a href="https://www.bethammicfc.org/our-parishes/" class="elementor-icon" tabindex="-1" aria-label="Burera Parish">
+                  <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Burera Parish">
                   <i aria-hidden="true" class="fas fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
 
                             <h6 class="elementor-icon-box-title">
-                      <a href="https://www.bethammicfc.org/our-parishes/" >
+                      <a href="../pages/our-parishes" >
                         Burera Parish            </a>
                     </h6>
 
@@ -476,14 +476,14 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-icon-box-wrapper">
 
                       <div class="elementor-icon-box-icon">
-                  <a href="https://www.bethammicfc.org/our-parishes/" class="elementor-icon" tabindex="-1" aria-label="Nyamasheke Parish">
+                  <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Nyamasheke Parish">
                   <i aria-hidden="true" class="fas fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
 
                             <h6 class="elementor-icon-box-title">
-                      <a href="https://www.bethammicfc.org/our-parishes/" >
+                      <a href="../pages/our-parishes" >
                         Nyamasheke Parish            </a>
                     </h6>
 
@@ -498,14 +498,14 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-icon-box-wrapper">
 
                       <div class="elementor-icon-box-icon">
-                  <a href="https://www.bethammicfc.org/our-parishes/" class="elementor-icon" tabindex="-1" aria-label="Nyaruguru Parish">
+                  <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Nyaruguru Parish">
                   <i aria-hidden="true" class="fas fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
 
                             <h6 class="elementor-icon-box-title">
-                      <a href="https://www.bethammicfc.org/our-parishes/" >
+                      <a href="../pages/our-parishes" >
                         Nyaruguru Parish            </a>
                     </h6>
 

@@ -6,7 +6,7 @@
       </a>
       <p>A place to worship, grow, and belong.<br>We look forward to seeing you.</p>
       <div class="footer__contact"><span>GET IN TOUCH</span><a href="tel:+250788482324">+250 788 482 324</a><a href="https://wa.me/250788482324">WhatsApp us ↗</a><a href="<?= bethammi_escape($siteRoot) ?>pages/contact-us">Contact us ↗</a></div>
-      <div class="footer__social"><span>FOLLOW ALONG</span><a href="https://www.facebook.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook" aria-hidden="true"></i>Facebook ↗</a><a href="https://www.twitter.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter-x" aria-hidden="true"></i>Twitter ↗</a><a href="https://www.instagram.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram" aria-hidden="true"></i>Instagram ↗</a><a href="https://www.youtube.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-youtube" aria-hidden="true"></i>YouTube ↗</a><a href="https://wa.me/250788482324" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp" aria-hidden="true"></i>WhatsApp ↗</a><a href="<?= bethammi_escape($siteRoot) ?>page?type=page&amp;slug=media">Media library ↗</a></div>
+      <div class="footer__social"><span>FOLLOW ALONG</span><a href="https://www.facebook.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook" aria-hidden="true"></i>Facebook ↗</a><a href="https://www.twitter.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter-x" aria-hidden="true"></i>Twitter ↗</a><a href="https://www.instagram.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram" aria-hidden="true"></i>Instagram ↗</a><a href="https://www.youtube.com/@bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-youtube" aria-hidden="true"></i>YouTube ↗</a><a href="https://wa.me/250788482324" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp" aria-hidden="true"></i>WhatsApp ↗</a><a href="<?= bethammi_escape($siteRoot) ?>page?type=page&amp;slug=media">Media library ↗</a></div>
     </div>
     <div class="container footer__directory">
       <span>EXPLORE BETH AMMI</span>
@@ -23,10 +23,49 @@
       <a href="<?= bethammi_escape($siteRoot) ?>pages/joan">Joan</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/josh">Josh</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/contact-us">Contact Details</a>
-      <a href="<?= bethammi_escape($siteRoot) ?>pages/donate">Give</a>
+      <a href="<?= bethammi_escape($siteRoot) ?>pages/donate" data-bs-toggle="modal" data-bs-target="#donateModal" aria-haspopup="dialog">Give</a>
     </div>
     <div class="container footer__bottom"><span>© <span id="year"></span> Beth Ammi Christian Fellowship Church</span><a href="#main">Back to top ↑</a></div>
   </footer>
+  <div class="modal fade" id="donateModal" tabindex="-1" aria-labelledby="donateModalLabel" aria-describedby="donateModalDescription" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content donate-modal">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow"><span></span> GIVE WITH JOY</p>
+            <h2 class="modal-title" id="donateModalLabel">Support the work of Beth Ammi.</h2>
+            <p class="donate-modal__description" id="donateModalDescription">Choose the giving method that works best for you.</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="donate-modal__methods">
+            <section class="donate-method" aria-labelledby="donate-check-title">
+              <span class="donate-method__icon bi bi-envelope" aria-hidden="true"></span>
+              <h3 id="donate-check-title">By check</h3>
+              <p>Make checks payable to Bethammi Christian Fellowship Church and mail to Rusororo Sector, New KBS garage.</p>
+            </section>
+            <section class="donate-method" aria-labelledby="donate-wire-title">
+              <span class="donate-method__icon bi bi-bank" aria-hidden="true"></span>
+              <h3 id="donate-wire-title">Wire transfer</h3>
+              <p>Contact Alfred Gatabazi for wire transfer information.</p>
+              <a href="tel:+250788451308">+250 788 451 308</a>
+            </section>
+            <section class="donate-method" aria-labelledby="donate-mobile-title">
+              <span class="donate-method__icon bi bi-phone" aria-hidden="true"></span>
+              <h3 id="donate-mobile-title">Mobile money</h3>
+              <p>On MTN, dial <strong>*182*8*1*007002#</strong> and follow the instructions.</p>
+              <p>Outside Rwanda? Use <a href="https://www.worldremit.com/" target="_blank" rel="noopener noreferrer">WorldRemit</a> and send to Alfred Gatabazi at <a href="tel:+250788482324">+250 788 482 324</a>.</p>
+            </section>
+          </div>
+          <div class="donate-modal__footer">
+            <p>Thank you for supporting the church and its ministries.</p>
+            <a class="btn button button--navy" href="<?= bethammi_escape($siteRoot) ?>pages/donate">Go to the donation page <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content admin-login-modal">

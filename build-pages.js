@@ -23,7 +23,7 @@ const staticPageTitles = new Map([
   ["outreach-evangelism", "Outreach evangelism"],
   ["children-ministries", "Children Ministries"],
   ["women-ministries", "Women Ministries"],
-  ["ltu", "LTU"],
+  ["ltu", "Lift Them Up"],
   ["partners", "Partners"],
   ["josh", "Josh"],
   ["joan", "Joan"],

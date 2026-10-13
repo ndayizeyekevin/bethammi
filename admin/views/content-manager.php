@@ -29,7 +29,10 @@ $hiddenCount = count($records) - $publishedCount;
         <?php bethammi_admin_field('published_at', 'Post date', 'date', true); ?>
         <?php bethammi_admin_field('featured_image_url', 'Highlight image URL or path'); ?>
       </div>
+      <?php bethammi_admin_field('youtube_url', 'YouTube video URL', 'url', false, true); ?>
+      <p class="admin-help">Optional. Use an https:// YouTube video, Shorts, or live link.</p>
       <?php bethammi_admin_field('short_info', 'Short info for cards', 'textarea', false, true); ?>
+        <thead><tr><th>Photo</th><th>Name / title</th><th>Details</th><?php if ($section === 'posts'): ?><th>YouTube</th><?php endif; ?><th>Status</th><th>Actions</th></tr></thead>
       <?php bethammi_admin_field('description', 'Full post description (plain text; blank lines create paragraphs)', 'textarea', true, true); ?>
     <?php elseif ($section === 'team'): ?>
       <div class="form-row">
@@ -87,6 +90,9 @@ $hiddenCount = count($records) - $publishedCount;
           <td><?php if ($image !== ''): ?><img class="record-image" src="<?= bethammi_escape($image) ?>" alt="" loading="lazy"><?php else: ?><span class="image-placeholder" aria-hidden="true">—</span><?php endif; ?></td>
           <td class="record-title"><?= bethammi_escape($recordTitle) ?></td>
           <td><?= bethammi_escape($recordDetails) ?></td>
+          <?php if ($section === 'posts'): ?>
+          <td><?php if (bethammi_valid_youtube_url($record['youtube_url'] ?? '')): ?><?php if (($record['youtube_url'] ?? '') !== ''): ?><a href="<?= bethammi_escape($record['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Open video ↗</a><?php else: ?>—<?php endif; ?><?php else: ?>—<?php endif; ?></td>
+          <?php endif; ?>
           <td><span class="status<?= $record['is_published'] ? ' status--published' : ' status--hidden' ?>"><?= $record['is_published'] ? 'Published' : 'Hidden' ?></span></td>
           <td class="record-actions"><a href="<?= bethammi_escape($section) ?>.php?edit=<?= (int) $record['id'] ?>">Edit</a>
             <form method="post" onsubmit="return confirm('Permanently delete this record?');">

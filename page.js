@@ -1,6 +1,37 @@
 const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector("#site-nav");
 
+function markActiveNavigationLink() {
+  if (!navigation) return;
+
+  const normalizePath = (pathname) => {
+    const path = pathname
+      .replace(/\/index(?:\.php|\.html)?$/i, "/")
+      .replace(/\.php$/i, "")
+      .replace(/\/+$/, "");
+    return path || "/";
+  };
+  const routeKey = (url) => {
+    const slug = url.searchParams.get("slug");
+    if (url.searchParams.get("type") === "page" && slug) return `page:${slug}`;
+    return `path:${normalizePath(url.pathname)}`;
+  };
+  const currentUrl = new URL(window.location.href);
+  const currentRoute = routeKey(currentUrl);
+
+  navigation.querySelectorAll("a").forEach((link) => {
+    const linkUrl = new URL(link.href, window.location.href);
+    if (linkUrl.origin !== currentUrl.origin || routeKey(linkUrl) !== currentRoute) return;
+
+    link.setAttribute("aria-current", "page");
+    link.closest(".nav-dropdown")?.classList.add("is-active");
+    link.closest(".nav-dropdown")?.querySelector(".nav-dropdown__toggle")
+      ?.setAttribute("aria-current", "true");
+  });
+}
+
+markActiveNavigationLink();
+
 function closeDropdowns(except) {
   document.querySelectorAll(".nav-dropdown.is-open").forEach((dropdown) => {
     if (dropdown !== except) {
@@ -30,8 +61,10 @@ if (menuButton && navigation) {
   });
 
   navigation.addEventListener("click", (event) => {
-    const link = event.target instanceof Element ? event.target.closest("a") : null;
-    if (link && window.matchMedia("(max-width: 680px)").matches) {
+    const target = event.target instanceof Element ? event.target : null;
+    const link = target?.closest("a");
+    const navLogin = target?.closest(".nav-login");
+    if ((link || navLogin) && window.matchMedia("(max-width: 1050px)").matches) {
       menuButton.setAttribute("aria-expanded", "false");
       menuButton.setAttribute("aria-label", "Open navigation");
       navigation.classList.remove("is-open");
@@ -177,6 +210,64 @@ function initializePartnersPage(partnersArticle) {
   animations.forEach((_animate, wrapper) => observer.observe(wrapper));
 }
 
+function initializeOutreachMetrics(outreachArticle) {
+  const section = outreachArticle.querySelector(".elementor-element-ptmngds");
+  if (!(section instanceof HTMLElement)) return;
+
+  const columns = [...section.querySelectorAll(":scope > .elementor-container > .elementor-column")].slice(1);
+  const counters = [...section.querySelectorAll(".elementor-counter-number")].map((element) => {
+    const match = (element.textContent ?? "").match(/\d[\d,]*/);
+    if (!match) return null;
+    return {
+      element,
+      text: match[0],
+      target: Number(match[0].replaceAll(",", ""))
+    };
+  }).filter((counter) => counter && Number.isFinite(counter.target));
+
+  section.classList.add("outreach-metrics-ready");
+  columns.forEach((column, index) => {
+    column.style.setProperty("--outreach-metric-delay", `${index * 110}ms`);
+  });
+
+  const animateMetrics = (animateNumbers) => {
+    section.classList.add("outreach-metrics-visible");
+    if (!animateNumbers) return;
+
+    const startTime = performance.now();
+    const duration = 1400;
+    const numberFormat = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 });
+    const animate = (now) => {
+      const progress = Math.min(1, (now - startTime) / duration);
+      const eased = 1 - ((1 - progress) ** 3);
+      counters.forEach(({ element, target, text }) => {
+        element.textContent = progress === 1
+          ? text
+          : numberFormat.format(Math.round(target * eased));
+      });
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+
+    counters.forEach(({ element }) => {
+      element.textContent = "0";
+    });
+    requestAnimationFrame(animate);
+  };
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    animateMetrics(false);
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    animateMetrics(true);
+    observer.disconnect();
+  }, { threshold: 0.2 });
+  observer.observe(section);
+}
+
 function safeLink(rawValue, pagePaths) {
   if (!rawValue || rawValue.startsWith("#")) return rawValue || "#";
   if (/^(mailto:|tel:)/i.test(rawValue)) return rawValue;
@@ -185,8 +276,12 @@ function safeLink(rawValue, pagePaths) {
     const url = new URL(rawValue, "https://www.bethammicfc.org/");
     if (url.protocol !== "http:" && url.protocol !== "https:") return "#";
     if (url.hostname === "www.bethammicfc.org" || url.hostname === "bethammicfc.org") {
-      if (url.pathname === "/" || url.pathname === "/home/") return `${siteRoot}${document.body.dataset.routeMode === "static" ? "index.html" : "index.php"}`;
-      const target = pagePaths.get(url.pathname)
+      const normalizedPath = url.pathname.replace(/\/+$/, "") || "/";
+      const lookupKey = normalizedPath.toLowerCase();
+      if (lookupKey === "/" || lookupKey === "/home") return `${siteRoot}${document.body.dataset.routeMode === "static" ? "index.html" : "index.php"}`;
+      const target = pagePaths.get(lookupKey)
+        ?? pagePaths.get(`${lookupKey}/`)
+        ?? pagePaths.get(url.pathname)
         ?? pagePaths.get(url.pathname.replace(/\/?$/, "/"));
       return target || `https://www.bethammicfc.org${url.pathname}${url.search}${url.hash}`;
     }
@@ -194,6 +289,93 @@ function safeLink(rawValue, pagePaths) {
   } catch {
     return "#";
   }
+}
+
+function normalizeLocalRoute(pathname) {
+  const normalized = pathname.replace(/\/+$/, "") || "/";
+  return normalized.toLowerCase();
+}
+
+function rewriteBethammiLinks() {
+  const localRoutes = new Map([
+    ["/", `${siteRoot}index`],
+    ["/home/", `${siteRoot}index`],
+    ["/about-us", `${siteRoot}pages/about-us`],
+    ["/about-us/", `${siteRoot}pages/about-us`],
+    ["/who-we-are", `${siteRoot}pages/who-we-are`],
+    ["/who-we-are/", `${siteRoot}pages/who-we-are`],
+    ["/our-parishes", `${siteRoot}pages/our-parishes`],
+    ["/our-parishes/", `${siteRoot}pages/our-parishes`],
+    ["/ministries", `${siteRoot}pages/ministries`],
+    ["/ministries/", `${siteRoot}pages/ministries`],
+    ["/outreach-evangelism", `${siteRoot}pages/outreach-evangelism`],
+    ["/outreach-evangelism/", `${siteRoot}pages/outreach-evangelism`],
+    ["/children-ministries", `${siteRoot}pages/children-ministries`],
+    ["/children-ministries/", `${siteRoot}pages/children-ministries`],
+    ["/women-ministries", `${siteRoot}pages/women-ministries`],
+    ["/women-ministries/", `${siteRoot}pages/women-ministries`],
+    ["/ltu", `${siteRoot}pages/ltu`],
+    ["/ltu/", `${siteRoot}pages/ltu`],
+    ["/partners", `${siteRoot}pages/partners`],
+    ["/partners/", `${siteRoot}pages/partners`],
+    ["/team", `${siteRoot}pages/team`],
+    ["/team/", `${siteRoot}pages/team`],
+    ["/our-staff", `${siteRoot}pages/team`],
+    ["/our-staff/", `${siteRoot}pages/team`],
+    ["/contact-us", `${siteRoot}pages/contact-us`],
+    ["/contact-us/", `${siteRoot}pages/contact-us`],
+    ["/donate", `${siteRoot}pages/donate`],
+    ["/donate/", `${siteRoot}pages/donate`],
+    ["/daily-bible-verses", `${siteRoot}pages/daily-bible-verses`],
+    ["/daily-bible-verses/", `${siteRoot}pages/daily-bible-verses`],
+    ["/media", `${siteRoot}page?type=page&slug=media`],
+    ["/media/", `${siteRoot}page?type=page&slug=media`],
+    ["/josh", `${siteRoot}pages/josh`],
+    ["/josh/", `${siteRoot}pages/josh`],
+    ["/joan", `${siteRoot}pages/joan`],
+    ["/joan/", `${siteRoot}pages/joan`],
+    ["/ep-kiramutse", `${siteRoot}pages/ep-kiramutse`],
+    ["/ep-kiramutse/", `${siteRoot}pages/ep-kiramutse`],
+    ["/pages/team", `${siteRoot}pages/team`],
+    ["/pages/about-us", `${siteRoot}pages/about-us`],
+    ["/pages/our-parishes", `${siteRoot}pages/our-parishes`],
+    ["/pages/ministries", `${siteRoot}pages/ministries`],
+    ["/pages/partners", `${siteRoot}pages/partners`],
+    ["/pages/contact-us", `${siteRoot}pages/contact-us`]
+  ]);
+
+  document.querySelectorAll("a[href]").forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href || !/^https?:\/\//i.test(href)) return;
+
+    try {
+      const url = new URL(href, window.location.href);
+      const host = url.hostname.toLowerCase();
+      const lookupKey = normalizeLocalRoute(url.pathname);
+      const localTarget = localRoutes.get(lookupKey) ?? localRoutes.get(`${lookupKey}/`);
+      if ((host === "www.bethammicfc.org" || host === "bethammicfc.org") && localTarget) {
+        const suffix = `${url.search}${url.hash}`;
+        const finalHref = `${localTarget}${suffix}`;
+        if (link.getAttribute("href") !== finalHref) {
+          link.setAttribute("href", finalHref);
+        }
+      }
+    } catch (error) {
+      console.warn("Could not normalize link:", href, error);
+    }
+  });
+}
+
+rewriteBethammiLinks();
+
+if (typeof MutationObserver !== "undefined") {
+  const linkObserver = new MutationObserver(() => rewriteBethammiLinks());
+  linkObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["href"]
+  });
 }
 
 function cleanContent(rawHtml, pagePaths) {
@@ -272,6 +454,26 @@ function cleanContent(rawHtml, pagePaths) {
   });
 
   return template.innerHTML;
+}
+
+function initializeMediaSocialIcons(mediaArticle) {
+  const iconNames = new Map([
+    ["facebook", "bi-facebook"],
+    ["twitter", "bi-twitter"],
+    ["instagram", "bi-instagram"],
+    ["whatsapp", "bi-whatsapp"],
+    ["youtube", "bi-youtube"]
+  ]);
+
+  mediaArticle.querySelectorAll(".elementor-social-icon").forEach((link) => {
+    const network = [...link.classList]
+      .find((className) => className.startsWith("elementor-social-icon-"))
+      ?.slice("elementor-social-icon-".length);
+    const icon = link.querySelector("i");
+    const iconName = network ? iconNames.get(network) : null;
+
+    if (icon && iconName) icon.className = `bi ${iconName}`;
+  });
 }
 
 function localPageLink(item, kind = "page") {
@@ -739,6 +941,84 @@ async function renderParishDirectory() {
   }
 }
 
+function initializeGalleryLightbox(gallery) {
+  if (!(gallery instanceof HTMLElement) || typeof HTMLDialogElement === "undefined") return;
+
+  const links = [...gallery.querySelectorAll(".gallery-item a[href]")];
+  if (!links.length) return;
+
+  const dialog = document.createElement("dialog");
+  dialog.className = "gallery-lightbox";
+  dialog.setAttribute("aria-label", "LTU photo gallery");
+
+  const closeButton = document.createElement("button");
+  closeButton.className = "gallery-lightbox__close";
+  closeButton.type = "button";
+  closeButton.setAttribute("aria-label", "Close image viewer");
+  closeButton.textContent = "Close";
+
+  const previousButton = document.createElement("button");
+  previousButton.className = "gallery-lightbox__navigate";
+  previousButton.type = "button";
+  previousButton.setAttribute("aria-label", "Previous image");
+  previousButton.textContent = "←";
+
+  const nextButton = document.createElement("button");
+  nextButton.className = "gallery-lightbox__navigate";
+  nextButton.type = "button";
+  nextButton.setAttribute("aria-label", "Next image");
+  nextButton.textContent = "→";
+
+  const figure = document.createElement("figure");
+  figure.className = "gallery-lightbox__figure";
+  const image = document.createElement("img");
+  const caption = document.createElement("figcaption");
+  caption.setAttribute("aria-live", "polite");
+  figure.append(image, caption);
+  dialog.append(closeButton, previousButton, figure, nextButton);
+  document.body.append(dialog);
+
+  let currentIndex = 0;
+  const showImage = (index) => {
+    currentIndex = (index + links.length) % links.length;
+    const link = links[currentIndex];
+    const thumbnail = link.querySelector("img");
+    image.src = link.href;
+    image.alt = thumbnail?.alt || link.getAttribute("data-elementor-lightbox-title") || "Gallery image";
+    caption.textContent = link.getAttribute("data-elementor-lightbox-title") || image.alt;
+  };
+  const openImage = (index) => {
+    showImage(index);
+    dialog.showModal();
+    closeButton.focus();
+  };
+
+  gallery.addEventListener("click", (event) => {
+    const link = event.target instanceof Element
+      ? event.target.closest(".gallery-item a[href]")
+      : null;
+    const index = links.indexOf(link);
+    if (index < 0) return;
+    event.preventDefault();
+    openImage(index);
+  });
+  previousButton.addEventListener("click", () => showImage(currentIndex - 1));
+  nextButton.addEventListener("click", () => showImage(currentIndex + 1));
+  closeButton.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      showImage(currentIndex - 1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      showImage(currentIndex + 1);
+    }
+  });
+}
+
 async function start() {
   const params = new URLSearchParams(window.location.search);
   const kind = document.body.dataset.contentKind || (params.get("type") === "post" ? "post" : "page");
@@ -779,6 +1059,19 @@ async function start() {
     });
     article.innerHTML = cleanContent(source.innerHTML, pagePaths);
     source.remove();
+    if (document.body.dataset.contentSlug === "ltu") {
+      initializeGalleryLightbox(article.querySelector(".ltu-gallery"));
+    } else if (document.body.dataset.contentSlug === "children-ministries") {
+      initializeGalleryLightbox(article.querySelector(".children-gallery"));
+      article.querySelectorAll(".elementor-progress-bar[data-max]").forEach((bar) => {
+        const maximum = Number(bar.dataset.max);
+        if (Number.isFinite(maximum)) {
+          bar.style.width = `${Math.min(100, Math.max(0, maximum))}%`;
+        }
+      });
+    } else if (document.body.dataset.contentSlug === "outreach-evangelism") {
+      initializeOutreachMetrics(article);
+    }
     if (document.body.dataset.contentSlug === "partners") {
       initializePartnersPage(article);
     } else if (document.body.dataset.contentSlug === "team") {
@@ -877,6 +1170,7 @@ async function start() {
       renderArchive(posts);
     } else if (kind === "page" && slug === "media") {
       document.querySelector("#feature-media").hidden = false;
+      initializeMediaSocialIcons(article);
     } else if (kind === "page" && (slug === "contact-us" || slug === "contact")) {
       createContactOptions();
     } else if (kind === "page" && slug === "our-staff" && !staticRoutes) {

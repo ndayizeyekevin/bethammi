@@ -71,3 +71,27 @@ function bethammi_valid_image_url($value)
     }
     return in_array(strtolower((string) parse_url($value, PHP_URL_SCHEME)), ['http', 'https'], true);
 }
+
+function bethammi_valid_youtube_url($value)
+{
+    if ($value === '') {
+        return true;
+    }
+
+    if (filter_var($value, FILTER_VALIDATE_URL) === false) {
+        return false;
+    }
+
+    $scheme = strtolower((string) parse_url($value, PHP_URL_SCHEME));
+    $host = strtolower((string) parse_url($value, PHP_URL_HOST));
+    $allowedHosts = [
+        'youtube.com', 'www.youtube.com', 'm.youtube.com',
+        'youtu.be', 'www.youtu.be',
+        'youtube-nocookie.com', 'www.youtube-nocookie.com',
+    ];
+
+    return $scheme === 'https'
+        && in_array($host, $allowedHosts, true)
+        && parse_url($value, PHP_URL_USER) === null
+        && parse_url($value, PHP_URL_PASS) === null;
+}

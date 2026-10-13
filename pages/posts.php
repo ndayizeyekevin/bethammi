@@ -10,7 +10,7 @@ $post = null;
 $posts = [];
 $pageError = '';
 $isSinglePost = isset($_GET['slug']) || isset($_GET['id']);
-$pageScripts = $isSinglePost ? [] : ['posts-archive.js'];
+$pageScripts = $isSinglePost ? ['script.js'] : ['script.js', 'posts-archive.js'];
 
 try {
     if ($isSinglePost) {
@@ -79,13 +79,20 @@ require __DIR__ . '/../includes/site-header.php';
     <div class="container page-message" role="status"><?= bethammi_escape($pageError) ?></div>
     <?php endif; ?>
     <?php if ($post !== null): ?>
-    <section class="container page-layout">
-      <article class="page-article">
-        <div class="page-meta">Published <?= bethammi_escape(date('j F Y', strtotime($post['published_at']))) ?></div>
+    <section class="container page-layout post-page-layout">
+      <article class="page-article post-article">
         <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
         <img class="post-featured-image" src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>">
         <?php endif; ?>
+        <div class="page-meta">Published <?= bethammi_escape(date('j F Y', strtotime($post['published_at']))) ?></div>
+        <h2 class="post-article__title"><?= bethammi_escape($post['title']) ?></h2>
+        <?php if ($post['short_info'] !== ''): ?>
+        <p class="post-article__summary"><?= bethammi_escape($post['short_info']) ?></p>
+        <?php endif; ?>
         <div class="remote-content"><?= $postContentHtml ?></div>
+        <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
+        <a class="youtube-video-link post-youtube-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch this message on YouTube <span aria-hidden="true">↗</span></a>
+        <?php endif; ?>
       </article>
       <aside class="page-sidebar">
         <div class="sidebar-card sidebar-card--visit">
@@ -109,7 +116,7 @@ require __DIR__ . '/../includes/site-header.php';
     <?php if ($pageError !== ''): ?>
     <div class="container page-message" role="status"><?= bethammi_escape($pageError) ?></div>
     <?php endif; ?>
-    <section class="container archive">
+    <section class="container archive posts-archive">
       <div class="archive__heading">
         <div><p class="eyebrow"><span></span> Stories and updates</p><h2>Faith in <em>action.</em></h2><p>Read the latest news, sermons, services, and events from our church.</p></div>
         <label class="archive-search"><span>Search stories</span><input id="posts-search" type="search" placeholder="Try a title or date…" autocomplete="off"><span class="archive-search__icon" aria-hidden="true">⌕</span></label>
@@ -119,7 +126,7 @@ require __DIR__ . '/../includes/site-header.php';
         <?php foreach ($posts as $post): ?>
         <article class="archive-card" data-search="<?= bethammi_escape(mb_strtolower($post['title'] . ' ' . $post['short_info'] . ' ' . $post['published_at'], 'UTF-8')) ?>">
           <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
-          <div class="archive-card__image"><img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy"></div>
+          <div class="archive-card__image"><a href="posts?slug=<?= rawurlencode($post['slug']) ?>"><img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy"></a></div>
           <?php else: ?>
           <div class="archive-card__image" aria-hidden="true"></div>
           <?php endif; ?>
@@ -127,6 +134,9 @@ require __DIR__ . '/../includes/site-header.php';
             <p class="story-card__meta">BETH AMMI <span>·</span> <?= bethammi_escape(date('j F Y', strtotime($post['published_at']))) ?></p>
             <h3><?= bethammi_escape($post['title']) ?></h3>
             <p><?= bethammi_escape($post['short_info']) ?></p>
+            <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
+            <a class="youtube-video-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>
+            <?php endif; ?>
             <a class="story-card__link" href="posts?slug=<?= rawurlencode($post['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
           </div>
         </article>

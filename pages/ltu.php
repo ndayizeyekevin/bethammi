@@ -37,7 +37,7 @@ require __DIR__ . '/../includes/site-header.php';
                 <div class="elementor-widget-wrap elementor-element-populated">
                       <div class="elementor-element elementor-element-d6e46e0 elementor-widget elementor-widget-heading" data-id="d6e46e0" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
-                    <h2 class="elementor-heading-title elementor-size-default">LTU in Actions</h2>        </div>
+                    <h2 class="elementor-heading-title elementor-size-default">Lift Them Up in Action</h2>        </div>
                   </div>
                     </div>
               </div>
@@ -50,7 +50,7 @@ require __DIR__ . '/../includes/site-header.php';
                       <div class="elementor-element elementor-element-4defed7 elementor-widget elementor-widget-image-gallery" data-id="4defed7" data-element_type="widget" data-e-type="widget" data-widget_type="image-gallery.default">
                   <div class="elementor-widget-container">
                         <div class="elementor-image-gallery">
-                <div id='gallery-1' class='gallery galleryid-2092 gallery-columns-4 gallery-size-thumbnail'><figure class='gallery-item'>
+                <div id='gallery-1' class='gallery ltu-gallery galleryid-2092 gallery-columns-4 gallery-size-thumbnail'><figure class='gallery-item'>
                 <div class='gallery-icon portrait'>
                   <a data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="4defed7" data-elementor-lightbox-title="WhatsApp Image 2023-01-12 at 16.22.16" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTk2NiwidXJsIjoiaHR0cHM6XC9cL3d3dy5iZXRoYW1taWNmYy5vcmdcL3dwLWNvbnRlbnRcL3VwbG9hZHNcLzIwMjNcLzAxXC9XaGF0c0FwcC1JbWFnZS0yMDIzLTAxLTEyLWF0LTE2LjIyLjE2LmpwZWciLCJzbGlkZXNob3ciOiI0ZGVmZWQ3In0%3D" href='https://www.bethammicfc.org/wp-content/uploads/2023/01/WhatsApp-Image-2023-01-12-at-16.22.16.jpeg'><img loading="lazy" decoding="async" width="150" height="150" src="https://www.bethammicfc.org/wp-content/uploads/2023/01/WhatsApp-Image-2023-01-12-at-16.22.16-150x150.jpeg" class="attachment-thumbnail size-thumbnail" alt="" srcset="https://www.bethammicfc.org/wp-content/uploads/2023/01/WhatsApp-Image-2023-01-12-at-16.22.16-150x150.jpeg 150w, https://www.bethammicfc.org/wp-content/uploads/2023/01/WhatsApp-Image-2023-01-12-at-16.22.16-300x300.jpeg 300w, https://www.bethammicfc.org/wp-content/uploads/2023/01/WhatsApp-Image-2023-01-12-at-16.22.16-100x100.jpeg 100w" sizes="(max-width: 150px) 100vw, 150px" /></a>
                 </div></figure><figure class='gallery-item'>
