@@ -10,7 +10,7 @@ function bethammi_static_pages()
         'outreach-evangelism' => 'Outreach evangelism',
         'children-ministries' => 'Children Ministries',
         'women-ministries' => 'Women Ministries',
-        'ltu' => 'LTU',
+        'ltu' => 'Lift Them Up',
         'partners' => 'Partners',
         'josh' => 'Josh',
         'joan' => 'Joan',

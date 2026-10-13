@@ -177,6 +177,64 @@ function initializePartnersPage(partnersArticle) {
   animations.forEach((_animate, wrapper) => observer.observe(wrapper));
 }
 
+function initializeOutreachMetrics(outreachArticle) {
+  const section = outreachArticle.querySelector(".elementor-element-ptmngds");
+  if (!(section instanceof HTMLElement)) return;
+
+  const columns = [...section.querySelectorAll(":scope > .elementor-container > .elementor-column")].slice(1);
+  const counters = [...section.querySelectorAll(".elementor-counter-number")].map((element) => {
+    const match = (element.textContent ?? "").match(/\d[\d,]*/);
+    if (!match) return null;
+    return {
+      element,
+      text: match[0],
+      target: Number(match[0].replaceAll(",", ""))
+    };
+  }).filter((counter) => counter && Number.isFinite(counter.target));
+
+  section.classList.add("outreach-metrics-ready");
+  columns.forEach((column, index) => {
+    column.style.setProperty("--outreach-metric-delay", `${index * 110}ms`);
+  });
+
+  const animateMetrics = (animateNumbers) => {
+    section.classList.add("outreach-metrics-visible");
+    if (!animateNumbers) return;
+
+    const startTime = performance.now();
+    const duration = 1400;
+    const numberFormat = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 });
+    const animate = (now) => {
+      const progress = Math.min(1, (now - startTime) / duration);
+      const eased = 1 - ((1 - progress) ** 3);
+      counters.forEach(({ element, target, text }) => {
+        element.textContent = progress === 1
+          ? text
+          : numberFormat.format(Math.round(target * eased));
+      });
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+
+    counters.forEach(({ element }) => {
+      element.textContent = "0";
+    });
+    requestAnimationFrame(animate);
+  };
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    animateMetrics(false);
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    animateMetrics(true);
+    observer.disconnect();
+  }, { threshold: 0.2 });
+  observer.observe(section);
+}
+
 function safeLink(rawValue, pagePaths) {
   if (!rawValue || rawValue.startsWith("#")) return rawValue || "#";
   if (/^(mailto:|tel:)/i.test(rawValue)) return rawValue;
@@ -958,6 +1016,8 @@ async function start() {
           bar.style.width = `${Math.min(100, Math.max(0, maximum))}%`;
         }
       });
+    } else if (document.body.dataset.contentSlug === "outreach-evangelism") {
+      initializeOutreachMetrics(article);
     }
     if (document.body.dataset.contentSlug === "partners") {
       initializePartnersPage(article);

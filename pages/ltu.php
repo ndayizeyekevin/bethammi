@@ -37,7 +37,7 @@ require __DIR__ . '/../includes/site-header.php';
                 <div class="elementor-widget-wrap elementor-element-populated">
                       <div class="elementor-element elementor-element-d6e46e0 elementor-widget elementor-widget-heading" data-id="d6e46e0" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                   <div class="elementor-widget-container">
-                    <h2 class="elementor-heading-title elementor-size-default">LTU in Actions</h2>        </div>
+                    <h2 class="elementor-heading-title elementor-size-default">Lift Them Up in Action</h2>        </div>
                   </div>
                     </div>
               </div>
