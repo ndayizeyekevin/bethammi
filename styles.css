@@ -371,6 +371,19 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
 .remote-content table { width: 100%; border-collapse: collapse; margin-block: 20px; font-size: 12px; }
 .remote-content th, .remote-content td { padding: 10px; border: 1px solid #deded5; text-align: left; }
 .remote-content th { background: #efeee8; color: var(--navy); }
+body[data-content-slug="media"] #page-content .gallery.gallery-columns-10 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 0; }
+body[data-content-slug="media"] #page-content .gallery-item { min-width: 0; width: auto; margin: 0; }
+body[data-content-slug="media"] #page-content .gallery-icon a { display: block; overflow: hidden; background: #e9e6de; }
+body[data-content-slug="media"] #page-content .gallery-icon img { width: 100%; height: clamp(150px, 18vw, 220px); margin: 0; object-fit: cover; transition: transform .3s ease; }
+body[data-content-slug="media"] #page-content .gallery-icon a:hover img,
+body[data-content-slug="media"] #page-content .gallery-icon a:focus-visible img { transform: scale(1.04); }
+body[data-content-slug="media"] #page-content .elementor-social-icons-wrapper { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+body[data-content-slug="media"] #page-content .elementor-social-icons-wrapper .elementor-grid-item { display: block; }
+body[data-content-slug="media"] #page-content .elementor-social-icon { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid #ded9ce; border-radius: 50%; background: var(--white); color: var(--navy); text-decoration: none; transition: border-color .2s ease, background .2s ease, color .2s ease, transform .2s ease; }
+body[data-content-slug="media"] #page-content .elementor-social-icon:hover,
+body[data-content-slug="media"] #page-content .elementor-social-icon:focus-visible { transform: translateY(-2px); border-color: var(--navy); background: var(--navy); color: var(--white); }
+body[data-content-slug="media"] #page-content .elementor-social-icon .bi { font-size: 18px; line-height: 1; }
+body[data-content-slug="media"] #page-content .elementor-screen-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .page-layout--who-we-are .page-article,
 .page-layout--who-we-are .remote-content { min-width: 0; width: 100%; }
 .page-layout--who-we-are > .page-article > .remote-content > .elementor > .elementor-element-1ef2fe8 { position: relative; z-index: 1; margin-bottom: 34px; padding: 12px; border: 1px solid #e7e3d9; background: var(--white); box-shadow: 0 10px 28px rgb(18 39 38 / 5%); }
@@ -647,6 +660,8 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
   .nav-dropdown__menu { position: static; min-width: 0; gap: 0; padding: 0 0 4px 12px; border: 0; background: transparent; box-shadow: none; }
   .nav-dropdown__menu::before { display: none; }
   .site-nav .nav-dropdown__menu a { padding: 10px 12px; font-size: 12px; }
+  body[data-content-slug="media"] #page-content .gallery.gallery-columns-10 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; }
+  body[data-content-slug="media"] #page-content .gallery-icon img { height: 180px; }
 }
 @media (max-width: 900px) {
   .container { width: min(100% - 48px, 760px); }
@@ -769,6 +784,8 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
   .post-article__title { font-size: 25px; }
   .post-article__summary { font-size: 13px; }
   .post-article .post-featured-image { max-height: 360px; margin-bottom: 19px; }
+  body[data-content-slug="media"] #page-content .gallery.gallery-columns-10 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  body[data-content-slug="media"] #page-content .gallery-icon img { height: 160px; }
   .ltu-gallery.gallery-columns-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .elementor-element-szl7ac5 { padding: 18px; }
   body[data-content-slug="children-ministries"] #page-content > .elementor-358 .elementor-inner-section.elementor-element-e49cb6c > .elementor-container { grid-template-columns: minmax(0, 1fr); }

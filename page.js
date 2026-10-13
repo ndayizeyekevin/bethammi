@@ -423,6 +423,26 @@ function cleanContent(rawHtml, pagePaths) {
   return template.innerHTML;
 }
 
+function initializeMediaSocialIcons(mediaArticle) {
+  const iconNames = new Map([
+    ["facebook", "bi-facebook"],
+    ["twitter", "bi-twitter"],
+    ["instagram", "bi-instagram"],
+    ["whatsapp", "bi-whatsapp"],
+    ["youtube", "bi-youtube"]
+  ]);
+
+  mediaArticle.querySelectorAll(".elementor-social-icon").forEach((link) => {
+    const network = [...link.classList]
+      .find((className) => className.startsWith("elementor-social-icon-"))
+      ?.slice("elementor-social-icon-".length);
+    const icon = link.querySelector("i");
+    const iconName = network ? iconNames.get(network) : null;
+
+    if (icon && iconName) icon.className = `bi ${iconName}`;
+  });
+}
+
 function localPageLink(item, kind = "page") {
   if (kind === "page" && ["contact", "contact-us"].includes(item.slug)) {
     return `${siteRoot}pages/contact-us`;
@@ -1117,6 +1137,7 @@ async function start() {
       renderArchive(posts);
     } else if (kind === "page" && slug === "media") {
       document.querySelector("#feature-media").hidden = false;
+      initializeMediaSocialIcons(article);
     } else if (kind === "page" && (slug === "contact-us" || slug === "contact")) {
       createContactOptions();
     } else if (kind === "page" && slug === "our-staff" && !staticRoutes) {
