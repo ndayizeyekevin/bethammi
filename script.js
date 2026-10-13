@@ -67,8 +67,10 @@ if (menuButton && navigation) {
   });
 
   navigation.addEventListener("click", (event) => {
-    const link = event.target instanceof Element ? event.target.closest("a") : null;
-    if (link && window.matchMedia("(max-width: 1050px)").matches) {
+    const target = event.target instanceof Element ? event.target : null;
+    const link = target?.closest("a");
+    const navLogin = target?.closest(".nav-login");
+    if ((link || navLogin) && window.matchMedia("(max-width: 1050px)").matches) {
       menuButton.setAttribute("aria-expanded", "false");
       menuButton.setAttribute("aria-label", "Open navigation");
       navigation.classList.remove("is-open");

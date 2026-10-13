@@ -54,8 +54,10 @@ $siteRoot = $siteRoot ?? '';
         <a href="<?= bethammi_escape($siteRoot) ?>pages/posts">News &amp; sermons</a>
         <a href="<?= bethammi_escape($siteRoot) ?>page?type=page&amp;slug=media">Media</a>
         <a href="<?= bethammi_escape($siteRoot) ?>pages/contact-us">Contact</a>
-        <a class="nav-visit" href="<?= bethammi_escape($siteRoot) ?>pages/donate" data-bs-toggle="modal" data-bs-target="#donateModal" aria-haspopup="dialog">Give <span aria-hidden="true">↗</span></a>
+        <a class="nav-visit" href="<?= bethammi_escape($siteRoot) ?>pages/donate" data-bs-toggle="modal" data-bs-target="#donateModal" aria-haspopup="dialog"><i class="bi bi-heart-fill" aria-hidden="true"></i> Donate</a>
+        <button class="nav-login" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
       </nav>
+      <a class="btn header-donate" href="<?= bethammi_escape($siteRoot) ?>pages/donate" data-bs-toggle="modal" data-bs-target="#donateModal" aria-haspopup="dialog"><i class="bi bi-heart-fill" aria-hidden="true"></i> Donate</a>
       <button class="btn header-login" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
     </div>
   </header>
