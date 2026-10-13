@@ -79,8 +79,8 @@ require __DIR__ . '/../includes/site-header.php';
     <div class="container page-message" role="status"><?= bethammi_escape($pageError) ?></div>
     <?php endif; ?>
     <?php if ($post !== null): ?>
-    <section class="container page-layout">
-      <article class="page-article">
+    <section class="container page-layout post-page-layout">
+      <article class="page-article post-article">
         <div class="page-meta">Published <?= bethammi_escape(date('j F Y', strtotime($post['published_at']))) ?></div>
         <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
         <img class="post-featured-image" src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>">
@@ -109,7 +109,7 @@ require __DIR__ . '/../includes/site-header.php';
     <?php if ($pageError !== ''): ?>
     <div class="container page-message" role="status"><?= bethammi_escape($pageError) ?></div>
     <?php endif; ?>
-    <section class="container archive">
+    <section class="container archive posts-archive">
       <div class="archive__heading">
         <div><p class="eyebrow"><span></span> Stories and updates</p><h2>Faith in <em>action.</em></h2><p>Read the latest news, sermons, services, and events from our church.</p></div>
         <label class="archive-search"><span>Search stories</span><input id="posts-search" type="search" placeholder="Try a title or date…" autocomplete="off"><span class="archive-search__icon" aria-hidden="true">⌕</span></label>

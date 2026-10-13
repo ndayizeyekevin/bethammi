@@ -525,6 +525,30 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
 .archive-card__body { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 21px; }
 .archive-card__body h3 { margin: 0 0 10px; color: var(--ink); font-family: var(--display); font-size: 17px; font-weight: 650; letter-spacing: -.025em; line-height: 1.35; }
 .archive-card__body > p:not(.story-card__meta) { margin: 0 0 20px; color: #747c78; font-size: 11px; }
+.posts-archive .archive__heading { align-items: center; margin-bottom: 36px; }
+.posts-archive .archive__heading > div { max-width: 600px; }
+.posts-archive .archive__heading h2 { margin-bottom: 8px; }
+.posts-archive .archive__heading > div > p:last-child { max-width: 460px; margin-bottom: 0; line-height: 1.7; }
+.posts-archive .archive-search { flex: 0 0 min(330px, 36%); }
+.posts-archive .archive-grid { gap: 22px; }
+.posts-archive .archive-card { overflow: hidden; border: 1px solid #e6e3da; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+.posts-archive .archive-card:hover,
+.posts-archive .archive-card:focus-within { transform: translateY(-3px); border-color: #c8b58f; box-shadow: 0 12px 26px rgba(18,39,38,.08); }
+.posts-archive .archive-card__image { height: auto; aspect-ratio: 16 / 10; }
+.posts-archive .archive-card__image img { display: block; transition: transform .35s ease; }
+.posts-archive .archive-card:hover .archive-card__image img { transform: scale(1.035); }
+.posts-archive .archive-card__body { padding: 22px; }
+.posts-archive .archive-card__body .story-card__meta { margin: 0 0 11px; color: #8b6b3b; font-size: 9px; font-weight: 700; letter-spacing: .08em; }
+.posts-archive .archive-card__body h3 { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.posts-archive .archive-card__body > p:not(.story-card__meta) { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-height: 1.7; }
+.post-page-layout { grid-template-columns: minmax(0, 1fr) 260px; gap: 38px; }
+.post-article { min-width: 0; padding: clamp(20px, 3vw, 38px); border: 1px solid #e6e3da; background: var(--white); }
+.post-article .page-meta { margin-bottom: 22px; }
+.post-article .post-featured-image { max-height: 500px; background: #efeee8; object-fit: contain; }
+.post-article .remote-content { max-width: 760px; margin-inline: auto; line-height: 1.9; }
+.post-article .remote-content h2,
+.post-article .remote-content h3,
+.post-article .remote-content h4 { margin-top: 34px; }
 .archive-empty { padding: 20px; background: #efeee8; color: #65716d; font-size: 12px; }
 .feature-media { padding-block: 70px; }
 .feature-media__heading { margin-bottom: 29px; }
@@ -626,6 +650,10 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
   .footer__top { grid-template-columns: 1.1fr 1fr 1fr; }
   .footer__social { grid-column: 3; }
   .page-layout { grid-template-columns: minmax(0, 1fr) 235px; gap: 28px; }
+  .post-page-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .post-page-layout .page-sidebar { position: static; }
+  .posts-archive .archive__heading { align-items: stretch; flex-direction: column; gap: 16px; }
+  .posts-archive .archive-search { width: 100%; flex-basis: auto; }
   body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .elementor-element-szl7ac5 > .elementor-container { grid-template-columns: minmax(0, 1fr); }
   body[data-content-slug="children-ministries"] #page-content > .elementor-358 .elementor-inner-section.elementor-element-e49cb6c > .elementor-container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   body[data-content-slug="children-ministries"] #page-content > .elementor-358 .elementor-inner-section.elementor-element-e49cb6c > .elementor-container > .elementor-column:last-child { grid-column: 1 / -1; }
@@ -720,6 +748,9 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
   .page-banner h1 { font-size: clamp(38px, 10vw, 55px); }
   .page-banner__summary { font-size: 12px; }
   .page-layout { grid-template-columns: 1fr; gap: 28px; padding-block: 39px 61px; }
+  .post-page-layout { gap: 18px; padding-block: 30px 50px; }
+  .post-article { padding: 18px; }
+  .post-article .post-featured-image { max-height: 360px; margin-bottom: 19px; }
   .ltu-gallery.gallery-columns-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .elementor-element-szl7ac5 { padding: 18px; }
   body[data-content-slug="children-ministries"] #page-content > .elementor-358 .elementor-inner-section.elementor-element-e49cb6c > .elementor-container { grid-template-columns: minmax(0, 1fr); }
@@ -794,9 +825,11 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
   .archive__heading { align-items: stretch; flex-direction: column; gap: 14px; }
   .archive-search { width: 100%; }
   .archive-grid { grid-template-columns: 1fr; gap: 14px; }
-  .archive-card { display: grid; grid-template-columns: minmax(95px, .7fr) 1.3fr; }
-  .archive-card__image { height: 100%; min-height: 160px; }
-  .archive-card__body { padding: 16px; }
+  .posts-archive { padding-block: 42px 58px; }
+  .posts-archive .archive-card { display: flex; }
+  .posts-archive .archive-card__image { width: 100%; min-height: 0; aspect-ratio: 16 / 9; }
+  .posts-archive .archive-card__body { padding: 18px; }
+  .posts-archive .archive-card__body > p:not(.story-card__meta) { -webkit-line-clamp: 3; }
   .archive-card__body h3 { font-size: 15px; }
   .directory-card { grid-template-columns: minmax(95px, .65fr) 1fr; }
   .directory-card > img { min-height: 150px; }
