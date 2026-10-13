@@ -219,6 +219,14 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .ltu-gallery .gallery-item { width: auto; margin: 0; }
 .ltu-gallery .gallery-icon a { display: block; }
 .ltu-gallery .gallery-icon img { display: block; width: 100%; height: clamp(190px, 24vw, 280px); object-fit: cover; }
+.ltu-lightbox { width: min(1100px, calc(100% - 32px)); max-width: none; max-height: calc(100% - 32px); padding: 46px 18px 18px; border: 1px solid rgba(255,255,255,.22); background: #102b31; color: #fff; }
+.ltu-lightbox::backdrop { background: rgba(5,16,18,.88); }
+.ltu-lightbox[open] { display: grid; grid-template-columns: 48px minmax(0, 1fr) 48px; grid-template-rows: minmax(0, 1fr); align-items: center; gap: 12px; }
+.ltu-lightbox__close { position: absolute; top: 10px; right: 12px; padding: 7px 10px; border: 1px solid rgba(255,255,255,.3); background: transparent; color: inherit; font: inherit; font-size: 12px; cursor: pointer; }
+.ltu-lightbox__navigate { width: 44px; height: 48px; border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.08); color: inherit; font-size: 26px; cursor: pointer; }
+.ltu-lightbox__figure { min-width: 0; margin: 0; text-align: center; }
+.ltu-lightbox__figure img { display: block; width: 100%; max-height: calc(100vh - 120px); object-fit: contain; }
+.ltu-lightbox__figure figcaption { margin-top: 10px; color: rgba(255,255,255,.8); font-size: 12px; }
 .partners-content > .elementor > .partners-partner { position: relative; margin-block: 20px; padding: clamp(22px, 3.2vw, 42px); overflow: hidden; border: 1px solid rgba(18,52,59,.09); border-radius: 8px; background: var(--white); box-shadow: 0 12px 32px rgba(18,39,38,.055); transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease; }
 .partners-content > .elementor > .partners-partner::before { position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--partner-accent); content: ""; }
 .partners-content > .elementor > .partners-partner--soft { background: linear-gradient(115deg, #f5f2ea 0%, #fff 54%); }
@@ -641,6 +649,9 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
   .page-banner__summary { font-size: 12px; }
   .page-layout { grid-template-columns: 1fr; gap: 28px; padding-block: 39px 61px; }
   .ltu-gallery.gallery-columns-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .ltu-lightbox { width: calc(100% - 16px); padding: 44px 8px 12px; }
+  .ltu-lightbox[open] { grid-template-columns: 36px minmax(0, 1fr) 36px; gap: 6px; }
+  .ltu-lightbox__navigate { width: 34px; height: 44px; }
   .page-layout--parishes { gap: 24px; }
   .page-layout--who-we-are { padding-block: 28px 60px; }
   .page-layout--who-we-are > .page-article > .remote-content > .elementor > .elementor-element-1ef2fe8 { margin-bottom: 24px; padding: 8px; }

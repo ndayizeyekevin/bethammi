@@ -830,6 +830,84 @@ async function renderParishDirectory() {
   }
 }
 
+function initializeGalleryLightbox(gallery) {
+  if (!(gallery instanceof HTMLElement) || typeof HTMLDialogElement === "undefined") return;
+
+  const links = [...gallery.querySelectorAll(".gallery-item a[href]")];
+  if (!links.length) return;
+
+  const dialog = document.createElement("dialog");
+  dialog.className = "ltu-lightbox";
+  dialog.setAttribute("aria-label", "LTU photo gallery");
+
+  const closeButton = document.createElement("button");
+  closeButton.className = "ltu-lightbox__close";
+  closeButton.type = "button";
+  closeButton.setAttribute("aria-label", "Close image viewer");
+  closeButton.textContent = "Close";
+
+  const previousButton = document.createElement("button");
+  previousButton.className = "ltu-lightbox__navigate";
+  previousButton.type = "button";
+  previousButton.setAttribute("aria-label", "Previous image");
+  previousButton.textContent = "←";
+
+  const nextButton = document.createElement("button");
+  nextButton.className = "ltu-lightbox__navigate";
+  nextButton.type = "button";
+  nextButton.setAttribute("aria-label", "Next image");
+  nextButton.textContent = "→";
+
+  const figure = document.createElement("figure");
+  figure.className = "ltu-lightbox__figure";
+  const image = document.createElement("img");
+  const caption = document.createElement("figcaption");
+  caption.setAttribute("aria-live", "polite");
+  figure.append(image, caption);
+  dialog.append(closeButton, previousButton, figure, nextButton);
+  document.body.append(dialog);
+
+  let currentIndex = 0;
+  const showImage = (index) => {
+    currentIndex = (index + links.length) % links.length;
+    const link = links[currentIndex];
+    const thumbnail = link.querySelector("img");
+    image.src = link.href;
+    image.alt = thumbnail?.alt || link.getAttribute("data-elementor-lightbox-title") || "Gallery image";
+    caption.textContent = link.getAttribute("data-elementor-lightbox-title") || image.alt;
+  };
+  const openImage = (index) => {
+    showImage(index);
+    dialog.showModal();
+    closeButton.focus();
+  };
+
+  gallery.addEventListener("click", (event) => {
+    const link = event.target instanceof Element
+      ? event.target.closest(".gallery-item a[href]")
+      : null;
+    const index = links.indexOf(link);
+    if (index < 0) return;
+    event.preventDefault();
+    openImage(index);
+  });
+  previousButton.addEventListener("click", () => showImage(currentIndex - 1));
+  nextButton.addEventListener("click", () => showImage(currentIndex + 1));
+  closeButton.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      showImage(currentIndex - 1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      showImage(currentIndex + 1);
+    }
+  });
+}
+
 async function start() {
   const params = new URLSearchParams(window.location.search);
   const kind = document.body.dataset.contentKind || (params.get("type") === "post" ? "post" : "page");
@@ -870,6 +948,9 @@ async function start() {
     });
     article.innerHTML = cleanContent(source.innerHTML, pagePaths);
     source.remove();
+    if (document.body.dataset.contentSlug === "ltu") {
+      initializeGalleryLightbox(article.querySelector(".ltu-gallery"));
+    }
     if (document.body.dataset.contentSlug === "partners") {
       initializePartnersPage(article);
     } else if (document.body.dataset.contentSlug === "team") {
