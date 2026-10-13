@@ -26,9 +26,9 @@ $sections = [
     ],
 ];
 
-function bethammi_admin_redirect($query)
+function bethammi_admin_redirect($url)
 {
-    header('Location: index.php?' . $query);
+    header('Location: ' . $url);
     exit;
 }
 
@@ -69,9 +69,22 @@ function bethammi_admin_image_field($name, $label)
 $message = '';
 $error = '';
 $isAuthenticated = isset($_SESSION['admin_user']);
-$section = isset($_GET['section']) && is_string($_GET['section']) && isset($sections[$_GET['section']])
-    ? $_GET['section']
-    : 'posts';
+$adminPage = isset($adminPage) && in_array($adminPage, ['dashboard', 'posts', 'team', 'parishes'], true)
+    ? $adminPage
+    : 'dashboard';
+$section = $adminPage === 'dashboard' ? 'posts' : $adminPage;
+
+if (
+    $_SERVER['REQUEST_METHOD'] === 'GET'
+    && basename((string) ($_SERVER['SCRIPT_NAME'] ?? '')) === 'index.php'
+    && isset($_GET['section'])
+    && is_string($_GET['section'])
+    && isset($sections[$_GET['section']])
+) {
+    $legacyQuery = array_intersect_key($_GET, array_flip(['edit', 'saved', 'deleted']));
+    $queryString = http_build_query($legacyQuery);
+    bethammi_admin_redirect($_GET['section'] . '.php' . ($queryString !== '' ? '?' . $queryString : ''));
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!bethammi_check_admin_csrf()) {
@@ -110,13 +123,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         )->execute(['username' => $username, 'ip_hash' => $ipHash]);
                         bethammi_db()->prepare('UPDATE admin_users SET last_login_at = NOW() WHERE id = :id')
                             ->execute(['id' => $user['id']]);
-                        bethammi_admin_redirect('section=posts');
+                        bethammi_admin_redirect('dashboard.php');
                     }
                 }
             } elseif ($isAuthenticated && $action === 'logout') {
                 $_SESSION = [];
                 session_destroy();
-                bethammi_admin_redirect('logged-out=1');
+                bethammi_admin_redirect('index.php?logged-out=1');
             } elseif ($isAuthenticated && $action === 'save') {
                 $section = is_string($_POST['section'] ?? null) && isset($sections[$_POST['section']])
                     ? $_POST['section']
@@ -205,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $sql = 'INSERT INTO `' . $entity['table'] . '` (' . implode(', ', $columnNames) . ') VALUES (' . implode(', ', $placeholders) . ')';
                 }
                 bethammi_db()->prepare($sql)->execute($values);
-                bethammi_admin_redirect('section=' . $section . '&saved=1');
+                bethammi_admin_redirect($section . '.php?saved=1');
             } elseif ($isAuthenticated && $action === 'delete') {
                 $section = is_string($_POST['section'] ?? null) && isset($sections[$_POST['section']])
                     ? $_POST['section']
@@ -217,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $entity = $sections[$section];
                 bethammi_db()->prepare('DELETE FROM `' . $entity['table'] . '` WHERE id = :id')
                     ->execute(['id' => $recordId]);
-                bethammi_admin_redirect('section=' . $section . '&deleted=1');
+                bethammi_admin_redirect($section . '.php?deleted=1');
             }
         } catch (InvalidArgumentException $exception) {
             $error = $exception->getMessage();
@@ -240,7 +253,7 @@ if (isset($_GET['deleted'])) $message = 'Record deleted.';
 
 $selectedRecord = [];
 $records = [];
-if ($isAuthenticated) {
+if ($isAuthenticated && $adminPage !== 'dashboard') {
     try {
         $entity = $sections[$section];
         $editId = filter_var($_GET['edit'] ?? null, FILTER_VALIDATE_INT);
@@ -264,6 +277,27 @@ if ($isAuthenticated) {
     }
 }
 
+$dashboardCounts = [];
+$recentPosts = [];
+if ($isAuthenticated && $adminPage === 'dashboard') {
+    try {
+        foreach (['posts' => 'posts', 'team' => 'team_members', 'parishes' => 'parishes'] as $key => $table) {
+            $dashboardCounts[$key] = (int) bethammi_db()->query('SELECT COUNT(*) FROM `' . $table . '`')->fetchColumn();
+            $dashboardCounts[$key . '_published'] = (int) bethammi_db()->query(
+                'SELECT COUNT(*) FROM `' . $table . '` WHERE is_published = 1'
+            )->fetchColumn();
+        }
+        $recentPosts = bethammi_db()->query(
+            'SELECT id, title, published_at, is_published FROM posts ORDER BY published_at DESC, id DESC LIMIT 5'
+        )->fetchAll();
+    } catch (Throwable $exception) {
+        error_log('Beth Ammi admin dashboard could not be loaded: ' . $exception->getMessage());
+        $error = 'Dashboard information could not be loaded. Check the database connection and schema setup.';
+        $dashboardCounts = null;
+        $recentPosts = [];
+    }
+}
+
 $csrfToken = bethammi_admin_csrf_token();
 ?>
 <!doctype html>
@@ -271,131 +305,25 @@ $csrfToken = bethammi_admin_csrf_token();
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Church content admin | Beth Ammi</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title><?= bethammi_escape($adminPage === 'dashboard' ? 'Dashboard' : $sections[$section]['label']) ?> | Beth Ammi Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 <?php if (!$isAuthenticated): ?>
-  <main class="admin-card admin-login">
-    <a class="admin-brand" href="../index.php">BETH AMMI · ADMIN</a>
-    <h1>Sign in</h1>
-    <p>Manage published posts, team profiles, and parish information.</p>
-    <?php if ($error !== ''): ?><p class="admin-alert admin-alert--error" role="alert"><?= bethammi_escape($error) ?></p><?php endif; ?>
-    <?php if ($message !== ''): ?><p class="admin-alert" role="status"><?= bethammi_escape($message) ?></p><?php endif; ?>
-    <form class="admin-form" method="post">
-      <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
-      <input type="hidden" name="action" value="login">
-      <label>Username<input name="username" autocomplete="username" required></label>
-      <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
-      <button class="btn admin-button" type="submit">Sign in</button>
-    </form>
-  </main>
+  <?php require __DIR__ . '/views/login.php'; ?>
 <?php else: ?>
-  <main class="admin-shell">
-    <header class="admin-header">
-      <div><a class="admin-brand" href="../index.php">BETH AMMI · ADMIN</a><h1>Church content</h1><p>Signed in as <?= bethammi_escape($_SESSION['admin_user']['username']) ?>.</p></div>
-      <form method="post">
-        <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
-        <input type="hidden" name="action" value="logout">
-        <button class="btn admin-button admin-button--light" type="submit">Sign out</button>
-      </form>
-    </header>
-    <?php if ($error !== ''): ?><p class="admin-alert admin-alert--error" role="alert"><?= bethammi_escape($error) ?></p><?php endif; ?>
-    <?php if ($message !== ''): ?><p class="admin-alert" role="status"><?= bethammi_escape($message) ?></p><?php endif; ?>
-    <nav class="admin-nav" aria-label="Content type">
-      <?php foreach ($sections as $key => $item): ?>
-        <a href="?section=<?= bethammi_escape($key) ?>"<?= $section === $key ? ' aria-current="page"' : '' ?>><?= bethammi_escape($item['label']) ?></a>
-      <?php endforeach; ?>
-      <a href="../index.php" target="_blank" rel="noopener noreferrer">View website ↗</a>
-    </nav>
-    <div class="admin-card">
-      <h2 class="admin-section-title"><?= $selectedRecord ? 'Edit ' . bethammi_escape($entity['singular']) : 'Add ' . bethammi_escape($entity['singular']) ?></h2>
-      <form class="admin-form" method="post">
-        <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
-        <input type="hidden" name="action" value="save">
-        <input type="hidden" name="section" value="<?= bethammi_escape($section) ?>">
-        <input type="hidden" name="id" value="<?= bethammi_escape($selectedRecord['id'] ?? '') ?>">
-        <?php if ($section === 'posts'): ?>
-          <div class="admin-form__row">
-            <?php bethammi_admin_field('title', 'Post title', 'text', true); ?>
-            <?php bethammi_admin_field('slug', 'URL slug (leave blank to create from title)'); ?>
-          </div>
-          <div class="admin-form__row">
-            <?php bethammi_admin_field('published_at', 'Post date', 'date', true); ?>
-            <?php bethammi_admin_field('featured_image_url', 'Highlight image URL or path'); ?>
-          </div>
-          <?php bethammi_admin_field('short_info', 'Short info for cards', 'textarea', false, true); ?>
-          <?php bethammi_admin_field('description', 'Full post description (plain text; blank lines create paragraphs)', 'textarea', true, true); ?>
-        <?php elseif ($section === 'team'): ?>
-          <div class="admin-form__row">
-            <?php bethammi_admin_field('name', 'Full name', 'text', true); ?>
-            <?php bethammi_admin_field('title', 'Position or title', 'text', true); ?>
-          </div>
-          <?php bethammi_admin_image_field('photo_url', 'Photo URL or path'); ?>
-          <?php bethammi_admin_field('bio', 'Short bio (optional)', 'textarea', false, true); ?>
-          <?php bethammi_admin_field('sort_order', 'Display order (lower appears first)', 'number'); ?>
-        <?php else: ?>
-          <div class="admin-form__row">
-            <?php bethammi_admin_field('name', 'Parish name', 'text', true); ?>
-            <?php bethammi_admin_field('country', 'Country', 'text', true); ?>
-          </div>
-          <div class="admin-form__row">
-            <?php bethammi_admin_field('region', 'Region or province'); ?>
-            <?php bethammi_admin_field('location', 'Town, district, or address'); ?>
-          </div>
-          <?php bethammi_admin_image_field('photo_url', 'Photo URL or path'); ?>
-          <div class="admin-form__row">
-            <?php bethammi_admin_field('short_info', 'Short summary'); ?>
-            <?php bethammi_admin_field('member_count', 'Number of members (optional)', 'number'); ?>
-          </div>
-          <?php bethammi_admin_field('description', 'Additional information', 'textarea', false, true); ?>
-          <?php bethammi_admin_field('sort_order', 'Display order (lower appears first)', 'number'); ?>
-        <?php endif; ?>
-        <label class="admin-checkbox"><input type="checkbox" name="is_published" value="1"<?= !array_key_exists('is_published', $_POST) ? (!isset($selectedRecord['is_published']) || $selectedRecord['is_published'] ? ' checked' : '') : (isset($_POST['is_published']) ? ' checked' : '') ?>> Show on website</label>
-        <div class="admin-actions">
-          <button class="btn admin-button" type="submit"><?= $selectedRecord ? 'Save changes' : 'Add ' . bethammi_escape($entity['singular']) ?></button>
-          <?php if ($selectedRecord): ?><a class="btn admin-button admin-button--light" href="?section=<?= bethammi_escape($section) ?>">Cancel edit</a><?php endif; ?>
-        </div>
-      </form>
-    </div>
-    <div class="admin-table-wrap">
-      <h2 class="admin-section-title">Existing <?= bethammi_escape(strtolower($entity['label'])) ?></h2>
-      <?php if (!$records): ?>
-        <p class="admin-empty">No records yet. Use the form above to add the first one.</p>
-      <?php else: ?>
-        <table class="admin-table">
-          <thead><tr><th>Photo</th><th>Name / title</th><th>Details</th><th>Status</th><th>Actions</th></tr></thead>
-          <tbody>
-          <?php foreach ($records as $record): ?>
-            <?php
-              $recordTitle = $section === 'posts' ? $record['title'] : $record['name'];
-              $recordDetails = $section === 'posts'
-                  ? $record['published_at']
-                  : ($section === 'team' ? $record['title'] : trim($record['location'] . ', ' . $record['country'], ', '));
-              $image = $section === 'posts' ? $record['featured_image_url'] : $record['photo_url'];
-            ?>
-            <tr>
-              <td><?php if ($image !== ''): ?><img src="<?= bethammi_escape($image) ?>" alt="" loading="lazy"><?php else: ?>—<?php endif; ?></td>
-              <td><?= bethammi_escape($recordTitle) ?></td>
-              <td><?= bethammi_escape($recordDetails) ?></td>
-              <td><?= $record['is_published'] ? 'Published' : 'Hidden' ?></td>
-              <td><a href="?section=<?= bethammi_escape($section) ?>&amp;edit=<?= (int) $record['id'] ?>">Edit</a>
-                <form class="admin-inline" method="post" onsubmit="return confirm('Permanently delete this record?');">
-                  <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
-                  <input type="hidden" name="action" value="delete">
-                  <input type="hidden" name="section" value="<?= bethammi_escape($section) ?>">
-                  <input type="hidden" name="id" value="<?= (int) $record['id'] ?>">
-                  <button type="submit">Delete</button>
-                </form>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-          </tbody>
-        </table>
-      <?php endif; ?>
-    </div>
-  </main>
+  <?php require __DIR__ . '/views/layout-start.php'; ?>
+  <?php if ($error !== ''): ?><p class="notice notice--error" role="alert"><?= bethammi_escape($error) ?></p><?php endif; ?>
+  <?php if ($message !== ''): ?><p class="notice" role="status"><?= bethammi_escape($message) ?></p><?php endif; ?>
+  <?php if ($adminPage === 'dashboard'): ?>
+    <?php require __DIR__ . '/views/dashboard.php'; ?>
+  <?php else: ?>
+    <?php require __DIR__ . '/views/content-manager.php'; ?>
+  <?php endif; ?>
+  <?php require __DIR__ . '/views/layout-end.php'; ?>
 <?php endif; ?>
 </body>
 </html>
