@@ -185,8 +185,12 @@ function safeLink(rawValue, pagePaths) {
     const url = new URL(rawValue, "https://www.bethammicfc.org/");
     if (url.protocol !== "http:" && url.protocol !== "https:") return "#";
     if (url.hostname === "www.bethammicfc.org" || url.hostname === "bethammicfc.org") {
-      if (url.pathname === "/" || url.pathname === "/home/") return `${siteRoot}${document.body.dataset.routeMode === "static" ? "index.html" : "index.php"}`;
-      const target = pagePaths.get(url.pathname)
+      const normalizedPath = url.pathname.replace(/\/+$/, "") || "/";
+      const lookupKey = normalizedPath.toLowerCase();
+      if (lookupKey === "/" || lookupKey === "/home") return `${siteRoot}${document.body.dataset.routeMode === "static" ? "index.html" : "index.php"}`;
+      const target = pagePaths.get(lookupKey)
+        ?? pagePaths.get(`${lookupKey}/`)
+        ?? pagePaths.get(url.pathname)
         ?? pagePaths.get(url.pathname.replace(/\/?$/, "/"));
       return target || `https://www.bethammicfc.org${url.pathname}${url.search}${url.hash}`;
     }
@@ -194,6 +198,93 @@ function safeLink(rawValue, pagePaths) {
   } catch {
     return "#";
   }
+}
+
+function normalizeLocalRoute(pathname) {
+  const normalized = pathname.replace(/\/+$/, "") || "/";
+  return normalized.toLowerCase();
+}
+
+function rewriteBethammiLinks() {
+  const localRoutes = new Map([
+    ["/", `${siteRoot}index`],
+    ["/home/", `${siteRoot}index`],
+    ["/about-us", `${siteRoot}pages/about-us`],
+    ["/about-us/", `${siteRoot}pages/about-us`],
+    ["/who-we-are", `${siteRoot}pages/who-we-are`],
+    ["/who-we-are/", `${siteRoot}pages/who-we-are`],
+    ["/our-parishes", `${siteRoot}pages/our-parishes`],
+    ["/our-parishes/", `${siteRoot}pages/our-parishes`],
+    ["/ministries", `${siteRoot}pages/ministries`],
+    ["/ministries/", `${siteRoot}pages/ministries`],
+    ["/outreach-evangelism", `${siteRoot}pages/outreach-evangelism`],
+    ["/outreach-evangelism/", `${siteRoot}pages/outreach-evangelism`],
+    ["/children-ministries", `${siteRoot}pages/children-ministries`],
+    ["/children-ministries/", `${siteRoot}pages/children-ministries`],
+    ["/women-ministries", `${siteRoot}pages/women-ministries`],
+    ["/women-ministries/", `${siteRoot}pages/women-ministries`],
+    ["/ltu", `${siteRoot}pages/ltu`],
+    ["/ltu/", `${siteRoot}pages/ltu`],
+    ["/partners", `${siteRoot}pages/partners`],
+    ["/partners/", `${siteRoot}pages/partners`],
+    ["/team", `${siteRoot}pages/team`],
+    ["/team/", `${siteRoot}pages/team`],
+    ["/our-staff", `${siteRoot}pages/team`],
+    ["/our-staff/", `${siteRoot}pages/team`],
+    ["/contact-us", `${siteRoot}pages/contact-us`],
+    ["/contact-us/", `${siteRoot}pages/contact-us`],
+    ["/donate", `${siteRoot}pages/donate`],
+    ["/donate/", `${siteRoot}pages/donate`],
+    ["/daily-bible-verses", `${siteRoot}pages/daily-bible-verses`],
+    ["/daily-bible-verses/", `${siteRoot}pages/daily-bible-verses`],
+    ["/media", `${siteRoot}page?type=page&slug=media`],
+    ["/media/", `${siteRoot}page?type=page&slug=media`],
+    ["/josh", `${siteRoot}pages/josh`],
+    ["/josh/", `${siteRoot}pages/josh`],
+    ["/joan", `${siteRoot}pages/joan`],
+    ["/joan/", `${siteRoot}pages/joan`],
+    ["/ep-kiramutse", `${siteRoot}pages/ep-kiramutse`],
+    ["/ep-kiramutse/", `${siteRoot}pages/ep-kiramutse`],
+    ["/pages/team", `${siteRoot}pages/team`],
+    ["/pages/about-us", `${siteRoot}pages/about-us`],
+    ["/pages/our-parishes", `${siteRoot}pages/our-parishes`],
+    ["/pages/ministries", `${siteRoot}pages/ministries`],
+    ["/pages/partners", `${siteRoot}pages/partners`],
+    ["/pages/contact-us", `${siteRoot}pages/contact-us`]
+  ]);
+
+  document.querySelectorAll("a[href]").forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href || !/^https?:\/\//i.test(href)) return;
+
+    try {
+      const url = new URL(href, window.location.href);
+      const host = url.hostname.toLowerCase();
+      const lookupKey = normalizeLocalRoute(url.pathname);
+      const localTarget = localRoutes.get(lookupKey) ?? localRoutes.get(`${lookupKey}/`);
+      if ((host === "www.bethammicfc.org" || host === "bethammicfc.org") && localTarget) {
+        const suffix = `${url.search}${url.hash}`;
+        const finalHref = `${localTarget}${suffix}`;
+        if (link.getAttribute("href") !== finalHref) {
+          link.setAttribute("href", finalHref);
+        }
+      }
+    } catch (error) {
+      console.warn("Could not normalize link:", href, error);
+    }
+  });
+}
+
+rewriteBethammiLinks();
+
+if (typeof MutationObserver !== "undefined") {
+  const linkObserver = new MutationObserver(() => rewriteBethammiLinks());
+  linkObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["href"]
+  });
 }
 
 function cleanContent(rawHtml, pagePaths) {

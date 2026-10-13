@@ -284,7 +284,7 @@ require __DIR__ . '/../includes/site-header.php';
                             <p>Bethammi has been in partnership with New City Fellowship South City Church led by Pastor Barry since 2016. They have contributed in Trainings, Nutrition program, and they helped us build a school in Nyaruguru</p>                </div>
                   </div>
                     </div>
-                    <a class="elementor-button elementor-button-link elementor-size-sm" href="./ltu">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="./ep-kiramutse">
                       <span class="elementor-button-content-wrapper">
                             <span class="elementor-button-text">Activity in Pictures</span>
                     </span>
