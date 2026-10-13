@@ -85,6 +85,9 @@ require __DIR__ . '/../includes/site-header.php';
         <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
         <img class="post-featured-image" src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>">
         <?php endif; ?>
+        <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
+        <a class="youtube-video-link post-youtube-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch this message on YouTube <span aria-hidden="true">↗</span></a>
+        <?php endif; ?>
         <div class="remote-content"><?= $postContentHtml ?></div>
       </article>
       <aside class="page-sidebar">
@@ -127,6 +130,9 @@ require __DIR__ . '/../includes/site-header.php';
             <p class="story-card__meta">BETH AMMI <span>·</span> <?= bethammi_escape(date('j F Y', strtotime($post['published_at']))) ?></p>
             <h3><?= bethammi_escape($post['title']) ?></h3>
             <p><?= bethammi_escape($post['short_info']) ?></p>
+            <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
+            <a class="youtube-video-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>
+            <?php endif; ?>
             <a class="story-card__link" href="posts?slug=<?= rawurlencode($post['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
           </div>
         </article>

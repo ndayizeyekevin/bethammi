@@ -143,6 +143,12 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .story-card__body > p:not(.story-card__meta) { margin: 0 0 20px; color: #747c78; font-size: 11px; line-height: 1.7; }
 .story-card__link { display: inline-flex; gap: 10px; align-items: center; margin-top: auto; color: var(--navy); font-size: 10px; font-weight: 700; text-decoration: none; }
 .story-card__link span { color: #a77838; font-size: 14px; }
+.youtube-video-link { display: inline-flex; width: fit-content; align-items: center; gap: 9px; margin: 0 0 13px; padding: 9px 12px; border: 1px solid #c9d6d0; color: #28594f; font-size: 10px; font-weight: 700; text-decoration: none; transition: background .2s ease, border-color .2s ease, color .2s ease; }
+.youtube-video-link:hover, .youtube-video-link:focus-visible { border-color: #28594f; background: #28594f; color: #fff; }
+.youtube-video-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.youtube-video-link span { color: #a33a30; font-size: 13px; }
+.youtube-video-link:hover span, .youtube-video-link:focus-visible span { color: inherit; }
+.post-youtube-link { margin: 0 0 24px; }
 .story-card--quote { position: relative; justify-content: center; padding: 31px; background: var(--navy); color: var(--white); }
 .quote-mark { color: var(--gold); font-family: var(--serif); font-size: 62px; line-height: .7; }
 .story-card--quote blockquote { margin: 21px 0; font-family: var(--serif); font-size: 22px; line-height: 1.4; }
