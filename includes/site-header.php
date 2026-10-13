@@ -38,7 +38,7 @@ $siteRoot = $siteRoot ?? '';
             <a href="<?= bethammi_escape($siteRoot) ?>pages/outreach-evangelism">Outreach Evangelism</a>
             <a href="<?= bethammi_escape($siteRoot) ?>pages/children-ministries">Children's Ministry</a>
             <a href="<?= bethammi_escape($siteRoot) ?>pages/women-ministries">Women's Ministry</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/ltu">LTU In Action</a>
+            <!-- <a href="<?= bethammi_escape($siteRoot) ?>pages/ltu">LTU In Action</a> -->
           </div>
         </div>
         <div class="nav-dropdown">
