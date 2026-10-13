@@ -276,20 +276,20 @@ function cleanContent(rawHtml, pagePaths) {
 
 function localPageLink(item, kind = "page") {
   if (kind === "page" && ["contact", "contact-us"].includes(item.slug)) {
-    return `${siteRoot}pages/contact-us.php`;
+    return `${siteRoot}pages/contact-us`;
   }
   if (kind === "page" && item.slug === "our-staff") {
-    return `${siteRoot}pages/team.php`;
+    return `${siteRoot}pages/team`;
   }
   const slug = encodeURIComponent(item.slug);
   if (document.body.dataset.routeMode === "static") {
     const directory = kind === "post" ? "stories" : "pages";
     return `${siteRoot}${directory}/${slug}.html`;
   }
-  if (kind === "post") return `${siteRoot}post.php?slug=${slug}`;
+  if (kind === "post") return `${siteRoot}post?slug=${slug}`;
   return staticPageSlugs.has(item.slug)
-    ? `${siteRoot}pages/${slug}.php`
-    : `${siteRoot}page.php?type=page&slug=${slug}`;
+    ? `${siteRoot}pages/${slug}`
+    : `${siteRoot}page?type=page&slug=${slug}`;
 }
 
 const staticPageSlugs = new Set([
@@ -361,15 +361,15 @@ function createContactOptions() {
   section.className = "contact-options";
   const phone = document.createElement("a");
   phone.href = "tel:+250788482324";
-  phone.innerHTML = "<span>CALL OR TEXT</span><strong>+250 788 482 324</strong>";
+  phone.innerHTML = "<span>CALL OR TEXT</span><strong><i class=\"bi bi-telephone-fill\" aria-hidden=\"true\"></i> +250 788 482 324</strong>";
   const directions = document.createElement("a");
-  directions.href = "https://www.google.com/maps/dir//%27%27/data=!4m7!4m6!1m1!4e2!1m2!1m1!1s0x19db583c864189c9:0xf7f437395770b483!3e0?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAF";
+  directions.href = "https://maps.google.com/?cid=17866966341105267843&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAFKgSoqNcy";
   directions.target = "_blank";
   directions.rel = "noopener noreferrer";
   directions.innerHTML = "<span>FIND US</span><strong>Get directions ↗</strong>";
   const map = document.createElement("iframe");
   map.className = "contact-map";
-  map.src = "https://www.google.com/maps?q=place_id%3A0x19db583c864189c9%3A0xf7f437395770b483&output=embed";
+  map.src = "https://maps.google.com/maps?cid=17866966341105267843&output=embed";
   map.title = "Map to Beth Ammi Christian Fellowship Church";
   map.loading = "lazy";
   map.referrerPolicy = "strict-origin-when-cross-origin";
@@ -506,7 +506,7 @@ function renderDirectoryCard({
 }
 
 async function renderTeamDirectory() {
-  const response = await fetch(`${siteRoot}team.php`);
+  const response = await fetch(`${siteRoot}team`);
   if (!response.ok) throw new Error(`Team request failed (${response.status}).`);
   const payload = await response.json();
   if (!Array.isArray(payload.team)) throw new Error("Team response has an invalid format.");
@@ -530,7 +530,7 @@ async function renderTeamDirectory() {
 }
 
 async function renderTeamProfiles() {
-  const response = await fetch(`${siteRoot}team.php`);
+  const response = await fetch(`${siteRoot}team`);
   if (!response.ok) throw new Error(`Team request failed (${response.status}).`);
   const payload = await response.json();
   if (!Array.isArray(payload.team)) throw new Error("Team response has an invalid format.");
@@ -606,7 +606,7 @@ async function renderTeamProfiles() {
 }
 
 async function renderParishDirectory() {
-  const response = await fetch(`${siteRoot}parishes.php`);
+  const response = await fetch(`${siteRoot}parishes`);
   if (!response.ok) throw new Error(`Parish request failed (${response.status}).`);
   const payload = await response.json();
   if (!Array.isArray(payload.parishes)) throw new Error("Parish response has an invalid format.");
@@ -760,13 +760,13 @@ async function start() {
       const teamAlias = pageSlug === "our-staff";
       const contactAlias = pageSlug === "contact";
       const route = teamAlias
-        ? "pages/team.php"
+        ? "pages/team"
         : contactAlias
-          ? "pages/contact-us.php"
+          ? "pages/contact-us"
         : staticRoutes
           ? `pages/${pageSlug}.html`
           : staticPageSlugs.has(pageSlug)
-            ? `pages/${pageSlug}.php`
+            ? `pages/${pageSlug}`
             : `page.php?type=page&slug=${pageSlug}`;
       const localRoute = `${siteRoot}${route}`;
       pagePaths.set(`/${pageSlug}/`, localRoute);
@@ -807,7 +807,7 @@ async function start() {
     const pages = asList(data.pages);
     let posts = asList(data.posts);
     if (!staticRoutes && kind === "page" && slug === "news-and-sermons") {
-      const postsResponse = await fetch(`${siteRoot}posts.php`);
+      const postsResponse = await fetch(`${siteRoot}posts`);
       if (!postsResponse.ok) throw new Error(`Posts request failed (${postsResponse.status}).`);
       const postsData = await postsResponse.json();
       posts = asList(postsData.posts);
@@ -830,7 +830,7 @@ async function start() {
 
     let item;
     if (kind === "post" && !staticRoutes) {
-      const postResponse = await fetch(`${siteRoot}posts.php?slug=${encodeURIComponent(slug)}`);
+      const postResponse = await fetch(`${siteRoot}posts?slug=${encodeURIComponent(slug)}`);
       if (!postResponse.ok) throw new Error(`Post request failed (${postResponse.status}).`);
       item = await postResponse.json();
     } else {

@@ -102,7 +102,7 @@
           <p class="eyebrow"><span></span> Give with joy</p>
           <h2 id="give-title">Be part of<br>what God is <em>doing.</em></h2>
           <p>Your generosity helps support the ministry and the work of our church. Thank you for standing with us in prayer and giving.</p>
-          <a class="btn button button--navy" href="./pages/donate.php">Ways to give <span aria-hidden="true">↗</span></a>
+          <a class="btn button button--navy" href="./pages/donate">Ways to give <span aria-hidden="true">↗</span></a>
           <p class="give__note">Giving details are available on the church website.</p>
         </div>
       </div>
