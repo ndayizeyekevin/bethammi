@@ -77,21 +77,27 @@
           <div><p class="eyebrow"><span></span> From our community</p><h2 id="stories-title">Faith in <em>action.</em></h2></div>
           <!-- <a class="text-link" href="https://www.bethammicfc.org/" target="_blank" rel="noopener noreferrer">Visit our original site <span aria-hidden="true">↗</span></a> -->
         </div>
-        <div class="story-grid" id="story-grid">
-          <article class="story-card story-card--feature">
-            <div class="story-card__photo story-card__photo--worship" role="img" aria-label="A worship gathering"></div>
-            <div class="story-card__body"><p class="story-card__meta">WORSHIP &amp; FELLOWSHIP <span>·</span> OCTOBER 2026</p><h3>Seven days of Holy Convocation</h3><p>A week of worship, fellowship, prayer, and reflection on the Word of God.</p><a class="story-card__link" href="stories/7-days-of-holy-convocation.html" aria-label="Read more about the Holy Convocation">Read the story <span aria-hidden="true">↗</span></a></div>
+        <div class="story-grid" id="story-grid" data-posts-loaded="true">
+          <?php foreach ($homePosts as $index => $post): ?>
+          <article class="story-card<?= $index === 0 ? ' story-card--feature' : '' ?>">
+            <div class="story-card__photo">
+              <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
+              <img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy">
+              <?php endif; ?>
+            </div>
+            <div class="story-card__body">
+              <p class="story-card__meta">FROM OUR CHURCH <span>·</span> <?= bethammi_escape(strtoupper(date('F Y', strtotime($post['published_at'])))) ?></p>
+              <h3><?= bethammi_escape($post['title']) ?></h3>
+              <p><?= bethammi_escape($post['short_info']) ?></p>
+              <a class="story-card__link" href="post?slug=<?= rawurlencode($post['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
+            </div>
           </article>
-          <article class="story-card">
-            <div class="story-card__photo story-card__photo--community" role="img" aria-label="People gathered together outdoors"></div>
-            <div class="story-card__body"><p class="story-card__meta">WORSHIP &amp; FELLOWSHIP <span>·</span> APRIL 2023</p><h3>Passover Sunday service</h3><p>A day of worship and fellowship as the church remembered salvation through Jesus Christ.</p><a class="story-card__link" href="stories/9th-april-2023-passover-service-in-pictures.html">Read the story <span aria-hidden="true">↗</span></a></div>
-          </article>
-          <article class="story-card">
-            <div class="story-card__photo story-card__photo--service" role="img" aria-label="A church service"></div>
-            <div class="story-card__body"><p class="story-card__meta">SUNDAY SERVICE <span>·</span> APRIL 2023</p><h3>Our first service in April</h3><p>A moment from the 2 April 2023 service at Beth Ammi Christian Fellowship Church.</p><a class="story-card__link" href="stories/1st-service-2nd-april-2023.html">Read the story <span aria-hidden="true">↗</span></a></div>
-          </article>
+          <?php endforeach; ?>
         </div>
-        <p class="stories-status" id="stories-status" role="status" aria-live="polite" hidden></p>
+        <p class="stories-status" id="stories-status" role="status" aria-live="polite"<?= $homePostsError || !$homePosts ? '' : ' hidden' ?>><?= $homePostsError ? 'We couldn’t load the latest stories right now. Please try again later.' : (!$homePosts ? 'There are no stories to show right now.' : '') ?></p>
+        <div class="stories__more-wrap">
+          <a class="btn button button--navy stories__more" href="page?type=page&amp;slug=news-and-sermons">View all <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
     </section>
 
