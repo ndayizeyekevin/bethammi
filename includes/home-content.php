@@ -89,14 +89,14 @@
               <p class="story-card__meta">FROM OUR CHURCH <span>·</span> <?= bethammi_escape(strtoupper(date('F Y', strtotime($post['published_at'])))) ?></p>
               <h3><?= bethammi_escape($post['title']) ?></h3>
               <p><?= bethammi_escape($post['short_info']) ?></p>
-              <a class="story-card__link" href="post?slug=<?= rawurlencode($post['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
+              <a class="story-card__link" href="pages/posts?slug=<?= rawurlencode($post['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
             </div>
           </article>
           <?php endforeach; ?>
         </div>
         <p class="stories-status" id="stories-status" role="status" aria-live="polite"<?= $homePostsError || !$homePosts ? '' : ' hidden' ?>><?= $homePostsError ? 'We couldn’t load the latest stories right now. Please try again later.' : (!$homePosts ? 'There are no stories to show right now.' : '') ?></p>
         <div class="stories__more-wrap">
-          <a class="btn button button--navy stories__more" href="page?type=page&amp;slug=news-and-sermons">View all <span aria-hidden="true">↗</span></a>
+          <a class="btn button button--navy stories__more" href="pages/posts">View all <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>

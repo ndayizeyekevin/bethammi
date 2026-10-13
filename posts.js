@@ -17,7 +17,7 @@ function postLink(post) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug ?? "")) {
     throw new Error("A post has an invalid URL slug.");
   }
-  return `post?slug=${encodeURIComponent(post.slug)}`;
+  return `pages/posts?slug=${encodeURIComponent(post.slug)}`;
 }
 
 function createPostCard(post, index) {

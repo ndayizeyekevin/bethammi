@@ -25,6 +25,16 @@ function bethammi_post_by_slug($slug)
     return $statement->fetch() ?: null;
 }
 
+function bethammi_post_by_id($id)
+{
+    $statement = bethammi_db()->prepare(
+        'SELECT id, slug, title, published_at, featured_image_url, short_info, description
+         FROM posts WHERE id = :id AND is_published = 1 LIMIT 1'
+    );
+    $statement->execute(['id' => $id]);
+    return $statement->fetch() ?: null;
+}
+
 function bethammi_post_response(array $post, $includeDescription = false)
 {
     $paragraphs = preg_split('/\R{2,}/u', trim((string) $post['description']));
