@@ -88,6 +88,10 @@
       </div>
     </div>
   </div>
+  <div class="floating-actions" aria-label="Quick actions">
+    <a class="floating-action floating-action--whatsapp" href="https://wa.me/250788482324" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
+    <a class="floating-action floating-action--top" href="#home" aria-label="Scroll to top" hidden><i class="bi bi-arrow-up" aria-hidden="true"></i></a>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -92,5 +92,23 @@ if (menuButton && navigation) {
   });
 }
 
+const scrollTopButton = document.querySelector(".floating-action--top");
+const toggleScrollTopButton = () => {
+  if (!scrollTopButton) return;
+
+  const scrollPosition = window.scrollY || window.pageYOffset;
+  const triggerOffset = Math.min(window.innerHeight * 0.35, 320);
+  const shouldShow = scrollPosition >= triggerOffset;
+
+  scrollTopButton.classList.toggle("is-visible", shouldShow);
+  scrollTopButton.toggleAttribute("hidden", !shouldShow);
+};
+
+if (scrollTopButton) {
+  toggleScrollTopButton();
+  window.addEventListener("scroll", toggleScrollTopButton, { passive: true });
+  window.addEventListener("resize", toggleScrollTopButton, { passive: true });
+}
+
 const year = document.querySelector("#year");
 if (year) year.textContent = String(new Date().getFullYear());

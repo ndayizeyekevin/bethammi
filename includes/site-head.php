@@ -14,6 +14,9 @@ $isStaticPage = ($isStaticPage ?? false) === true;
 $siteRoot = isset($siteRoot) && is_string($siteRoot) ? $siteRoot : ($isStaticPage ? '../' : '');
 $staticPageTitle = isset($staticPageTitle) && is_string($staticPageTitle) ? $staticPageTitle : '';
 $pageScripts = isset($pageScripts) && is_array($pageScripts) ? $pageScripts : [];
+if (!in_array('script.js', $pageScripts, true)) {
+    $pageScripts[] = 'script.js';
+}
 
 ?>
 <!doctype html>
