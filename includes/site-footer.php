@@ -90,24 +90,8 @@
   </div>
   <div class="floating-actions" aria-label="Quick actions">
     <a class="floating-action floating-action--whatsapp" href="https://wa.me/250788482324" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
-    <a class="floating-action floating-action--top" href="#home" aria-label="Scroll to top" hidden><i class="bi bi-arrow-up" aria-hidden="true"></i></a>
+    <a class="floating-action floating-action--top" href="#" aria-label="Scroll to top" hidden><i class="bi bi-arrow-up" aria-hidden="true"></i></a>
   </div>
-  <style>
-    /* Reduce the scroll-to-top floating action size without affecting other floating actions */
-    .floating-action.floating-action--top {
-      height: 44px;
-      width: 44px;
-      line-height: 44px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .floating-action.floating-action--top i {
-      font-size: 18px;
-      line-height: 1; /* ensure icon centers correctly */
-    }
-  </style>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

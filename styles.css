@@ -233,9 +233,10 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .floating-action { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; box-shadow: 0 15px 35px rgba(18,39,38,.16); color: var(--white); text-decoration: none; opacity: 1; visibility: visible; transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease, visibility .2s ease; }
 .floating-action:hover, .floating-action:focus-visible { transform: translateY(-2px); box-shadow: 0 18px 36px rgba(18,39,38,.2); }
 .floating-action--whatsapp { background: #25d366; }
-.floating-action--top { background: #12515d; opacity: 0; visibility: hidden; transform: translateY(8px); }
+.floating-action--top { width: 44px; height: 44px; background: #12515d; opacity: 0; visibility: hidden; transform: translateY(8px); }
 .floating-action--top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
 .floating-action i { font-size: 28px; }
+.floating-action--top i { font-size: 18px; line-height: 1; }
 
 .page-banner { padding-block: 48px 58px; background: var(--navy); color: var(--white); }
 .breadcrumbs { display: flex; align-items: center; gap: 9px; margin-bottom: 39px; color: rgba(255,255,255,.56); font-size: 9px; }

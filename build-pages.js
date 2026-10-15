@@ -70,6 +70,7 @@ function createStandalonePage(kind, slug) {
   html = html
     .replace('href="styles.css"', 'href="../styles.css"')
     .replace('src="page.js"', 'src="../page.js"')
+    .replace('src="script.js"', 'src="../script.js"')
     .replace(/href="index\.html(?=[#"])/g, 'href="../index.html');
 
   return rewritePageLinks(removeAdminLoginLink(html), "../");

@@ -1,3 +1,4 @@
+(() => {
 const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector("#site-nav");
 
@@ -108,7 +109,12 @@ if (scrollTopButton) {
   toggleScrollTopButton();
   window.addEventListener("scroll", toggleScrollTopButton, { passive: true });
   window.addEventListener("resize", toggleScrollTopButton, { passive: true });
+  scrollTopButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 }
 
 const year = document.querySelector("#year");
 if (year) year.textContent = String(new Date().getFullYear());
+})();
