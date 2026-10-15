@@ -14,7 +14,7 @@ $siteRoot = $siteRoot ?? '';
   <header class="site-header">
     <div class="container header__inner">
       <a class="brand" href="<?= bethammi_escape($siteRoot) ?>index#home" aria-label="Beth Ammi Christian Fellowship Church home">
-        <span class="brand__mark" aria-hidden="true">BA</span>
+        <img class="brand__logo" src="<?= bethammi_escape($siteRoot) ?>assets/images/bethammilogo.png" alt="">
         <span class="brand__words"><strong>BETH AMMI</strong><small>CHRISTIAN FELLOWSHIP CHURCH</small></span>
       </a>
       <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">

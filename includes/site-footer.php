@@ -1,7 +1,7 @@
   <footer class="site-footer">
     <div class="container footer__top">
       <a class="brand brand--footer" href="<?= bethammi_escape($siteRoot) ?>index#home" aria-label="Beth Ammi Christian Fellowship Church home">
-        <span class="brand__mark" aria-hidden="true">BA</span>
+        <img class="brand__logo" src="<?= bethammi_escape($siteRoot) ?>assets/images/bethammilogo.png" alt="">
         <span class="brand__words"><strong>BETH AMMI</strong><small>CHRISTIAN FELLOWSHIP CHURCH</small></span>
       </a>
       <p>A place to worship, grow, and belong.<br>We look forward to seeing you.</p>

@@ -71,6 +71,7 @@ function createStandalonePage(kind, slug) {
     .replace('href="styles.css"', 'href="../styles.css"')
     .replace('src="page.js"', 'src="../page.js"')
     .replace('src="script.js"', 'src="../script.js"')
+    .replaceAll('src="assets/images/bethammilogo.png"', 'src="../assets/images/bethammilogo.png"')
     .replace(/href="index\.html(?=[#"])/g, 'href="../index.html');
 
   return rewritePageLinks(removeAdminLoginLink(html), "../");
