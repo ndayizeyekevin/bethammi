@@ -3,7 +3,7 @@
 http_response_code(404);
 $pageTitle = 'Page not found | Beth Ammi Christian Fellowship Church';
 $pageDescription = 'The page you are looking for could not be found.';
-
+$siteRoot = rtrim(dirname((string) ($_SERVER['SCRIPT_NAME'] ?? '/')), '/\\') . '/';
 
 require __DIR__ . '/includes/site-head.php';
 require __DIR__ . '/includes/site-header.php';
@@ -12,7 +12,7 @@ require __DIR__ . '/includes/site-header.php';
   <section class="page-banner" aria-labelledby="page-title">
     <div class="container">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
-        <a href="index">Home</a>
+        <a href="<?= bethammi_escape($siteRoot) ?>index">Home</a>
         <span aria-hidden="true">/</span>
         <span id="breadcrumb-label">Not found</span>
       </nav>
@@ -22,14 +22,14 @@ require __DIR__ . '/includes/site-header.php';
     </div>
   </section>
 
-  <section class="container page-layout">
+  <section class="container page-layout" style="min-height: 80vh;">
     <article class="page-article">
       <div class="remote-content">
         <div class="not-found-wrap" style="padding: 1rem 0 0;">
-          <p class="lead mb-4">We couldn’t find the page you were trying to reach.</p>
+          <p class="lead mb-4 text-danger">Sorry, We couldn’t find the page you were trying to reach.</p>
           <div class="d-flex flex-wrap gap-3">
-            <a class="btn button button--navy" href="index">Back home <span aria-hidden="true">↗</span></a>
-            <a class="btn button button--gold" href="pages/contact-us">Contact us</a>
+            <a class="btn button button--navy" href="<?= bethammi_escape($siteRoot) ?>index">Back home <span aria-hidden="true">↗</span></a>
+            <a class="btn button button--gold" href="<?= bethammi_escape($siteRoot) ?>pages/contact-us">Contact us</a>
           </div>
         </div>
       </div>
@@ -40,11 +40,11 @@ require __DIR__ . '/includes/site-header.php';
         <p class="eyebrow"><span></span> Explore instead</p>
         <h2>Find your way<br>back to church.</h2>
         <ul class="list-unstyled mb-0">
-          <li><a href="index">Home</a></li>
-          <li><a href="pages/about-us">About us</a></li>
-          <li><a href="pages/ministries">Ministries</a></li>
-          <li><a href="pages/posts">News &amp; sermons</a></li>
-          <li><a href="pages/contact-us">Contact</a></li>
+          <li><a href="<?= bethammi_escape($siteRoot) ?>index">Home</a></li>
+          <li><a href="<?= bethammi_escape($siteRoot) ?>pages/about-us">About us</a></li>
+          <li><a href="<?= bethammi_escape($siteRoot) ?>pages/ministries">Ministries</a></li>
+          <li><a href="<?= bethammi_escape($siteRoot) ?>pages/posts">News &amp; sermons</a></li>
+          <li><a href="<?= bethammi_escape($siteRoot) ?>pages/contact-us">Contact</a></li>
         </ul>
       </div>
     </aside>

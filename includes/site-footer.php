@@ -1,7 +1,7 @@
   <footer class="site-footer">
     <div class="container footer__top">
       <a class="brand brand--footer" href="<?= bethammi_escape($siteRoot) ?>index#home" aria-label="Beth Ammi Christian Fellowship Church home">
-        <span class="brand__mark" aria-hidden="true">BA</span>
+        <img class="brand__logo" src="<?= bethammi_escape($siteRoot) ?>assets/images/bethammilogo.png" alt="">
         <span class="brand__words"><strong>BETH AMMI</strong><small>CHRISTIAN FELLOWSHIP CHURCH</small></span>
       </a>
       <p>A place to worship, grow, and belong.<br>We look forward to seeing you.</p>
@@ -90,7 +90,7 @@
   </div>
   <div class="floating-actions" aria-label="Quick actions">
     <a class="floating-action floating-action--whatsapp" href="https://wa.me/250788482324" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
-    <a class="floating-action floating-action--top" href="#home" aria-label="Scroll to top" hidden><i class="bi bi-arrow-up" aria-hidden="true"></i></a>
+    <a class="floating-action floating-action--top" href="#" aria-label="Scroll to top" hidden><i class="bi bi-arrow-up" aria-hidden="true"></i></a>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

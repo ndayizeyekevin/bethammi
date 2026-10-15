@@ -27,6 +27,7 @@ if (!in_array('script.js', $pageScripts, true)) {
   <meta name="theme-color" content="#f8f7f3">
   <meta name="description" content="<?= bethammi_escape($pageDescription) ?>">
   <title><?= bethammi_escape($pageTitle) ?></title>
+  <link rel="icon" type="image/png" href="<?= bethammi_escape($siteRoot) ?>assets/images/bethammilogo.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
