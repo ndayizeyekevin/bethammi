@@ -58,12 +58,36 @@ if (menuButton && navigation) {
   });
 
   navigation.querySelectorAll(".nav-dropdown__toggle").forEach((button) => {
-    button.addEventListener("click", () => {
-      const dropdown = button.closest(".nav-dropdown");
-      const isOpen = button.getAttribute("aria-expanded") === "true";
+    const dropdown = button.closest(".nav-dropdown");
+    const setDropdownOpen = (isOpen) => {
+      dropdown?.classList.toggle("is-open", isOpen);
+      button.setAttribute("aria-expanded", String(isOpen));
+    };
+    const supportsHover = () => window.matchMedia("(min-width: 1051px) and (hover: hover)").matches;
+
+    dropdown?.addEventListener("pointerenter", (event) => {
+      if (!supportsHover() || event.pointerType === "touch") return;
+
       closeDropdowns(dropdown);
-      dropdown?.classList.toggle("is-open", !isOpen);
-      button.setAttribute("aria-expanded", String(!isOpen));
+      setDropdownOpen(true);
+    });
+    dropdown?.addEventListener("pointerleave", (event) => {
+      if (!supportsHover() || event.pointerType === "touch") return;
+
+      setDropdownOpen(false);
+    });
+
+    button.addEventListener("click", () => {
+      const isOpen = button.getAttribute("aria-expanded") === "true";
+
+      if (supportsHover()) {
+        closeDropdowns(dropdown);
+        setDropdownOpen(true);
+        return;
+      }
+
+      closeDropdowns(dropdown);
+      setDropdownOpen(!isOpen);
     });
   });
 
