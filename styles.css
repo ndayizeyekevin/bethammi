@@ -31,7 +31,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .site-header { position: sticky; top: 0; z-index: 20; background: var(--paper); box-shadow: 0 5px 18px rgba(18,39,38,.07); }
 .header__inner { min-height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand { display: inline-flex; flex-shrink: 0; align-items: center; gap: 11px; color: var(--navy); text-decoration: none; }
-.brand__logo { display: block; flex: 0 0 48px; width: 48px; height: 48px; object-fit: contain; }
+.brand__logo { display: block; flex: 0 0 58px; width: 58px; height: 58px; object-fit: contain; }
 .brand__words { display: grid; line-height: 1.14; }
 .brand__words strong { font-family: var(--display); font-size: 18px; font-weight: 800; letter-spacing: .085em; }
 .brand__words small { margin-top: 4px; font-size: 8px; font-weight: 700; letter-spacing: .13em; }
@@ -760,7 +760,7 @@ body[data-content-slug="media"] #page-content .elementor-screen-only { position:
   .topline__inner { min-height: 33px; }
   .header__inner { min-height: 72px; }
   .brand { gap: 8px; }
-  .brand__logo { flex-basis: 40px; width: 40px; height: 40px; }
+  .brand__logo { flex-basis: 46px; width: 46px; height: 46px; }
   .brand__words strong { font-size: 15px; }
   .brand__words small { font-size: 7px; }
   .header-login { order: 2; min-width: 68px; min-height: 38px; padding: 8px 12px; font-size: 11px; }
