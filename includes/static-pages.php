@@ -17,5 +17,6 @@ function bethammi_static_pages()
         'ep-kiramutse' => 'New City Fellowship Church',
         'donate' => 'Donate',
         'daily-bible-verses' => 'Daily Bible verses',
+        'disclaimer' => 'Website Disclaimer',
     ];
 }

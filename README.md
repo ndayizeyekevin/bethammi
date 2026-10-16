@@ -1,6 +1,6 @@
 # Beth Ammi website
 
-The website uses shared PHP head, header, and footer includes for the live homepage, content pages, and posts. Each informational page has its own PHP route in `pages/`, with its page-specific HTML in that file between the shared shell includes. The Our Parishes route uses the shared shell and loads published parish records from the database. Database-driven posts, team profiles, and parish directories stay dynamic. The header login button opens a sign-in modal. A protected dashboard at `/admin/` lets administrators create, edit, publish, hide, and delete those records.
+The website uses shared PHP head, header, and footer includes for the live homepage, content pages, and posts. Each informational page has its own PHP route in `pages/`, with its page-specific HTML in that file between the shared shell includes. The Website Disclaimer is included in both the PHP site and static build. The Our Parishes route uses the shared shell and loads published parish records from the database. Database-driven posts, team profiles, and parish directories stay dynamic. The header login button opens a sign-in modal. A protected dashboard at `/admin/` lets administrators create, edit, publish, hide, and delete those records.
 
 ## Local setup with XAMPP
 
