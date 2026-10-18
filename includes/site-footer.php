@@ -14,8 +14,7 @@
             <input id="newsletter-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="Your email address" required>
             <button type="submit" name="action" value="subscribe">Subscribe <span aria-hidden="true">↗</span></button>
           </div>
-          <button class="newsletter-form__unsubscribe" type="submit" name="action" value="unsubscribe">Unsubscribe this email</button>
-          <p class="newsletter-form__note">Subscribe to receive church updates, or unsubscribe at any time.</p>
+          <p class="newsletter-form__note">Subscribe to receive church updates.</p>
           <p class="newsletter-form__status" role="status" aria-live="polite" hidden></p>
         </form>
       </section>

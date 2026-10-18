@@ -145,27 +145,21 @@ if (year) year.textContent = String(new Date().getFullYear());
 const newsletterForm = document.querySelector(".newsletter-form");
 if (newsletterForm instanceof HTMLFormElement) {
   const newsletterStatus = newsletterForm.querySelector(".newsletter-form__status");
-  const newsletterSubmitButtons = newsletterForm.querySelectorAll('button[type="submit"]');
+  const newsletterSubmit = newsletterForm.querySelector('button[type="submit"]');
 
   newsletterForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    if (!(newsletterStatus instanceof HTMLElement)) return;
+    if (!(newsletterStatus instanceof HTMLElement) || !(newsletterSubmit instanceof HTMLButtonElement)) return;
 
-    newsletterSubmitButtons.forEach((button) => {
-      button.disabled = true;
-    });
+    newsletterSubmit.disabled = true;
     newsletterStatus.hidden = false;
     newsletterStatus.classList.remove("is-success", "is-error");
     newsletterStatus.classList.add("is-pending");
-    const submitter = event.submitter;
-    const action = submitter instanceof HTMLButtonElement ? submitter.value : "subscribe";
-    newsletterStatus.textContent = action === "unsubscribe"
-      ? "Updating your subscription…"
-      : "Submitting your subscription…";
+    newsletterStatus.textContent = "Submitting your subscription…";
 
     try {
       const formData = new FormData(newsletterForm);
-      formData.set("action", action);
+      formData.set("action", "subscribe");
       const endpoint = newsletterForm.getAttribute("action");
       if (!endpoint) throw new Error("The subscription form is missing its endpoint.");
       const response = await fetch(endpoint, {
@@ -188,7 +182,7 @@ if (newsletterForm instanceof HTMLFormElement) {
       newsletterStatus.classList.remove("is-pending", "is-error");
       newsletterStatus.classList.add("is-success");
       newsletterStatus.textContent = result.message;
-      if (action === "subscribe" && result.message === "Subscribed successfully.") {
+      if (result.message === "Subscribed successfully.") {
         newsletterForm.reset();
       }
     } catch (error) {
@@ -198,9 +192,7 @@ if (newsletterForm instanceof HTMLFormElement) {
         ? error.message
         : "Your subscription could not be completed. Please try again.";
     } finally {
-      newsletterSubmitButtons.forEach((button) => {
-        button.disabled = false;
-      });
+      newsletterSubmit.disabled = false;
     }
   });
 }
