@@ -1,6 +1,16 @@
 <main id="main">
     <section class="hero" id="home" aria-labelledby="hero-title">
-      <div class="hero__image" role="img" aria-label="A church community gathering for worship"></div>
+      <div class="hero__image" role="img" aria-label="A church community gathering for worship">
+        <img class="hero__slide is-active" src="assets/images/hero/908A6454.jpg" alt="" fetchpriority="high">
+        <img class="hero__slide" src="assets/images/hero/130A0026.jpg" alt="" loading="lazy">
+        <img class="hero__slide" src="assets/images/hero/908A6408.jpg" alt="" loading="lazy">
+        <img class="hero__slide" src="assets/images/hero/130A0562.jpg" alt="" loading="lazy">
+        <img class="hero__slide" src="assets/images/hero/130A0664.jpg" alt="" loading="lazy">
+        <img class="hero__slide" src="assets/images/hero/4A3A6471.jpg" alt="" loading="lazy">
+        <img class="hero__slide" src="assets/images/hero/4A3A6537.jpg" alt="" loading="lazy">
+        <img class="hero__slide" src="assets/images/hero/4A3A6560.jpg" alt="" loading="lazy">
+        <img class="hero__slide" src="assets/images/hero/908A6172.jpg" alt="" loading="lazy">
+      </div>
       <div class="hero__shade"></div>
       <div class="container hero__content">
         <p class="eyebrow eyebrow--light"><span></span> Beth Ammi Christian Fellowship Church</p>
