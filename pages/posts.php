@@ -137,6 +137,36 @@ require __DIR__ . '/../includes/site-header.php';
         </div>
       </aside>
     </section>
+    <section class="container post-recommendations" aria-labelledby="post-recommendations-title">
+      <div class="post-recommendations__heading">
+        <p class="eyebrow"><span></span> Keep exploring</p>
+        <h2 id="post-recommendations-title">You might also <em>enjoy.</em></h2>
+        <p>Here are a few more stories and messages from our church family.</p>
+      </div>
+      <?php if ($latestPosts): ?>
+      <div class="post-recommendations__grid">
+        <?php foreach ($latestPosts as $suggestedPost): ?>
+        <article class="post-recommendation">
+          <a class="post-recommendation__image" href="posts?slug=<?= rawurlencode($suggestedPost['slug']) ?>">
+            <?php if ($suggestedPost['featured_image_url'] !== '' && bethammi_valid_image_url($suggestedPost['featured_image_url'])): ?>
+            <img src="<?= bethammi_escape($suggestedPost['featured_image_url']) ?>" alt="" loading="lazy">
+            <?php else: ?>
+            <span aria-hidden="true"></span>
+            <?php endif; ?>
+          </a>
+          <div class="post-recommendation__body">
+            <p class="story-card__meta">BETH AMMI <span>·</span> <?= bethammi_escape(date('j F Y', strtotime($suggestedPost['published_at']))) ?></p>
+            <h3><a href="posts?slug=<?= rawurlencode($suggestedPost['slug']) ?>"><?= bethammi_escape($suggestedPost['title']) ?></a></h3>
+            <?php if ($suggestedPost['short_info'] !== ''): ?>
+            <p><?= bethammi_escape($suggestedPost['short_info']) ?></p>
+            <?php endif; ?>
+            <a class="story-card__link" href="posts?slug=<?= rawurlencode($suggestedPost['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <?php endforeach; ?>
+      </div>
+      <?php endif; ?>
+    </section>
     <?php endif; ?>
   <?php else: ?>
     <section class="page-banner" aria-labelledby="page-title">
