@@ -301,7 +301,7 @@ function cleanContent(rawHtml, pagePaths) {
     "alt", "allow", "allowfullscreen", "aria-labelledby", "aria-valuemax", "aria-valuemin",
     "aria-valuenow", "aria-valuetext", "class", "controls", "data-max", "height", "href",
     "id", "loading", "loop", "muted", "poster", "preload", "role", "rowspan", "scope",
-    "src", "colspan", "title", "width"
+    "src", "colspan", "title", "target", "rel", "width"
   ]);
   const blockedTags = new Set([
     "BUTTON", "EMBED", "FORM", "INPUT", "LINK", "META", "NOSCRIPT", "OBJECT",
@@ -442,7 +442,7 @@ function createStoryCard(item) {
   const title = document.createElement("h3");
   title.textContent = decodeEntities(item.title.rendered);
   const excerpt = document.createElement("p");
-  const summary = plainText(item.excerpt.rendered);
+  const summary = plainText(item.cardSummary ?? item.excerpt.rendered);
   excerpt.textContent = summary.length > 180 ? `${summary.slice(0, 177).trimEnd()}…` : summary;
   const link = document.createElement("a");
   link.className = "story-card__link";
@@ -461,7 +461,7 @@ function renderArchive(posts) {
   const term = archiveSearch.value.trim().toLocaleLowerCase();
   const matches = posts.filter((post) => {
     const title = decodeEntities(post.title.rendered).toLocaleLowerCase();
-    const excerpt = plainText(post.excerpt.rendered).toLocaleLowerCase();
+    const excerpt = plainText(post.cardSummary ?? post.excerpt.rendered).toLocaleLowerCase();
     const date = String(post.date).slice(0, 10);
     return `${title} ${excerpt} ${date}`.includes(term);
   });
@@ -1071,6 +1071,23 @@ async function start() {
     }
 
     article.innerHTML = cleanContent(item.content.rendered, pagePaths);
+    if (kind === "post" && item.actionButton?.text && item.actionButton?.url) {
+      const actionUrl = safeLink(item.actionButton.url, pagePaths);
+      if (actionUrl !== "#") {
+        const actionParagraph = document.createElement("p");
+        actionParagraph.className = "post-action";
+        const actionLink = document.createElement("a");
+        actionLink.className = "button button--navy post-action__button";
+        actionLink.href = actionUrl;
+        actionLink.textContent = item.actionButton.text;
+        if (item.actionButton.newTab === true) {
+          actionLink.target = "_blank";
+          actionLink.rel = "noopener noreferrer";
+        }
+        actionParagraph.append(actionLink);
+        article.append(actionParagraph);
+      }
+    }
 
     if (kind === "page" && slug === "news-and-sermons") {
       document.querySelector("#page-layout").hidden = true;

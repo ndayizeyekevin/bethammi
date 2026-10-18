@@ -10,7 +10,7 @@ $sections = [
         'label' => 'Posts',
         'singular' => 'Post',
         'table' => 'posts',
-        'fields' => ['title', 'slug', 'published_at', 'featured_image_url', 'youtube_url', 'short_info', 'description', 'is_published'],
+        'fields' => ['title', 'slug', 'published_at', 'featured_image_url', 'youtube_url', 'action_button_text', 'action_button_url', 'action_button_new_tab', 'short_info', 'description', 'is_published'],
     ],
     'team' => [
         'label' => 'Team',
@@ -194,6 +194,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $values['published_at'] = trim(bethammi_admin_input('published_at'));
                     $values['featured_image_url'] = trim(bethammi_admin_input('featured_image_url'));
                     $values['youtube_url'] = trim(bethammi_admin_input('youtube_url'));
+                    $values['action_button_text'] = trim(bethammi_admin_input('action_button_text'));
+                    $values['action_button_url'] = trim(bethammi_admin_input('action_button_url'));
+                    $actionButtonNewTab = bethammi_admin_input('action_button_new_tab', '0');
+                    if (!in_array($actionButtonNewTab, ['0', '1'], true)) {
+                        throw new InvalidArgumentException('Choose whether the post button opens in the current or a new tab.');
+                    }
+                    $values['action_button_new_tab'] = $actionButtonNewTab === '1' ? 1 : 0;
                     $values['short_info'] = trim(bethammi_admin_input('short_info'));
                     $values['description'] = trim(bethammi_admin_input('description'));
                     $date = DateTime::createFromFormat('!Y-m-d', $values['published_at']);
@@ -214,6 +221,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     if (!bethammi_valid_youtube_url($values['youtube_url'])) {
                         throw new InvalidArgumentException('Enter a valid HTTPS YouTube video, Shorts, or live URL.');
+                    }
+                    if (mb_strlen($values['action_button_text'], 'UTF-8') > 120) {
+                        throw new InvalidArgumentException('Post button text must be 120 characters or fewer.');
+                    }
+                    if (mb_strlen($values['action_button_url'], 'UTF-8') > 2048) {
+                        throw new InvalidArgumentException('Post button link must be 2,048 characters or fewer.');
+                    }
+                    if (($values['action_button_text'] === '') !== ($values['action_button_url'] === '')) {
+                        throw new InvalidArgumentException('Enter both the post button text and its link, or leave both blank.');
+                    }
+                    if (!bethammi_valid_post_button_url($values['action_button_url'])) {
+                        throw new InvalidArgumentException('Enter a valid http(s) URL or a site-relative link for the post button.');
                     }
                 } elseif ($section === 'team') {
                     $values['name'] = trim(bethammi_admin_input('name'));
@@ -343,9 +362,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mysqlErrorCode = (int) ($exception->errorInfo[1] ?? 0);
             $error = $mysqlErrorCode === 1062
                 ? 'That post slug is already in use.'
-                : ((string) $exception->getCode() === '42S02'
-                    ? 'Image storage is not installed. Apply database/migrations/20261018_create_post_images.sql, then reload this page.'
-                    : 'The change could not be saved. Check the database connection and try again.');
+                : ($mysqlErrorCode === 1054
+                    ? 'Post button storage is not installed. Apply database/migrations/20261018_add_post_action_button.sql, then reload this page.'
+                    : ((string) $exception->getCode() === '42S02'
+                        ? 'Image storage is not installed. Apply database/migrations/20261018_create_post_images.sql, then reload this page.'
+                        : 'The change could not be saved. Check the database connection and try again.'));
         } catch (Throwable $exception) {
             error_log('Beth Ammi admin request failed: ' . $exception->getMessage());
             $error = 'The request could not be completed. Check the server log for details.';
@@ -391,7 +412,9 @@ if ($isAuthenticated && !in_array($adminPage, ['dashboard', 'add-post'], true)) 
         error_log('Beth Ammi admin records could not be loaded: ' . $exception->getMessage());
         $error = $exception instanceof PDOException && (string) $exception->getCode() === '42S02'
             ? 'Image storage is not installed. Apply database/migrations/20261018_create_post_images.sql, then reload this page.'
-            : 'Database records could not be loaded. Check the connection and schema setup.';
+            : ($exception instanceof PDOException && (int) ($exception->errorInfo[1] ?? 0) === 1054
+                ? 'Post button storage is not installed. Apply database/migrations/20261018_add_post_action_button.sql, then reload this page.'
+                : 'Database records could not be loaded. Check the connection and schema setup.');
     }
 }
 

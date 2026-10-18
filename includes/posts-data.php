@@ -31,7 +31,8 @@ function bethammi_list_posts($limit = null, $excludeId = null)
 function bethammi_post_by_slug($slug)
 {
     $statement = bethammi_db()->prepare(
-        'SELECT id, slug, title, published_at, featured_image_url, youtube_url, short_info, description
+        'SELECT id, slug, title, published_at, featured_image_url, youtube_url,
+                action_button_text, action_button_url, action_button_new_tab, short_info, description
          FROM posts WHERE slug = :slug AND is_published = 1 LIMIT 1'
     );
     $statement->execute(['slug' => $slug]);
@@ -41,7 +42,8 @@ function bethammi_post_by_slug($slug)
 function bethammi_post_by_id($id)
 {
     $statement = bethammi_db()->prepare(
-        'SELECT id, slug, title, published_at, featured_image_url, youtube_url, short_info, description
+        'SELECT id, slug, title, published_at, featured_image_url, youtube_url,
+                action_button_text, action_button_url, action_button_new_tab, short_info, description
          FROM posts WHERE id = :id AND is_published = 1 LIMIT 1'
     );
     $statement->execute(['id' => $id]);
@@ -126,6 +128,66 @@ function bethammi_post_inline_image($paragraph)
     return ['layout' => $layout, 'html' => $figure];
 }
 
+function bethammi_post_card_summary(array $post, $limit = 180)
+{
+    $shortInfo = trim((string) ($post['short_info'] ?? ''));
+    if ($shortInfo !== '') {
+        return $shortInfo;
+    }
+
+    $description = (string) ($post['description'] ?? '');
+    $paragraphs = preg_split('/\R{2,}/u', $description);
+    $text = [];
+    foreach ($paragraphs as $paragraph) {
+        $paragraph = trim($paragraph);
+        if ($paragraph === '' || bethammi_post_inline_image($paragraph) !== null) {
+            continue;
+        }
+        $paragraph = preg_replace('/\[([^\]]+)\]\([^)]+\)/u', '$1', $paragraph);
+        $paragraph = preg_replace('/!\[([^\]]*)\]\([^)]+\)/u', '$1', $paragraph);
+        $paragraph = preg_replace('/^#{1,6}[ \t]+/u', '', $paragraph);
+        $paragraph = preg_replace('/\*\*([^*]+)\*\*|\*([^*]+)\*/u', '$1$2', $paragraph);
+        $paragraph = preg_replace('/(?:^|\s)[*-][ \t]+/u', ' ', $paragraph);
+        $text[] = trim(strip_tags($paragraph));
+    }
+
+    $summary = trim(preg_replace('/\s+/u', ' ', implode(' ', array_filter($text, 'strlen'))));
+    if ($summary === '') {
+        return '';
+    }
+
+    $limit = max(1, (int) $limit);
+    if (mb_strlen($summary, 'UTF-8') <= $limit) {
+        return $summary;
+    }
+
+    $truncated = rtrim(mb_substr($summary, 0, $limit - 1, 'UTF-8'));
+    $lastSpace = mb_strrpos($truncated, ' ', 0, 'UTF-8');
+    if ($lastSpace !== false && $lastSpace >= (int) ($limit * 0.65)) {
+        $truncated = rtrim(mb_substr($truncated, 0, $lastSpace, 'UTF-8'));
+    }
+    return $truncated . '…';
+}
+
+function bethammi_post_action_button(array $post)
+{
+    $text = trim((string) ($post['action_button_text'] ?? ''));
+    $url = trim((string) ($post['action_button_url'] ?? ''));
+    if ($text === '' || $url === '' || !bethammi_valid_post_button_url($url)) {
+        return '';
+    }
+
+    $urlParts = parse_url($url);
+    if (!isset($urlParts['scheme']) && !str_starts_with($url, '/') && !str_starts_with($url, '#') && !str_starts_with($url, '?')) {
+        $url = '/' . $url;
+    }
+    $newTab = (int) ($post['action_button_new_tab'] ?? 0) === 1;
+    return '<p class="post-action"><a class="button button--navy post-action__button" href="'
+        . bethammi_escape($url) . '"'
+        . ($newTab ? ' target="_blank" rel="noopener noreferrer"' : '')
+        . '>' . bethammi_escape($text) . '</a></p>';
+}
+
 function bethammi_post_response(array $post, $includeDescription = false)
 {
     $paragraphs = preg_split('/\R{2,}/u', trim((string) $post['description']));
@@ -184,6 +246,7 @@ function bethammi_post_response(array $post, $includeDescription = false)
         'link' => 'https://www.bethammicfc.org/' . rawurlencode($post['slug']) . '/',
         'title' => ['rendered' => $post['title']],
         'excerpt' => ['rendered' => '<p>' . bethammi_escape($post['short_info']) . '</p>'],
+        'cardSummary' => bethammi_post_card_summary($post),
         'featuredImage' => [
             'url' => $post['featured_image_url'],
             'alt' => $post['title'],
@@ -192,6 +255,11 @@ function bethammi_post_response(array $post, $includeDescription = false)
     ];
     if ($includeDescription) {
         $result['content'] = ['rendered' => $content];
+        $result['actionButton'] = [
+            'text' => $post['action_button_text'] ?? '',
+            'url' => $post['action_button_url'] ?? '',
+            'newTab' => (int) ($post['action_button_new_tab'] ?? 0) === 1,
+        ];
     }
 
     return $result;

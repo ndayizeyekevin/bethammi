@@ -51,6 +51,18 @@ if ($adminPage !== 'add-post') {
       </div>
       <?php bethammi_admin_field('youtube_url', 'YouTube video URL', 'url', false, true); ?>
       <p class="admin-help">Optional. Use an https:// YouTube video, Shorts, or live link.</p>
+      <div class="form-row post-action-fields">
+        <?php bethammi_admin_field('action_button_text', 'Optional button text'); ?>
+        <?php bethammi_admin_field('action_button_url', 'Optional button link'); ?>
+      </div>
+      <div class="admin-field admin-field--wide">
+        <label for="action-button-new-tab">Button link behavior</label>
+        <select id="action-button-new-tab" name="action_button_new_tab">
+          <option value="0"<?= bethammi_admin_value('action_button_new_tab', '0') === '0' ? ' selected' : '' ?>>Open in the current tab</option>
+          <option value="1"<?= bethammi_admin_value('action_button_new_tab', '0') === '1' ? ' selected' : '' ?>>Open in a new tab</option>
+        </select>
+        <p class="admin-help">Leave the button text and link blank to omit the button.</p>
+      </div>
       <?php bethammi_admin_field('short_info', 'Short info for cards', 'textarea', false, true); ?>
       <div class="post-description-field admin-field--wide">
         <label for="post-description">Full post description</label>
