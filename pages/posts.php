@@ -46,6 +46,7 @@ try {
         }
     } else {
         $posts = bethammi_list_posts();
+        $latestPosts = array_slice($posts, 0, 3);
     }
 } catch (Throwable $error) {
     error_log('Beth Ammi posts page failed: ' . $error->getMessage());
@@ -174,6 +175,31 @@ require __DIR__ . '/../includes/site-header.php';
         <p class="archive-empty" id="posts-empty"<?= $posts || $pageError !== '' ? ' hidden' : '' ?>><?= $posts ? 'No stories match that search. Try a different word.' : 'There are no stories to show right now.' ?></p>
       </div>
       <aside class="sidebar-card posts-newsletter" aria-labelledby="posts-newsletter-title">
+        <section class="posts-latest-posts" aria-labelledby="posts-latest-posts-title">
+          <p class="eyebrow"><span></span> Fresh from Beth Ammi</p>
+          <h2 id="posts-latest-posts-title">Latest <em>posts.</em></h2>
+          <?php if ($latestPosts): ?>
+          <ul class="latest-posts__list">
+            <?php foreach ($latestPosts as $latestPost): ?>
+            <?php $latestPostHasImage = $latestPost['featured_image_url'] !== '' && bethammi_valid_image_url($latestPost['featured_image_url']); ?>
+            <li>
+              <a class="latest-posts__link<?= $latestPostHasImage ? '' : ' latest-posts__link--no-image' ?>" href="posts?slug=<?= rawurlencode($latestPost['slug']) ?>">
+                <?php if ($latestPostHasImage): ?>
+                <img src="<?= bethammi_escape($latestPost['featured_image_url']) ?>" alt="" loading="lazy">
+                <?php endif; ?>
+                <span class="latest-posts__copy">
+                  <span class="latest-posts__title"><?= bethammi_escape($latestPost['title']) ?></span>
+                  <span class="latest-posts__date"><?= bethammi_escape(date('j F Y', strtotime($latestPost['published_at']))) ?></span>
+                </span>
+              </a>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+          <?php else: ?>
+          <p class="latest-posts__empty">There are no posts to show right now.</p>
+          <?php endif; ?>
+        </section>
+        <hr class="posts-newsletter__divider">
         <p class="eyebrow"><span></span> Stay connected</p>
         <h2 id="posts-newsletter-title">News in your <em>inbox.</em></h2>
         <p class="posts-newsletter__intro">Receive church news, sermons, and community updates by email.</p>
