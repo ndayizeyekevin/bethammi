@@ -141,4 +141,14 @@ if (scrollTopButton) {
 
 const year = document.querySelector("#year");
 if (year) year.textContent = String(new Date().getFullYear());
+
+const heroSlides = document.querySelectorAll(".hero__slide");
+if (heroSlides.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  let activeHeroSlide = 0;
+  window.setInterval(() => {
+    heroSlides[activeHeroSlide].classList.remove("is-active");
+    activeHeroSlide = (activeHeroSlide + 1) % heroSlides.length;
+    heroSlides[activeHeroSlide].classList.add("is-active");
+  }, 3000);
+}
 })();
