@@ -96,6 +96,29 @@ function bethammi_valid_youtube_url($value)
         && parse_url($value, PHP_URL_PASS) === null;
 }
 
+function bethammi_valid_post_button_url($value)
+{
+    if ($value === '') {
+        return true;
+    }
+    if (preg_match('/[\x00-\x20\x7f\\\\]/', $value) || str_starts_with($value, '//')) {
+        return false;
+    }
+
+    $parts = parse_url($value);
+    if ($parts === false) {
+        return false;
+    }
+    if (isset($parts['scheme'])) {
+        return in_array(strtolower($parts['scheme']), ['http', 'https'], true)
+            && filter_var($value, FILTER_VALIDATE_URL) !== false
+            && !isset($parts['user'])
+            && !isset($parts['pass']);
+    }
+
+    return true;
+}
+
 function bethammi_youtube_embed_url($value)
 {
     if (!bethammi_valid_youtube_url($value) || $value === '') {
