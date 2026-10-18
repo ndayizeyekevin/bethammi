@@ -2,13 +2,26 @@
 
 require_once __DIR__ . '/database.php';
 
-function bethammi_list_posts($limit = null)
+function bethammi_list_posts($limit = null, $excludeId = null)
 {
     $sql = 'SELECT id, slug, title, published_at, featured_image_url, youtube_url, short_info, description
-        FROM posts WHERE is_published = 1 ORDER BY published_at DESC, id DESC';
+        FROM posts WHERE is_published = 1';
+    if ($excludeId !== null) {
+        $sql .= ' AND id <> :exclude_id';
+    }
+    $sql .= ' ORDER BY published_at DESC, id DESC';
     if ($limit !== null) {
         $statement = bethammi_db()->prepare($sql . ' LIMIT :limit');
         $statement->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+        if ($excludeId !== null) {
+            $statement->bindValue(':exclude_id', (int) $excludeId, PDO::PARAM_INT);
+        }
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+    if ($excludeId !== null) {
+        $statement = bethammi_db()->prepare($sql);
+        $statement->bindValue(':exclude_id', (int) $excludeId, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll();
     }

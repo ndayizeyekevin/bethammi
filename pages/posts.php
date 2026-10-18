@@ -8,6 +8,7 @@ header('Cache-Control: no-store');
 $siteRoot = '../';
 $post = null;
 $posts = [];
+$latestPosts = [];
 $pageError = '';
 $isSinglePost = isset($_GET['slug']) || isset($_GET['id']);
 $pageScripts = $isSinglePost ? ['script.js'] : ['script.js', 'posts-archive.js'];
@@ -39,6 +40,9 @@ try {
         if ($pageError === '' && $post === null) {
             http_response_code(404);
             $pageError = 'This post could not be found.';
+        }
+        if ($post !== null) {
+            $latestPosts = bethammi_list_posts(3, (int) $post['id']);
         }
     } else {
         $posts = bethammi_list_posts();
@@ -95,6 +99,30 @@ require __DIR__ . '/../includes/site-header.php';
         <?php endif; ?>
       </article>
       <aside class="page-sidebar">
+        <section class="sidebar-card latest-posts" aria-labelledby="latest-posts-title">
+          <p class="eyebrow"><span></span> Keep reading</p>
+          <h2 id="latest-posts-title">Latest <em>posts.</em></h2>
+          <?php if ($latestPosts): ?>
+          <ul class="latest-posts__list">
+            <?php foreach ($latestPosts as $latestPost): ?>
+            <?php $latestPostHasImage = $latestPost['featured_image_url'] !== '' && bethammi_valid_image_url($latestPost['featured_image_url']); ?>
+            <li>
+              <a class="latest-posts__link<?= $latestPostHasImage ? '' : ' latest-posts__link--no-image' ?>" href="posts?slug=<?= rawurlencode($latestPost['slug']) ?>">
+                <?php if ($latestPostHasImage): ?>
+                <img src="<?= bethammi_escape($latestPost['featured_image_url']) ?>" alt="" loading="lazy">
+                <?php endif; ?>
+                <span class="latest-posts__copy">
+                  <span class="latest-posts__title"><?= bethammi_escape($latestPost['title']) ?></span>
+                  <span class="latest-posts__date"><?= bethammi_escape(date('j F Y', strtotime($latestPost['published_at']))) ?></span>
+                </span>
+              </a>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+          <?php else: ?>
+          <p class="latest-posts__empty">There are no other posts yet.</p>
+          <?php endif; ?>
+        </section>
         <div class="sidebar-card sidebar-card--visit">
           <p class="eyebrow"><span></span> From our church family</p>
           <h2>More news<br>and <em>sermons.</em></h2>

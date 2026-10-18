@@ -543,6 +543,20 @@ body[data-content-slug="media"] #page-content .elementor-screen-only { position:
 .sidebar-card h2 { font-size: 28px; }
 .sidebar-card--visit > p:not(.eyebrow) { color: #69736f; font-size: 11px; }
 .sidebar-card--visit .button { width: 100%; gap: 12px; padding-inline: 11px; font-size: 10px; }
+.latest-posts { border: 1px solid #e6e3da; background: var(--white); }
+.latest-posts .eyebrow { font-size: 8px; }
+.latest-posts h2 { margin-bottom: 18px; color: var(--navy); font-size: 25px; }
+.latest-posts__list { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.latest-posts__list li + li { padding-top: 14px; border-top: 1px solid #e8e5dd; }
+.latest-posts__link { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; align-items: center; color: var(--ink); text-decoration: none; }
+.latest-posts__link--no-image { grid-template-columns: minmax(0, 1fr); }
+.latest-posts__link img { width: 64px; height: 58px; object-fit: cover; background: #efeee8; }
+.latest-posts__copy { display: grid; gap: 6px; }
+.latest-posts__title { font-size: 11px; font-weight: 700; line-height: 1.45; }
+.latest-posts__link:hover .latest-posts__title, .latest-posts__link:focus-visible .latest-posts__title { color: #8b6b3b; }
+.latest-posts__link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.latest-posts__date { color: #737c77; font-size: 9px; }
+.latest-posts__empty { margin: 0; color: #69736f; font-size: 11px; }
 .sidebar-card--contact { display: grid; gap: 8px; background: var(--navy); }
 .sidebar-card__label { margin-bottom: 4px; color: var(--gold-light); font-size: 8px; font-weight: 700; letter-spacing: .13em; }
 .sidebar-card--contact a { color: var(--white); font-size: 11px; text-decoration: none; }
