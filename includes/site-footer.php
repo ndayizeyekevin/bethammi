@@ -4,7 +4,20 @@
         <img class="brand__logo" src="<?= bethammi_escape($siteRoot) ?>assets/images/bethammilogo.png" alt="">
         <span class="brand__words"><strong>BETH AMMI</strong><small>CHRISTIAN FELLOWSHIP CHURCH</small></span>
       </a>
-      <p>A place to worship, grow, and belong.<br>We look forward to seeing you.</p>
+      <section class="footer__newsletter" aria-labelledby="footer-newsletter-title">
+        <span class="footer__newsletter-label">NEWSLETTER</span>
+        <p id="footer-newsletter-title">Church news and encouragement, delivered to your inbox.</p>
+        <form class="newsletter-form" action="<?= bethammi_escape($siteRoot) ?>subscribe" method="post">
+          <input type="hidden" name="csrf_token" value="<?= bethammi_escape($loginCsrfToken) ?>">
+          <label class="visually-hidden" for="newsletter-email">Email address</label>
+          <div class="newsletter-form__controls">
+            <input id="newsletter-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="Your email address" required>
+            <button type="submit">Subscribe <span aria-hidden="true">↗</span></button>
+          </div>
+          <p class="newsletter-form__note">Subscribe to receive church updates. You can contact us to have your address removed.</p>
+          <p class="newsletter-form__status" role="status" aria-live="polite" hidden></p>
+        </form>
+      </section>
       <div class="footer__contact"><span>GET IN TOUCH</span><a href="tel:+250788482324">+250 788 482 324</a><a href="https://wa.me/250788482324">WhatsApp us ↗</a><a href="<?= bethammi_escape($siteRoot) ?>pages/contact-us">Contact us ↗</a></div>
       <div class="footer__social"><span>FOLLOW ALONG</span><a href="https://www.facebook.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook" aria-hidden="true"></i>Facebook ↗</a><a href="https://www.twitter.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter-x" aria-hidden="true"></i>Twitter ↗</a><a href="https://www.instagram.com/bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram" aria-hidden="true"></i>Instagram ↗</a><a href="https://www.youtube.com/@bethammicfc/" target="_blank" rel="noopener noreferrer"><i class="bi bi-youtube" aria-hidden="true"></i>YouTube ↗</a><a href="https://wa.me/250788482324" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp" aria-hidden="true"></i>WhatsApp ↗</a><a href="<?= bethammi_escape($siteRoot) ?>page?type=page&amp;slug=media">Media library ↗</a></div>
     </div>

@@ -142,6 +142,40 @@ if (scrollTopButton) {
 const year = document.querySelector("#year");
 if (year) year.textContent = String(new Date().getFullYear());
 
+const newsletterForm = document.querySelector(".newsletter-form");
+if (newsletterForm instanceof HTMLFormElement) {
+  const newsletterStatus = newsletterForm.querySelector(".newsletter-form__status");
+  const newsletterSubmit = newsletterForm.querySelector('button[type="submit"]');
+
+  newsletterForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!(newsletterStatus instanceof HTMLElement) || !(newsletterSubmit instanceof HTMLButtonElement)) return;
+
+    newsletterSubmit.disabled = true;
+    newsletterStatus.hidden = false;
+    newsletterStatus.textContent = "Submitting your subscription…";
+
+    try {
+      const response = await fetch(newsletterForm.action, {
+        method: "POST",
+        body: new FormData(newsletterForm),
+        headers: { Accept: "application/json" },
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Your subscription could not be completed.");
+
+      newsletterStatus.textContent = result.message;
+      newsletterForm.reset();
+    } catch (error) {
+      newsletterStatus.textContent = error instanceof Error
+        ? error.message
+        : "Your subscription could not be completed. Please try again.";
+    } finally {
+      newsletterSubmit.disabled = false;
+    }
+  });
+}
+
 const heroSlides = document.querySelectorAll(".hero__slide");
 if (heroSlides.length > 1) {
   const previousHeroButton = document.querySelector(".hero__control--previous");
