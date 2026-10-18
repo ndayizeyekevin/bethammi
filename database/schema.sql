@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS admin_login_attempts (
 CREATE TABLE IF NOT EXISTS newsletter_subscribers (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(254) NOT NULL,
+    status ENUM('subscribed', 'unsubscribed') NOT NULL DEFAULT 'subscribed',
     subscribed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY newsletter_subscribers_email_unique (email)

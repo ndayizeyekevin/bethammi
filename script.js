@@ -145,31 +145,52 @@ if (year) year.textContent = String(new Date().getFullYear());
 const newsletterForm = document.querySelector(".newsletter-form");
 if (newsletterForm instanceof HTMLFormElement) {
   const newsletterStatus = newsletterForm.querySelector(".newsletter-form__status");
-  const newsletterSubmit = newsletterForm.querySelector('button[type="submit"]');
+  const newsletterSubmitButtons = newsletterForm.querySelectorAll('button[type="submit"]');
 
   newsletterForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    if (!(newsletterStatus instanceof HTMLElement) || !(newsletterSubmit instanceof HTMLButtonElement)) return;
+    if (!(newsletterStatus instanceof HTMLElement)) return;
 
-    newsletterSubmit.disabled = true;
+    newsletterSubmitButtons.forEach((button) => {
+      button.disabled = true;
+    });
     newsletterStatus.hidden = false;
     newsletterStatus.classList.remove("is-success", "is-error");
     newsletterStatus.classList.add("is-pending");
-    newsletterStatus.textContent = "Submitting your subscription…";
+    const submitter = event.submitter;
+    const action = submitter instanceof HTMLButtonElement ? submitter.value : "subscribe";
+    newsletterStatus.textContent = action === "unsubscribe"
+      ? "Updating your subscription…"
+      : "Submitting your subscription…";
 
     try {
-      const response = await fetch(newsletterForm.action, {
+      const formData = new FormData(newsletterForm);
+      formData.set("action", action);
+      const endpoint = newsletterForm.getAttribute("action");
+      if (!endpoint) throw new Error("The subscription form is missing its endpoint.");
+      const response = await fetch(endpoint, {
         method: "POST",
-        body: new FormData(newsletterForm),
-        headers: { Accept: "application/json" },
+        body: formData,
+        headers: {
+          Accept: "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+        },
       });
-      const result = await response.json();
+      const responseBody = await response.text();
+      let result;
+      try {
+        result = JSON.parse(responseBody);
+      } catch {
+        throw new Error("The subscription service returned an invalid response. Please try again later.");
+      }
       if (!response.ok) throw new Error(result.error || "Your subscription could not be completed.");
 
-      newsletterStatus.classList.remove("is-pending");
+      newsletterStatus.classList.remove("is-pending", "is-error");
       newsletterStatus.classList.add("is-success");
       newsletterStatus.textContent = result.message;
-      newsletterForm.reset();
+      if (action === "subscribe" && result.message === "Subscribed successfully.") {
+        newsletterForm.reset();
+      }
     } catch (error) {
       newsletterStatus.classList.remove("is-pending");
       newsletterStatus.classList.add("is-error");
@@ -177,7 +198,9 @@ if (newsletterForm instanceof HTMLFormElement) {
         ? error.message
         : "Your subscription could not be completed. Please try again.";
     } finally {
-      newsletterSubmit.disabled = false;
+      newsletterSubmitButtons.forEach((button) => {
+        button.disabled = false;
+      });
     }
   });
 }

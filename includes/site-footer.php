@@ -7,14 +7,15 @@
       <section class="footer__newsletter" aria-labelledby="footer-newsletter-title">
         <span class="footer__newsletter-label">NEWSLETTER</span>
         <p id="footer-newsletter-title">Church news and encouragement, delivered to your inbox.</p>
-        <form class="newsletter-form" action="<?= bethammi_escape($siteRoot) ?>subscribe" method="post">
+        <form class="newsletter-form" action="<?= bethammi_escape($siteRoot) ?>subscribe.php" method="post">
           <input type="hidden" name="csrf_token" value="<?= bethammi_escape($loginCsrfToken) ?>">
           <label class="visually-hidden" for="newsletter-email">Email address</label>
           <div class="newsletter-form__controls">
             <input id="newsletter-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="Your email address" required>
-            <button type="submit">Subscribe <span aria-hidden="true">↗</span></button>
+            <button type="submit" name="action" value="subscribe">Subscribe <span aria-hidden="true">↗</span></button>
           </div>
-          <p class="newsletter-form__note">Subscribe to receive church updates. You can contact us to have your address removed.</p>
+          <button class="newsletter-form__unsubscribe" type="submit" name="action" value="unsubscribe">Unsubscribe this email</button>
+          <p class="newsletter-form__note">Subscribe to receive church updates, or unsubscribe at any time.</p>
           <p class="newsletter-form__status" role="status" aria-live="polite" hidden></p>
         </form>
       </section>

@@ -8,9 +8,15 @@ header('Cache-Control: no-store');
 function bethammi_subscribe_response(array $payload, $status = 200)
 {
     http_response_code($status);
-    if (strpos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false) {
+    if (
+        ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST'
+        ||
+        strpos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false
+        || ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') === 'XMLHttpRequest'
+    ) {
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE);
+        $json = json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE);
+        echo $json === false ? '{"error":"The response could not be encoded."}' : $json;
         return;
     }
 
@@ -52,23 +58,67 @@ if (strlen($email) > 254 || filter_var($email, FILTER_VALIDATE_EMAIL) === false)
     exit;
 }
 
-try {
-    $statement = bethammi_db()->prepare(
-        'INSERT INTO newsletter_subscribers (email) VALUES (:email)'
-    );
-    try {
-        $statement->execute(['email' => $email]);
-    } catch (PDOException $error) {
-        $isDuplicateEmail = $error->getCode() === '23000'
-            && isset($error->errorInfo[1])
-            && (int) $error->errorInfo[1] === 1062;
-        if (!$isDuplicateEmail) {
-            throw $error;
-        }
-    }
+$action = $_POST['action'] ?? 'subscribe';
+if (!is_string($action) || !in_array($action, ['subscribe', 'unsubscribe'], true)) {
+    bethammi_subscribe_response(['error' => 'Choose whether to subscribe or unsubscribe.'], 422);
+    exit;
+}
 
-    bethammi_subscribe_response(['message' => 'Subscribed successfully.']);
+try {
+    $database = bethammi_db();
+    if ($action === 'subscribe') {
+        $database->beginTransaction();
+        $statement = $database->prepare(
+            "INSERT IGNORE INTO newsletter_subscribers (email, status) VALUES (:email, 'subscribed')"
+        );
+        $statement->execute(['email' => $email]);
+        $wasInserted = $statement->rowCount() === 1;
+
+        $statement = $database->prepare(
+            'SELECT status FROM newsletter_subscribers WHERE email = :email FOR UPDATE'
+        );
+        $statement->execute(['email' => $email]);
+        $subscriptionStatus = $statement->fetchColumn();
+
+        if ($subscriptionStatus === 'unsubscribed') {
+            $statement = $database->prepare(
+                "UPDATE newsletter_subscribers SET status = 'subscribed', subscribed_at = CURRENT_TIMESTAMP WHERE email = :email"
+            );
+            $statement->execute(['email' => $email]);
+            $message = 'Subscribed successfully.';
+        } elseif ($wasInserted) {
+            $message = 'Subscribed successfully.';
+        } else {
+            $message = 'This email address is already subscribed.';
+        }
+
+        $database->commit();
+        bethammi_subscribe_response(['message' => $message]);
+    } else {
+        $statement = $database->prepare(
+            "UPDATE newsletter_subscribers SET status = 'unsubscribed' WHERE email = :email AND status = 'subscribed'"
+        );
+        $statement->execute(['email' => $email]);
+
+        if ($statement->rowCount() === 1) {
+            $message = 'Unsubscribed successfully.';
+        } else {
+            $statement = $database->prepare(
+                'SELECT status FROM newsletter_subscribers WHERE email = :email'
+            );
+            $statement->execute(['email' => $email]);
+            $subscriptionStatus = $statement->fetchColumn();
+            $message = $subscriptionStatus === 'unsubscribed'
+                ? 'This email address is already unsubscribed.'
+                : 'No subscription was found for this email address.';
+        }
+
+        bethammi_subscribe_response(['message' => $message]);
+    }
 } catch (Throwable $error) {
-    error_log('Beth Ammi newsletter signup failed: ' . $error->getMessage());
+    if (isset($database) && $database->inTransaction()) {
+        $database->rollBack();
+    }
+    error_log('Beth Ammi newsletter subscription update failed: ' . $error->getMessage());
     bethammi_subscribe_response(['error' => 'Your subscription could not be saved right now. Please try again.'], 500);
 }
