@@ -1,14 +1,18 @@
 <?php
-$publishedCount = count(array_filter($records, function ($record) {
-    return (int) $record['is_published'] === 1;
-}));
-$hiddenCount = count($records) - $publishedCount;
+if ($adminPage !== 'add-post') {
+    $publishedCount = count(array_filter($records, function ($record) {
+        return (int) $record['is_published'] === 1;
+    }));
+    $hiddenCount = count($records) - $publishedCount;
+}
 ?>
+<?php if ($adminPage !== 'add-post'): ?>
 <section class="stats-grid stats-grid--compact" aria-label="<?= bethammi_escape($sections[$section]['label']) ?> summary">
   <article class="stat-card stat-card--compact"><div><p>Total <?= bethammi_escape(strtolower($sections[$section]['label'])) ?></p><strong><?= count($records) ?></strong></div></article>
   <article class="stat-card stat-card--compact"><div><p>Published</p><strong><?= $publishedCount ?></strong></div></article>
   <article class="stat-card stat-card--compact"><div><p>Hidden</p><strong><?= $hiddenCount ?></strong></div></article>
 </section>
+<?php endif; ?>
 
 <section class="panel editor-panel" id="editor">
   <div class="panel-heading">
@@ -32,14 +36,13 @@ $hiddenCount = count($records) - $publishedCount;
       <?php bethammi_admin_field('youtube_url', 'YouTube video URL', 'url', false, true); ?>
       <p class="admin-help">Optional. Use an https:// YouTube video, Shorts, or live link.</p>
       <?php bethammi_admin_field('short_info', 'Short info for cards', 'textarea', false, true); ?>
-        <thead><tr><th>Photo</th><th>Name / title</th><th>Details</th><?php if ($section === 'posts'): ?><th>YouTube</th><?php endif; ?><th>Status</th><th>Actions</th></tr></thead>
       <div class="post-description-field admin-field--wide">
         <label for="post-description">Full post description</label>
         <div class="post-formatting-toolbar" role="group" aria-label="Format post description">
           <button type="button" data-format="bold" aria-label="Bold selected text"><strong>B</strong></button>
           <button type="button" data-format="italic" aria-label="Italicize selected text"><em>I</em></button>
         </div>
-        <textarea id="post-description" name="description" required><?= bethammi_escape(bethammi_admin_value('description')) ?></textarea>
+        <textarea id="post-description" name="description"><?= bethammi_escape(bethammi_admin_value('description')) ?></textarea>
         <div class="post-image-insert" data-upload-endpoint="post-image-upload.php">
           <h3>Add an image to your post</h3>
           <div class="post-image-insert__fields">
@@ -55,7 +58,7 @@ $hiddenCount = count($records) - $publishedCount;
             <label data-image-file-field hidden>Choose image
               <input type="file" data-image-file accept="image/jpeg,image/png,image/webp">
             </label>
-            <label>Text below the image
+            <label>Text style below the image
               <select data-image-text-type>
                 <option value="caption">Caption</option>
                 <option value="paragraph">Regular paragraph</option>
@@ -63,24 +66,24 @@ $hiddenCount = count($records) - $publishedCount;
             </label>
             <label>Image placement
               <select data-image-layout>
-                <option value="left">Left, above the following text</option>
-                <option value="center">Center, above the following text</option>
-                <option value="right">Right, above the following text</option>
+                <option value="left">Left aligned</option>
+                <option value="center">Center aligned</option>
+                <option value="right">Right aligned</option>
                 <option value="gallery">Side-by-side gallery after the post text</option>
               </select>
             </label>
-            <label data-image-caption-field><span>Caption shown below the image</span>
-              <input type="text" data-image-caption maxlength="300" placeholder="Write a short caption">
+            <label><span data-image-below-label>Caption shown below the image</span>
+              <textarea data-image-below-text maxlength="5000" rows="3" placeholder="Write a short caption"></textarea>
             </label>
             <label>Image description for accessibility (not displayed)
               <input type="text" data-image-alt maxlength="200" placeholder="Describe the image">
             </label>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ad dignissimos assumenda mollitia ipsam iure eos corrupti officiis nesciunt at? Atque quaerat ab, numquam id obcaecati nesciunt? Ab quibusdam vitae quidem recusandae assumenda praesentium incidunt! Molestiae velit adipisci architecto vero sunt, sequi nulla facilis deserunt assumenda voluptas quam! Quos, dolores?
           </div>
-          <button type="button" class="button button--secondary post-image-insert__button" data-insert-image>Insert image</button>
+          <button type="button" class="button button--secondary post-image-insert__button" data-add-post-image>Add image to post</button>
           <p class="post-image-insert__status" role="status" aria-live="polite" hidden></p>
+          <div class="post-image-list" data-post-image-list data-existing-images="<?= bethammi_escape(json_encode($postImages, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP) ?: '[]') ?>"></div>
         </div>
-        <p class="admin-help">Enter the caption or paragraph in the image controls; it will be inserted with the image and displayed below it. Add multiple gallery images to place them side by side. Click Add Post or Save changes to store the post text and images. Site paths are relative to the website root, for example assets/images/photo.jpg.</p>
+        <p class="admin-help">After choosing a computer image and entering its accessibility description and caption or paragraph, click Add image to post to upload the file. It will be saved in assets/images/posts/ with a generated filename (JPEG, PNG, or WebP; maximum 8 MB). Then save the post to store its caption, accessibility description, layout, and order in the database. Site paths are relative to the website root, for example assets/images/photo.jpg.</p>
       </div>
     <?php elseif ($section === 'team'): ?>
       <div class="form-row">
@@ -115,6 +118,7 @@ $hiddenCount = count($records) - $publishedCount;
   </form>
 </section>
 
+<?php if ($adminPage !== 'add-post'): ?>
 <section class="panel records-panel">
   <div class="panel-heading">
     <div><p class="eyebrow">CONTENT LIBRARY</p><h2>Existing <?= bethammi_escape(strtolower($sections[$section]['label'])) ?></h2></div>
@@ -157,3 +161,4 @@ $hiddenCount = count($records) - $publishedCount;
     </table></div>
   <?php endif; ?>
 </section>
+<?php endif; ?>

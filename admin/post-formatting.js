@@ -47,11 +47,12 @@
   const fileInput = imageComposer.querySelector("[data-image-file]");
   const textType = imageComposer.querySelector("[data-image-text-type]");
   const imageLayout = imageComposer.querySelector("[data-image-layout]");
-  const captionField = imageComposer.querySelector("[data-image-caption-field]");
-  const captionInput = imageComposer.querySelector("[data-image-caption]");
+  const belowTextInput = imageComposer.querySelector("[data-image-below-text]");
+  const belowTextLabel = imageComposer.querySelector("[data-image-below-label]");
   const altInput = imageComposer.querySelector("[data-image-alt]");
-  const insertButton = imageComposer.querySelector("[data-insert-image]");
+  const addButton = imageComposer.querySelector("[data-add-post-image]");
   const imageStatus = imageComposer.querySelector(".post-image-insert__status");
+  const imageList = imageComposer.querySelector("[data-post-image-list]");
   const editorForm = textarea.closest("form");
   const csrfInput = editorForm?.querySelector('input[name="csrf_token"]');
 
@@ -63,12 +64,14 @@
     || !(fileInput instanceof HTMLInputElement)
     || !(textType instanceof HTMLSelectElement)
     || !(imageLayout instanceof HTMLSelectElement)
-    || !(captionField instanceof HTMLElement)
-    || !(captionInput instanceof HTMLInputElement)
+    || !(belowTextInput instanceof HTMLTextAreaElement)
+    || !(belowTextLabel instanceof HTMLElement)
     || !(altInput instanceof HTMLInputElement)
-    || !(insertButton instanceof HTMLButtonElement)
+    || !(addButton instanceof HTMLButtonElement)
     || !(imageStatus instanceof HTMLElement)
+    || !(imageList instanceof HTMLElement)
     || !(csrfInput instanceof HTMLInputElement)
+    || !editorForm
   ) return;
 
   const setImageStatus = (message, state = "") => {
@@ -76,90 +79,180 @@
     imageStatus.textContent = message;
     imageStatus.dataset.state = state;
   };
+  const media = [];
+  const allowedLayouts = ["left", "center", "right", "gallery"];
 
-  const updateBelowImageLabel = () => {
-    const label = captionField.querySelector("span");
-    if (label) {
-      label.textContent = imageLayout.value === "gallery"
-        ? "Description shown below each gallery image"
-        : textType.value === "caption"
-          ? "Caption shown below the image"
-          : "Paragraph shown below the image";
-    }
-    captionInput.placeholder = imageLayout.value === "gallery" || textType.value === "caption"
+  const updateBelowTextLabel = () => {
+    belowTextLabel.textContent = imageLayout.value === "gallery"
+      ? "Description shown below each gallery image"
+      : textType.value === "caption"
+        ? "Caption shown below the image"
+        : "Paragraph shown below the image";
+    belowTextInput.placeholder = imageLayout.value === "gallery" || textType.value === "caption"
       ? "Write a short description"
       : "Write the paragraph to display below the image";
   };
+
+  const normalizeImageUrl = (value) => {
+    const imageUrl = value.trim();
+    if (/^https?:\/\//i.test(imageUrl)) {
+      const externalUrl = new URL(imageUrl);
+      if (!["http:", "https:"].includes(externalUrl.protocol)) throw new Error("Use a full http(s) image URL or a safe site-root path.");
+      return imageUrl;
+    }
+    const siteRootPath = new URL("../", window.location.href).pathname;
+    if (imageUrl.includes("\\") || /(^|\/)\.\.(\/|$)/.test(imageUrl)) {
+      throw new Error("Use a site-root path without parent-directory segments.");
+    }
+    const relativePath = imageUrl.replace(/^\/+/, "");
+    const parsedUrl = imageUrl.startsWith(siteRootPath)
+      ? new URL(imageUrl, window.location.origin)
+      : new URL(relativePath, new URL("../", window.location.href));
+    if (!parsedUrl.pathname.startsWith(siteRootPath)) {
+      throw new Error("Use a safe path inside the website.");
+    }
+    return parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
+  };
+
+  const addHiddenField = (container, name, value) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = value;
+    container.append(input);
+  };
+
+  const renderMedia = () => {
+    imageList.replaceChildren();
+    media.forEach((item, index) => {
+      const card = document.createElement("article");
+      card.className = "post-image-item";
+
+      const preview = document.createElement("img");
+      preview.className = "post-image-item__preview";
+      preview.src = item.image_path;
+      preview.alt = "";
+      preview.loading = "lazy";
+      card.append(preview);
+
+      const details = document.createElement("div");
+      details.className = "post-image-item__details";
+      const title = document.createElement("strong");
+      title.textContent = item.below_text_type === "caption" ? "Caption" : "Paragraph";
+      const description = document.createElement("p");
+      description.textContent = item.below_text;
+      const metadata = document.createElement("span");
+      metadata.textContent = `${item.layout} · ${item.image_path}`;
+      details.append(title, description, metadata);
+      card.append(details);
+
+      const actions = document.createElement("div");
+      actions.className = "post-image-item__actions";
+      [
+        { label: "Move image up", text: "↑", offset: -1 },
+        { label: "Move image down", text: "↓", offset: 1 },
+      ].forEach(({ label, text, offset }) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = text;
+        button.setAttribute("aria-label", label);
+        button.disabled = index + offset < 0 || index + offset >= media.length;
+        button.addEventListener("click", () => {
+          const target = index + offset;
+          [media[index], media[target]] = [media[target], media[index]];
+          renderMedia();
+        });
+        actions.append(button);
+      });
+      const removeButton = document.createElement("button");
+      removeButton.type = "button";
+      removeButton.textContent = "Remove";
+      removeButton.addEventListener("click", () => {
+        media.splice(index, 1);
+        renderMedia();
+        setImageStatus("Image removed from this post. Save changes to store the update.");
+      });
+      actions.append(removeButton);
+      card.append(actions);
+
+      addHiddenField(card, `post_images[${index}][image_path]`, item.image_path);
+      addHiddenField(card, `post_images[${index}][alt_text]`, item.alt_text);
+      addHiddenField(card, `post_images[${index}][below_text]`, item.below_text);
+      addHiddenField(card, `post_images[${index}][below_text_type]`, item.below_text_type);
+      addHiddenField(card, `post_images[${index}][layout]`, item.layout);
+      imageList.append(card);
+    });
+  };
+
+  try {
+    const initialMedia = JSON.parse(imageList.dataset.existingImages || "[]");
+    if (!Array.isArray(initialMedia)) throw new Error("Saved post images could not be loaded.");
+    initialMedia.forEach((image) => {
+      if (
+        image && typeof image.image_path === "string"
+        && typeof image.alt_text === "string"
+        && typeof image.below_text === "string"
+        && ["caption", "paragraph"].includes(image.below_text_type)
+        && allowedLayouts.includes(image.layout)
+      ) media.push(image);
+    });
+  } catch (error) {
+    setImageStatus(error instanceof Error ? error.message : "Saved post images could not be loaded.", "error");
+  }
 
   sourceSelect.addEventListener("change", () => {
     const isUpload = sourceSelect.value === "upload";
     urlField.hidden = isUpload;
     fileField.hidden = !isUpload;
-  });
-
-  textType.addEventListener("change", () => {
-    updateBelowImageLabel();
-  });
-  imageLayout.addEventListener("change", updateBelowImageLabel);
-  updateBelowImageLabel();
-
-  const insertImage = (imageUrl) => {
-    const alt = altInput.value.trim().replace(/[\]\r\n]/g, " ");
-    const belowImageText = captionInput.value.trim().replace(/["\r\n]/g, " ");
-    const caption = textType.value === "caption" || imageLayout.value === "gallery"
-      ? belowImageText
-      : "";
-    const paragraph = textType.value === "paragraph" && imageLayout.value !== "gallery"
-      ? belowImageText
-      : "";
-    const encodedUrl = imageUrl.trim().replace(/[()"\s]/g, (character) => encodeURIComponent(character));
-    const captionMarker = caption ? ` "${caption}"` : "";
-    const layout = imageLayout.value;
-    const layoutMarker = `{layout=${layout}}`;
-    const imageMarker = `![${alt}](${encodedUrl}${captionMarker})${layoutMarker}`;
-    if (layout === "gallery") {
-      const existingContent = textarea.value.replace(/\s+$/u, "");
-      const galleryContent = `${existingContent ? `${existingContent}\n\n` : ""}${imageMarker}\n\n`;
-      textarea.setRangeText(galleryContent, 0, textarea.value.length, "end");
+    if (isUpload) {
+      setImageStatus("Choose a file, add its accessibility description and caption or paragraph, then click Add image to post to upload it.");
     } else {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const before = textarea.value.slice(0, start);
-      const after = textarea.value.slice(end);
-      const prefix = before
-        ? (before.endsWith("\n\n") ? "" : before.endsWith("\n") ? "\n" : "\n\n")
-        : "";
-      const suffix = after
-        ? (after.startsWith("\n\n") ? "" : after.startsWith("\n") ? "\n" : "\n\n")
-        : "\n\n";
-
-      const belowImageParagraph = paragraph ? `\n\n${paragraph}` : "";
-      textarea.setRangeText(`${prefix}${imageMarker}${belowImageParagraph}${suffix}`, start, end, "end");
+      setImageStatus("");
     }
-    textarea.focus();
-    textarea.dispatchEvent(new Event("input", { bubbles: true }));
-    setImageStatus(layout === "gallery"
-      ? "Image and text added to the gallery after the post text. Add more gallery images to place them side by side, then save the post."
-      : "Image and text added to the post at the cursor. Save the post to keep your changes.");
-  };
+  });
+  fileInput.addEventListener("change", () => {
+    const file = fileInput.files?.[0];
+    if (file) {
+      setImageStatus(`${file.name} selected. It is not uploaded yet. Add its accessibility description and caption or paragraph, then click Add image to post.`);
+    } else {
+      setImageStatus("");
+    }
+  });
+  textType.addEventListener("change", updateBelowTextLabel);
+  imageLayout.addEventListener("change", updateBelowTextLabel);
+  updateBelowTextLabel();
+  renderMedia();
 
-  insertButton.addEventListener("click", async () => {
+  addButton.addEventListener("click", async () => {
     setImageStatus("");
-    let imageUrl = urlInput.value.trim();
-
-    if (!altInput.value.trim()) {
-      setImageStatus("Describe the image for visitors using screen readers.", "error");
+    const altText = altInput.value.trim();
+    const belowText = belowTextInput.value.trim();
+    if (!altText || altText.length > 200) {
+      setImageStatus("Add an accessibility description of 1 to 200 characters.", "error");
       altInput.focus();
       return;
     }
-    if (!captionInput.value.trim()) {
-      setImageStatus(textType.value === "caption"
-        ? "Enter a caption to display below the image."
-        : "Enter the paragraph to display below the image.", "error");
-      captionInput.focus();
+    if (!belowText || belowText.length > 5000) {
+      setImageStatus("Add a caption or paragraph of 1 to 5,000 characters.", "error");
+      belowTextInput.focus();
+      return;
+    }
+    if (!allowedLayouts.includes(imageLayout.value)) {
+      setImageStatus("Choose a valid image layout.", "error");
+      imageLayout.focus();
+      return;
+    }
+    if (!["caption", "paragraph"].includes(textType.value)) {
+      setImageStatus("Choose whether the text below the image is a caption or paragraph.", "error");
+      textType.focus();
+      return;
+    }
+    if (media.length >= 30) {
+      setImageStatus("A post can contain up to 30 images.", "error");
       return;
     }
 
+    let imagePath;
     if (sourceSelect.value === "upload") {
       const file = fileInput.files?.[0];
       if (!file) {
@@ -168,7 +261,7 @@
         return;
       }
 
-      insertButton.disabled = true;
+      addButton.disabled = true;
       setImageStatus("Uploading image…");
       try {
         const uploadData = new FormData();
@@ -176,7 +269,6 @@
         uploadData.set("image", file);
         const uploadEndpoint = imageComposer.dataset.uploadEndpoint;
         if (!uploadEndpoint) throw new Error("The image upload endpoint is missing.");
-
         const response = await fetch(uploadEndpoint, {
           method: "POST",
           body: uploadData,
@@ -198,57 +290,54 @@
         if (typeof result.url !== "string" || !result.url) {
           throw new Error("The image upload returned an invalid response.");
         }
-        imageUrl = result.url;
-        fileInput.value = "";
+        imagePath = normalizeImageUrl(result.url);
       } catch (error) {
         setImageStatus(error instanceof Error ? error.message : "The image could not be uploaded.", "error");
         return;
       } finally {
-        insertButton.disabled = false;
+        addButton.disabled = false;
       }
     } else {
-      if (!imageUrl) {
+      if (!urlInput.value.trim()) {
         setImageStatus("Enter an image URL or site path.", "error");
         urlInput.focus();
         return;
       }
-
-      let parsedUrl;
       try {
-        parsedUrl = new URL(imageUrl, new URL("../", window.location.href));
-      } catch {
-        parsedUrl = null;
-      }
-      if (!parsedUrl || !["http:", "https:"].includes(parsedUrl.protocol)) {
-        setImageStatus("Use a full http(s) image URL or a safe site-root path.", "error");
+        imagePath = normalizeImageUrl(urlInput.value);
+      } catch (error) {
+        setImageStatus(error instanceof Error ? error.message : "Enter a valid image URL or site path.", "error");
         urlInput.focus();
         return;
       }
-
-      const isExternalUrl = /^https?:\/\//i.test(imageUrl);
-      if (!isExternalUrl) {
-        const siteRootPath = new URL("../", window.location.href).pathname;
-        if (imageUrl.includes("\\") || /(^|\/)\.\.(\/|$)/.test(imageUrl)) {
-          setImageStatus("Use a site-root path without parent-directory segments.", "error");
-          urlInput.focus();
-          return;
-        }
-        const relativePath = imageUrl.replace(/^\/+/, "");
-        parsedUrl = imageUrl.startsWith(siteRootPath)
-          ? new URL(imageUrl, window.location.origin)
-          : new URL(relativePath, new URL("../", window.location.href));
-        if (!parsedUrl.pathname.startsWith(siteRootPath)) {
-          setImageStatus("Use a safe path inside the website.", "error");
-          urlInput.focus();
-          return;
-        }
-        imageUrl = parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
-      }
     }
 
-    insertImage(imageUrl);
+    media.push({
+      image_path: imagePath,
+      alt_text: altText,
+      below_text: belowText,
+      below_text_type: textType.value,
+      layout: imageLayout.value,
+    });
+    renderMedia();
+    const siteRootPath = new URL("../", window.location.href).pathname;
+    const storedPath = imagePath.startsWith(siteRootPath)
+      ? imagePath.slice(siteRootPath.length)
+      : imagePath;
     urlInput.value = "";
-    captionInput.value = "";
+    fileInput.value = "";
+    belowTextInput.value = "";
     altInput.value = "";
+    setImageStatus(sourceSelect.value === "upload"
+      ? `Upload complete. The file is saved as ${storedPath}. Save the post to store its caption and link in the database.`
+      : "Image added to the post. Save the post to store its reference and caption in the database.");
+  });
+
+  editorForm.addEventListener("submit", (event) => {
+    if (textarea.value.trim() === "" && media.length === 0) {
+      event.preventDefault();
+      setImageStatus("Enter post text or add at least one image before saving.", "error");
+      textarea.focus();
+    }
   });
 })();
