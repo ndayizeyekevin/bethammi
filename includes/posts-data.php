@@ -52,7 +52,18 @@ function bethammi_post_response(array $post, $includeDescription = false)
 {
     $paragraphs = preg_split('/\R{2,}/u', trim((string) $post['description']));
     $content = implode('', array_map(function ($paragraph) {
-        return '<p>' . nl2br(bethammi_escape(trim($paragraph)), false) . '</p>';
+        $escapedParagraph = bethammi_escape(trim($paragraph));
+        $formattedParagraph = preg_replace_callback(
+            '/\*\*([^*\r\n]+)\*\*|\*([^*\r\n]+)\*/u',
+            function ($matches) {
+                if (($matches[1] ?? '') !== '') {
+                    return '<strong>' . $matches[1] . '</strong>';
+                }
+                return '<em>' . $matches[2] . '</em>';
+            },
+            $escapedParagraph
+        );
+        return '<p>' . nl2br($formattedParagraph, false) . '</p>';
     }, array_filter($paragraphs, 'strlen')));
 
     $result = [

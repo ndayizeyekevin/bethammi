@@ -33,7 +33,15 @@ $hiddenCount = count($records) - $publishedCount;
       <p class="admin-help">Optional. Use an https:// YouTube video, Shorts, or live link.</p>
       <?php bethammi_admin_field('short_info', 'Short info for cards', 'textarea', false, true); ?>
         <thead><tr><th>Photo</th><th>Name / title</th><th>Details</th><?php if ($section === 'posts'): ?><th>YouTube</th><?php endif; ?><th>Status</th><th>Actions</th></tr></thead>
-      <?php bethammi_admin_field('description', 'Full post description (plain text; blank lines create paragraphs)', 'textarea', true, true); ?>
+      <div class="post-description-field admin-field--wide">
+        <label for="post-description">Full post description</label>
+        <div class="post-formatting-toolbar" role="group" aria-label="Format post description">
+          <button type="button" data-format="bold" aria-label="Bold selected text"><strong>B</strong></button>
+          <button type="button" data-format="italic" aria-label="Italicize selected text"><em>I</em></button>
+        </div>
+        <textarea id="post-description" name="description" required><?= bethammi_escape(bethammi_admin_value('description')) ?></textarea>
+        <p class="admin-help">Select text and choose Bold or Italic. Blank lines create paragraphs. Formatting is saved as **bold** and *italic* text.</p>
+      </div>
     <?php elseif ($section === 'team'): ?>
       <div class="form-row">
         <?php bethammi_admin_field('name', 'Full name', 'text', true); ?>

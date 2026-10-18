@@ -109,6 +109,12 @@ button, input, textarea { font: inherit; }
 .admin-form input:not([type="checkbox"]), .admin-form textarea { display: block; width: 100%; min-height: 42px; margin-top: 6px; padding: 10px 11px; border: 1px solid #dce2dc; border-radius: 3px; outline: none; background: #fff; color: var(--ink); font-size: 12px; }
 .admin-form textarea { min-height: 104px; resize: vertical; }
 .admin-form input:focus, .admin-form textarea:focus { border-color: #9c7b4b; box-shadow: 0 0 0 3px rgba(156,123,75,.12); }
+.post-description-field { min-width: 0; }
+.post-description-field > label { display: block; margin: 0; color: #43534f; font-size: 10px; font-weight: 700; }
+.post-formatting-toolbar { display: flex; gap: 5px; margin-top: 7px; padding: 6px; border: 1px solid #dce2dc; border-bottom: 0; border-radius: 3px 3px 0 0; background: #f7f8f5; }
+.post-formatting-toolbar button { display: grid; width: 30px; height: 28px; place-items: center; border: 1px solid #dce2dc; border-radius: 3px; background: #fff; color: var(--ink); cursor: pointer; font: 13px "DM Sans", Arial, sans-serif; }
+.post-formatting-toolbar button:hover, .post-formatting-toolbar button:focus-visible { border-color: #9c7b4b; background: #f3eee5; outline: 2px solid rgba(156,123,75,.25); }
+.admin-form .post-description-field textarea { margin-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
 .admin-help { margin: 6px 0 0; color: #89938f; font-size: 9px; font-weight: 400; }
 .checkbox-field { display: flex !important; align-items: center; font-weight: 600 !important; }
 .checkbox-field input { width: 16px; height: 16px; margin: 0 8px 0 0; accent-color: var(--navy); }

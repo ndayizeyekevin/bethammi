@@ -329,6 +329,7 @@ $csrfToken = bethammi_admin_csrf_token();
     <?php require __DIR__ . '/views/content-manager.php'; ?>
   <?php endif; ?>
   <?php require __DIR__ . '/views/layout-end.php'; ?>
+  <?php if ($adminPage === 'posts'): ?><script src="post-formatting.js" defer></script><?php endif; ?>
 <?php endif; ?>
 </body>
 </html>
