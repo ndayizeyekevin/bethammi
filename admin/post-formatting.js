@@ -37,6 +37,29 @@
     });
   });
 
+  const headingLevel = document.querySelector("[data-heading-level]");
+  const headingButton = document.querySelector("[data-format-heading]");
+  if (headingLevel instanceof HTMLSelectElement && headingButton instanceof HTMLButtonElement) {
+    headingButton.addEventListener("click", () => {
+      const level = Number(headingLevel.value);
+      if (!Number.isInteger(level) || level < 1 || level > 6) return;
+
+      const selectedText = textarea.value
+        .slice(textarea.selectionStart, textarea.selectionEnd)
+        .trim()
+        .replace(/\s+/g, " ") || "Heading";
+      const before = textarea.value.slice(0, textarea.selectionStart).trimEnd();
+      const after = textarea.value.slice(textarea.selectionEnd).trimStart();
+      const marker = `${"#".repeat(level)} `;
+      const heading = `${marker}${selectedText}`;
+      textarea.value = `${before}${before ? "\n\n" : ""}${heading}${after ? "\n\n" : ""}${after}`;
+      const headingStart = before.length + (before ? 2 : 0);
+      textarea.setSelectionRange(headingStart + marker.length, headingStart + heading.length);
+      textarea.focus();
+      textarea.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+  }
+
   const imageComposer = document.querySelector(".post-image-insert");
   if (!(imageComposer instanceof HTMLElement)) return;
 

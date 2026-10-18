@@ -13,7 +13,6 @@ if ($adminPage !== 'add-post') {
   <article class="stat-card stat-card--compact"><div><p>Hidden</p><strong><?= $hiddenCount ?></strong></div></article>
 </section>
 <?php endif; ?>
-Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi doloremque error, laudantium cum sapiente, ea debitis enim odit sunt repellendus dolore quod nihil necessitatibus eos quia quasi odio perferendis fugit.
 
 <section class="panel editor-panel" id="editor">
   <div class="panel-heading">
@@ -58,6 +57,17 @@ Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi doloremque error
         <div class="post-formatting-toolbar" role="group" aria-label="Format post description">
           <button type="button" data-format="bold" aria-label="Bold selected text"><strong>B</strong></button>
           <button type="button" data-format="italic" aria-label="Italicize selected text"><em>I</em></button>
+          <label class="post-formatting-toolbar__heading">
+            <select data-heading-level aria-label="Heading level">
+              <option value="1">Heading 1</option>
+              <option value="2">Heading 2</option>
+              <option value="3">Heading 3</option>
+              <option value="4">Heading 4</option>
+              <option value="5">Heading 5</option>
+              <option value="6">Heading 6</option>
+            </select>
+          </label>
+          <button type="button" data-format-heading>Apply heading</button>
         </div>
         <textarea id="post-description" name="description"><?= bethammi_escape(bethammi_admin_value('description')) ?></textarea>
         <div class="post-image-insert" data-upload-endpoint="post-image-upload.php">

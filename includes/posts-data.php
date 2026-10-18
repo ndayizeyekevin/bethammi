@@ -164,7 +164,12 @@ function bethammi_post_response(array $post, $includeDescription = false)
             },
             $escapedParagraph
         );
-        $renderedParagraphs[] = '<p>' . nl2br($formattedParagraph, false) . '</p>';
+        if (preg_match('/^(#{1,6})[ \t]+(.+)$/u', $formattedParagraph, $headingMatch)) {
+            $level = strlen($headingMatch[1]);
+            $renderedParagraphs[] = '<h' . $level . '>' . $headingMatch[2] . '</h' . $level . '>';
+        } else {
+            $renderedParagraphs[] = '<p>' . nl2br($formattedParagraph, false) . '</p>';
+        }
     }
     $flushGallery();
     $content = implode('', $renderedParagraphs);

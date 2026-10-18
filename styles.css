@@ -413,7 +413,8 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
 .page-meta { margin: 0 0 24px; padding-bottom: 15px; border-bottom: 1px solid #e4e1d8; color: #8b6b3b; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .remote-content { color: #535f5b; font-size: 14px; line-height: 1.85; overflow-wrap: anywhere; }
 .remote-content > :first-child { margin-top: 0; }
-.remote-content h2, .remote-content h3, .remote-content h4, .remote-content h5, .remote-content h6 { margin: 35px 0 13px; color: var(--ink); font-family: var(--display); font-weight: 650; letter-spacing: -.035em; line-height: 1.25; }
+.remote-content h1, .remote-content h2, .remote-content h3, .remote-content h4, .remote-content h5, .remote-content h6 { margin: 35px 0 13px; color: var(--ink); font-family: var(--display); font-weight: 650; letter-spacing: -.035em; line-height: 1.25; }
+.remote-content h1 { font-size: clamp(30px, 3.5vw, 40px); }
 .remote-content h2 { font-size: clamp(25px, 3vw, 34px); }
 .remote-content h3 { font-size: 23px; }
 .remote-content h4, .remote-content h5, .remote-content h6 { font-size: 18px; }

@@ -119,6 +119,8 @@ button, input, textarea { font: inherit; }
 .post-formatting-toolbar { display: flex; gap: 5px; margin-top: 7px; padding: 6px; border: 1px solid #dce2dc; border-bottom: 0; border-radius: 3px 3px 0 0; background: #f7f8f5; }
 .post-formatting-toolbar button { display: grid; width: 30px; height: 28px; place-items: center; border: 1px solid #dce2dc; border-radius: 3px; background: #fff; color: var(--ink); cursor: pointer; font: 13px "DM Sans", Arial, sans-serif; }
 .post-formatting-toolbar button:hover, .post-formatting-toolbar button:focus-visible { border-color: #9c7b4b; background: #f3eee5; outline: 2px solid rgba(156,123,75,.25); }
+.post-formatting-toolbar__heading select { height: 28px; padding: 0 7px; border: 1px solid #dce2dc; border-radius: 3px; background: #fff; color: var(--ink); font: 10px "DM Sans", Arial, sans-serif; }
+.post-formatting-toolbar [data-format-heading] { width: auto; padding: 0 8px; font: 10px "DM Sans", Arial, sans-serif; }
 .admin-form .post-description-field textarea { margin-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
 .post-image-insert { margin-top: 12px; padding: 13px; border: 1px solid #dce2dc; border-radius: 3px; background: #f7f8f5; }
 .post-image-insert h3 { margin: 0 0 10px; color: var(--navy); font-size: 11px; }
