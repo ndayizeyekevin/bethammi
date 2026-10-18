@@ -30,7 +30,11 @@ const staticPageTitles = new Map([
   ["ep-kiramutse", "New City Fellowship Church"],
   ["donate", "Donate"],
   ["daily-bible-verses", "Daily Bible verses"],
+  ["disclaimer", "Website Disclaimer"],
 ]);
+if (!pages.some((page) => page.slug === "disclaimer")) {
+  pages.push({ slug: "disclaimer" });
+}
 const pageSlugs = new Set();
 const storySlugs = new Set();
 
@@ -94,7 +98,7 @@ try {
 } catch (error) {
   if (error.code !== "ENOENT") throw error;
 }
-const home = await readFile(path.join(root, "index.html"), "utf8");
+const home = await readFile(path.join(root, "index2.html"), "utf8");
 await writeFile(
   path.join(output, "index.html"),
   rewritePageLinks(removeAdminLoginLink(home.replace("<body>", '<body data-route-mode="static">')), "")

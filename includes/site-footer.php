@@ -24,6 +24,7 @@
       <a href="<?= bethammi_escape($siteRoot) ?>pages/josh">Josh</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/contact-us">Contact Details</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/donate" data-bs-toggle="modal" data-bs-target="#donateModal" aria-haspopup="dialog">Give</a>
+      <a href="<?= bethammi_escape($siteRoot) ?>pages/disclaimer">Website Disclaimer</a>
     </div>
     <div class="container footer__bottom"><span>© <span id="year"></span> Beth Ammi Christian Fellowship Church</span><a href="#main">Back to top ↑</a></div>
   </footer>
