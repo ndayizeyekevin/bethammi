@@ -12,6 +12,12 @@
         <img class="hero__slide" src="assets/images/hero/908A6172.jpg" alt="" loading="lazy">
       </div>
       <div class="hero__shade"></div>
+      <button class="hero__control hero__control--previous" type="button" aria-label="Show previous hero image">
+        <span aria-hidden="true">‹</span>
+      </button>
+      <button class="hero__control hero__control--next" type="button" aria-label="Show next hero image">
+        <span aria-hidden="true">›</span>
+      </button>
       <div class="container hero__content">
         <p class="eyebrow eyebrow--light"><span></span> Beth Ammi Christian Fellowship Church</p>
         <h1 id="hero-title">Faith grows<br>better <em>together.</em></h1>
