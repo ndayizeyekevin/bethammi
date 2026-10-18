@@ -106,9 +106,14 @@ button, input, textarea { font: inherit; }
 .admin-form { display: grid; gap: 14px; }
 .admin-form > label, .form-row > label { display: block; min-width: 0; margin: 0; color: #43534f; font-size: 10px; font-weight: 700; }
 .form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.admin-form input:not([type="checkbox"]), .admin-form textarea { display: block; width: 100%; min-height: 42px; margin-top: 6px; padding: 10px 11px; border: 1px solid #dce2dc; border-radius: 3px; outline: none; background: #fff; color: var(--ink); font-size: 12px; }
+.admin-form input:not([type="checkbox"]), .admin-form textarea, .admin-form select { display: block; width: 100%; min-height: 42px; margin-top: 6px; padding: 10px 11px; border: 1px solid #dce2dc; border-radius: 3px; outline: none; background: #fff; color: var(--ink); font-size: 12px; }
 .admin-form textarea { min-height: 104px; resize: vertical; }
-.admin-form input:focus, .admin-form textarea:focus { border-color: #9c7b4b; box-shadow: 0 0 0 3px rgba(156,123,75,.12); }
+.admin-form input:focus, .admin-form textarea:focus, .admin-form select:focus { border-color: #9c7b4b; box-shadow: 0 0 0 3px rgba(156,123,75,.12); }
+.admin-field { display: block; min-width: 0; color: #43534f; font-size: 10px; font-weight: 700; }
+.admin-field > label, .featured-image-upload > label { display: block; color: #43534f; font-size: 9px; font-weight: 700; }
+.featured-image-upload[hidden], .featured-image-url-field[hidden] { display: none; }
+.featured-image-upload .button { margin-top: 9px; }
+.featured-image-status[data-state="error"] { color: #a33a30; }
 .post-description-field { min-width: 0; }
 .post-description-field > label { display: block; margin: 0; color: #43534f; font-size: 10px; font-weight: 700; }
 .post-formatting-toolbar { display: flex; gap: 5px; margin-top: 7px; padding: 6px; border: 1px solid #dce2dc; border-bottom: 0; border-radius: 3px 3px 0 0; background: #f7f8f5; }

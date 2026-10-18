@@ -68,11 +68,11 @@ function bethammi_admin_post_images()
         if (!bethammi_valid_image_url($imagePath) || $imagePath === '') {
             throw new InvalidArgumentException('Enter a valid image URL or site-relative path for every post image.');
         }
-        if ($altText === '' || mb_strlen($altText, 'UTF-8') > 200) {
-            throw new InvalidArgumentException('Each image needs an accessibility description of 1 to 200 characters.');
+        if (mb_strlen($altText, 'UTF-8') > 200) {
+            throw new InvalidArgumentException('Image accessibility descriptions must be 200 characters or fewer.');
         }
-        if ($belowText === '' || mb_strlen($belowText, 'UTF-8') > 5000) {
-            throw new InvalidArgumentException('Each image needs a caption or paragraph of 1 to 5,000 characters.');
+        if (mb_strlen($belowText, 'UTF-8') > 5000) {
+            throw new InvalidArgumentException('Image captions and paragraphs must be 5,000 characters or fewer.');
         }
         if (!in_array($belowTextType, ['caption', 'paragraph'], true)) {
             throw new InvalidArgumentException('Choose whether the text below each image is a caption or paragraph.');

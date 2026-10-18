@@ -31,7 +31,23 @@ if ($adminPage !== 'add-post') {
       </div>
       <div class="form-row">
         <?php bethammi_admin_field('published_at', 'Post date', 'date', true); ?>
-        <?php bethammi_admin_field('featured_image_url', 'Highlight image URL or path'); ?>
+        <div class="admin-field">
+          <label for="featured-image-source">Highlight image source</label>
+          <select id="featured-image-source" data-featured-image-source>
+            <option value="url">Online URL or site path</option>
+            <option value="upload">Upload from computer</option>
+          </select>
+          <label class="featured-image-url-field" data-featured-image-url-field>Highlight image URL or path
+            <input id="featured-image-url" type="text" name="featured_image_url" data-featured-image-url value="<?= bethammi_escape(bethammi_admin_value('featured_image_url')) ?>" placeholder="https://example.com/image.jpg or assets/images/photo.jpg">
+          </label>
+          <div class="featured-image-upload" data-featured-image-upload hidden>
+            <label>Choose highlight image
+              <input type="file" data-featured-image-file accept="image/jpeg,image/png,image/webp">
+            </label>
+            <button type="button" class="button button--secondary" data-upload-featured-image>Upload highlight image</button>
+          </div>
+          <p class="featured-image-status admin-help" data-featured-image-status role="status" aria-live="polite" hidden></p>
+        </div>
       </div>
       <?php bethammi_admin_field('youtube_url', 'YouTube video URL', 'url', false, true); ?>
       <p class="admin-help">Optional. Use an https:// YouTube video, Shorts, or live link.</p>
@@ -72,10 +88,10 @@ if ($adminPage !== 'add-post') {
                 <option value="gallery">Side-by-side gallery after the post text</option>
               </select>
             </label>
-            <label><span data-image-below-label>Caption shown below the image</span>
+            <label><span data-image-below-label>Caption shown below the image (optional)</span>
               <textarea data-image-below-text maxlength="5000" rows="3" placeholder="Write a short caption"></textarea>
             </label>
-            <label>Image description for accessibility (not displayed)
+            <label>Image description for accessibility (optional, not displayed)
               <input type="text" data-image-alt maxlength="200" placeholder="Describe the image">
             </label>
           </div>
@@ -83,7 +99,7 @@ if ($adminPage !== 'add-post') {
           <p class="post-image-insert__status" role="status" aria-live="polite" hidden></p>
           <div class="post-image-list" data-post-image-list data-existing-images="<?= bethammi_escape(json_encode($postImages, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP) ?: '[]') ?>"></div>
         </div>
-        <p class="admin-help">After choosing a computer image and entering its accessibility description and caption or paragraph, click Add image to post to upload the file. It will be saved in assets/images/posts/ with a generated filename (JPEG, PNG, or WebP; maximum 8 MB). Then save the post to store its caption, accessibility description, layout, and order in the database. Site paths are relative to the website root, for example assets/images/photo.jpg.</p>
+        <p class="admin-help">After choosing a computer image, click Add image to post to upload it. The accessibility description and caption or paragraph are optional. Uploaded files are saved in assets/images/posts/ with a generated filename (JPEG, PNG, or WebP; maximum 8 MB). Save the post to store its image details in the database. Site paths are relative to the website root, for example assets/images/photo.jpg.</p>
       </div>
     <?php elseif ($section === 'team'): ?>
       <div class="form-row">

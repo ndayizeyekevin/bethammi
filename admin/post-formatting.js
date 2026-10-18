@@ -55,6 +55,13 @@
   const imageList = imageComposer.querySelector("[data-post-image-list]");
   const editorForm = textarea.closest("form");
   const csrfInput = editorForm?.querySelector('input[name="csrf_token"]');
+  const featuredImageSource = document.querySelector("[data-featured-image-source]");
+  const featuredImageUrlField = document.querySelector("[data-featured-image-url-field]");
+  const featuredImageUrl = document.querySelector("[data-featured-image-url]");
+  const featuredImageUpload = document.querySelector("[data-featured-image-upload]");
+  const featuredImageFile = document.querySelector("[data-featured-image-file]");
+  const featuredImageUploadButton = document.querySelector("[data-upload-featured-image]");
+  const featuredImageStatus = document.querySelector("[data-featured-image-status]");
 
   if (
     !(sourceSelect instanceof HTMLSelectElement)
@@ -71,6 +78,13 @@
     || !(imageStatus instanceof HTMLElement)
     || !(imageList instanceof HTMLElement)
     || !(csrfInput instanceof HTMLInputElement)
+    || !(featuredImageSource instanceof HTMLSelectElement)
+    || !(featuredImageUrlField instanceof HTMLElement)
+    || !(featuredImageUrl instanceof HTMLInputElement)
+    || !(featuredImageUpload instanceof HTMLElement)
+    || !(featuredImageFile instanceof HTMLInputElement)
+    || !(featuredImageUploadButton instanceof HTMLButtonElement)
+    || !(featuredImageStatus instanceof HTMLElement)
     || !editorForm
   ) return;
 
@@ -81,6 +95,7 @@
   };
   const media = [];
   const allowedLayouts = ["left", "center", "right", "gallery"];
+  let featuredUploadComplete = featuredImageSource.value !== "upload";
 
   const updateBelowTextLabel = () => {
     belowTextLabel.textContent = imageLayout.value === "gallery"
@@ -114,6 +129,88 @@
     return parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
   };
 
+  const uploadImageFile = async (file) => {
+    const uploadEndpoint = imageComposer.dataset.uploadEndpoint;
+    if (!uploadEndpoint) throw new Error("The image upload endpoint is missing.");
+    const uploadData = new FormData();
+    uploadData.set("csrf_token", csrfInput.value);
+    uploadData.set("image", file);
+    const response = await fetch(uploadEndpoint, {
+      method: "POST",
+      body: uploadData,
+      headers: { Accept: "application/json" },
+    });
+    const responseText = await response.text();
+    let result;
+    try {
+      result = JSON.parse(responseText);
+    } catch {
+      throw new Error("The image upload returned an invalid response.");
+    }
+    if (!result || typeof result !== "object" || Array.isArray(result)) {
+      throw new Error("The image upload returned an invalid response.");
+    }
+    if (!response.ok) {
+      throw new Error(typeof result.error === "string" ? result.error : "The image could not be uploaded.");
+    }
+    if (typeof result.url !== "string" || !result.url) {
+      throw new Error("The image upload returned an invalid response.");
+    }
+    return normalizeImageUrl(result.url);
+  };
+
+  const setFeaturedImageStatus = (message, isError = false) => {
+    featuredImageStatus.hidden = !message;
+    featuredImageStatus.textContent = message;
+    featuredImageStatus.dataset.state = isError ? "error" : "";
+  };
+
+  const updateFeaturedImageSource = () => {
+    const isUpload = featuredImageSource.value === "upload";
+    featuredImageUrlField.hidden = isUpload;
+    featuredImageUpload.hidden = !isUpload;
+    featuredUploadComplete = !isUpload;
+    setFeaturedImageStatus(isUpload
+      ? "Choose a JPEG, PNG, or WebP image, then click Upload highlight image."
+      : "");
+  };
+
+  featuredImageSource.addEventListener("change", updateFeaturedImageSource);
+  featuredImageFile.addEventListener("change", () => {
+    const file = featuredImageFile.files?.[0];
+    if (file) {
+      featuredUploadComplete = false;
+      setFeaturedImageStatus(`${file.name} selected. Click Upload highlight image to save it to the server.`);
+    } else {
+      setFeaturedImageStatus("");
+    }
+  });
+  featuredImageUploadButton.addEventListener("click", async () => {
+    const file = featuredImageFile.files?.[0];
+    if (!file) {
+      setFeaturedImageStatus("Choose a highlight image to upload.", true);
+      featuredImageFile.focus();
+      return;
+    }
+    featuredImageUploadButton.disabled = true;
+    setFeaturedImageStatus("Uploading highlight image…");
+    try {
+      const imagePath = await uploadImageFile(file);
+      featuredImageUrl.value = imagePath;
+      featuredUploadComplete = true;
+      featuredImageFile.value = "";
+      const siteRootPath = new URL("../", window.location.href).pathname;
+      const storedPath = imagePath.startsWith(siteRootPath)
+        ? imagePath.slice(siteRootPath.length)
+        : imagePath;
+      setFeaturedImageStatus(`Upload complete. Saved as ${storedPath}. Save the post to store this highlight image.`);
+    } catch (error) {
+      setFeaturedImageStatus(error instanceof Error ? error.message : "The highlight image could not be uploaded.", true);
+    } finally {
+      featuredImageUploadButton.disabled = false;
+    }
+  });
+
   const addHiddenField = (container, name, value) => {
     const input = document.createElement("input");
     input.type = "hidden";
@@ -138,12 +235,18 @@
       const details = document.createElement("div");
       details.className = "post-image-item__details";
       const title = document.createElement("strong");
-      title.textContent = item.below_text_type === "caption" ? "Caption" : "Paragraph";
-      const description = document.createElement("p");
-      description.textContent = item.below_text;
+      title.textContent = item.below_text
+        ? (item.below_text_type === "caption" ? "Caption" : "Paragraph")
+        : "Image";
       const metadata = document.createElement("span");
       metadata.textContent = `${item.layout} · ${item.image_path}`;
-      details.append(title, description, metadata);
+      details.append(title);
+      if (item.below_text) {
+        const description = document.createElement("p");
+        description.textContent = item.below_text;
+        details.append(description);
+      }
+      details.append(metadata);
       card.append(details);
 
       const actions = document.createElement("div");
@@ -227,13 +330,13 @@
     setImageStatus("");
     const altText = altInput.value.trim();
     const belowText = belowTextInput.value.trim();
-    if (!altText || altText.length > 200) {
-      setImageStatus("Add an accessibility description of 1 to 200 characters.", "error");
+    if (altText.length > 200) {
+      setImageStatus("Image accessibility descriptions must be 200 characters or fewer.", "error");
       altInput.focus();
       return;
     }
-    if (!belowText || belowText.length > 5000) {
-      setImageStatus("Add a caption or paragraph of 1 to 5,000 characters.", "error");
+    if (belowText.length > 5000) {
+      setImageStatus("Image captions and paragraphs must be 5,000 characters or fewer.", "error");
       belowTextInput.focus();
       return;
     }
@@ -264,33 +367,7 @@
       addButton.disabled = true;
       setImageStatus("Uploading image…");
       try {
-        const uploadData = new FormData();
-        uploadData.set("csrf_token", csrfInput.value);
-        uploadData.set("image", file);
-        const uploadEndpoint = imageComposer.dataset.uploadEndpoint;
-        if (!uploadEndpoint) throw new Error("The image upload endpoint is missing.");
-        const response = await fetch(uploadEndpoint, {
-          method: "POST",
-          body: uploadData,
-          headers: { Accept: "application/json" },
-        });
-        const responseText = await response.text();
-        let result;
-        try {
-          result = JSON.parse(responseText);
-        } catch {
-          throw new Error("The image upload returned an invalid response.");
-        }
-        if (!result || typeof result !== "object" || Array.isArray(result)) {
-          throw new Error("The image upload returned an invalid response.");
-        }
-        if (!response.ok) {
-          throw new Error(typeof result.error === "string" ? result.error : "The image could not be uploaded.");
-        }
-        if (typeof result.url !== "string" || !result.url) {
-          throw new Error("The image upload returned an invalid response.");
-        }
-        imagePath = normalizeImageUrl(result.url);
+        imagePath = await uploadImageFile(file);
       } catch (error) {
         setImageStatus(error instanceof Error ? error.message : "The image could not be uploaded.", "error");
         return;
@@ -334,6 +411,12 @@
   });
 
   editorForm.addEventListener("submit", (event) => {
+    if (featuredImageSource.value === "upload" && !featuredUploadComplete) {
+      event.preventDefault();
+      setFeaturedImageStatus("Upload the selected highlight image before saving the post.", true);
+      featuredImageFile.focus();
+      return;
+    }
     if (textarea.value.trim() === "" && media.length === 0) {
       event.preventDefault();
       setImageStatus("Enter post text or add at least one image before saving.", "error");
