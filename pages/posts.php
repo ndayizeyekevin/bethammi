@@ -95,7 +95,12 @@ require __DIR__ . '/../includes/site-header.php';
         <p class="post-article__summary"><?= bethammi_escape($post['short_info']) ?></p>
         <?php endif; ?>
         <div class="remote-content"><?= $postContentHtml ?></div>
-        <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
+        <?php $youtubeEmbedUrl = bethammi_youtube_embed_url($post['youtube_url'] ?? ''); ?>
+        <?php if ($youtubeEmbedUrl !== ''): ?>
+        <div class="post-youtube-embed">
+          <iframe src="<?= bethammi_escape($youtubeEmbedUrl) ?>" title="<?= bethammi_escape($post['title']) ?> — YouTube video" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <?php elseif (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
         <a class="youtube-video-link post-youtube-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch this message on YouTube <span aria-hidden="true">↗</span></a>
         <?php endif; ?>
       </article>

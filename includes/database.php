@@ -95,3 +95,34 @@ function bethammi_valid_youtube_url($value)
         && parse_url($value, PHP_URL_USER) === null
         && parse_url($value, PHP_URL_PASS) === null;
 }
+
+function bethammi_youtube_embed_url($value)
+{
+    if (!bethammi_valid_youtube_url($value) || $value === '') {
+        return '';
+    }
+
+    $url = parse_url($value);
+    if (!is_array($url)) {
+        return '';
+    }
+
+    $host = strtolower((string) ($url['host'] ?? ''));
+    $pathSegments = array_values(array_filter(explode('/', trim((string) ($url['path'] ?? ''), '/')), 'strlen'));
+    $videoId = '';
+
+    if (in_array($host, ['youtu.be', 'www.youtu.be'], true)) {
+        $videoId = $pathSegments[0] ?? '';
+    } elseif (($pathSegments[0] ?? '') === 'watch') {
+        parse_str((string) ($url['query'] ?? ''), $query);
+        $videoId = is_string($query['v'] ?? null) ? $query['v'] : '';
+    } elseif (in_array($pathSegments[0] ?? '', ['embed', 'live', 'shorts', 'v'], true)) {
+        $videoId = $pathSegments[1] ?? '';
+    }
+
+    if (!preg_match('/^[A-Za-z0-9_-]{11}$/', $videoId)) {
+        return '';
+    }
+
+    return 'https://www.youtube-nocookie.com/embed/' . rawurlencode($videoId);
+}
