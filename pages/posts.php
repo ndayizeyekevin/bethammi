@@ -8,6 +8,7 @@ header('Cache-Control: no-store');
 $siteRoot = '../';
 $post = null;
 $posts = [];
+$latestPosts = [];
 $pageError = '';
 $isSinglePost = isset($_GET['slug']) || isset($_GET['id']);
 $pageScripts = $isSinglePost ? ['script.js'] : ['script.js', 'posts-archive.js'];
@@ -40,8 +41,12 @@ try {
             http_response_code(404);
             $pageError = 'This post could not be found.';
         }
+        if ($post !== null) {
+            $latestPosts = bethammi_list_posts(3, (int) $post['id']);
+        }
     } else {
         $posts = bethammi_list_posts();
+        $latestPosts = array_slice($posts, 0, 3);
     }
 } catch (Throwable $error) {
     error_log('Beth Ammi posts page failed: ' . $error->getMessage());
@@ -90,11 +95,41 @@ require __DIR__ . '/../includes/site-header.php';
         <p class="post-article__summary"><?= bethammi_escape($post['short_info']) ?></p>
         <?php endif; ?>
         <div class="remote-content"><?= $postContentHtml ?></div>
-        <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
+        <?php $youtubeEmbedUrl = bethammi_youtube_embed_url($post['youtube_url'] ?? ''); ?>
+        <?php if ($youtubeEmbedUrl !== ''): ?>
+        <div class="post-youtube-embed">
+          <iframe src="<?= bethammi_escape($youtubeEmbedUrl) ?>" title="<?= bethammi_escape($post['title']) ?> — YouTube video" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <?php elseif (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
         <a class="youtube-video-link post-youtube-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch this message on YouTube <span aria-hidden="true">↗</span></a>
         <?php endif; ?>
+        <?= bethammi_post_action_button($post) ?>
       </article>
       <aside class="page-sidebar">
+        <section class="sidebar-card latest-posts" aria-labelledby="latest-posts-title">
+          <p class="eyebrow"><span></span> Keep reading</p>
+          <h2 id="latest-posts-title">Latest <em>posts.</em></h2>
+          <?php if ($latestPosts): ?>
+          <ul class="latest-posts__list">
+            <?php foreach ($latestPosts as $latestPost): ?>
+            <?php $latestPostHasImage = $latestPost['featured_image_url'] !== '' && bethammi_valid_image_url($latestPost['featured_image_url']); ?>
+            <li>
+              <a class="latest-posts__link<?= $latestPostHasImage ? '' : ' latest-posts__link--no-image' ?>" href="posts?slug=<?= rawurlencode($latestPost['slug']) ?>">
+                <?php if ($latestPostHasImage): ?>
+                <img src="<?= bethammi_escape($latestPost['featured_image_url']) ?>" alt="" loading="lazy">
+                <?php endif; ?>
+                <span class="latest-posts__copy">
+                  <span class="latest-posts__title"><?= bethammi_escape($latestPost['title']) ?></span>
+                  <span class="latest-posts__date"><?= bethammi_escape(date('j F Y', strtotime($latestPost['published_at']))) ?></span>
+                </span>
+              </a>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+          <?php else: ?>
+          <p class="latest-posts__empty">There are no other posts yet.</p>
+          <?php endif; ?>
+        </section>
         <div class="sidebar-card sidebar-card--visit">
           <p class="eyebrow"><span></span> From our church family</p>
           <h2>More news<br>and <em>sermons.</em></h2>
@@ -102,6 +137,36 @@ require __DIR__ . '/../includes/site-header.php';
           <a class="btn button button--navy" href="posts">View all posts <span aria-hidden="true">↗</span></a>
         </div>
       </aside>
+    </section>
+    <section class="container post-recommendations" aria-labelledby="post-recommendations-title">
+      <div class="post-recommendations__heading">
+        <p class="eyebrow"><span></span> Keep exploring</p>
+        <h2 id="post-recommendations-title">You might also <em>enjoy.</em></h2>
+        <p>Here are a few more stories and messages from our church family.</p>
+      </div>
+      <?php if ($latestPosts): ?>
+      <div class="post-recommendations__grid">
+        <?php foreach ($latestPosts as $suggestedPost): ?>
+        <article class="post-recommendation">
+          <a class="post-recommendation__image" href="posts?slug=<?= rawurlencode($suggestedPost['slug']) ?>">
+            <?php if ($suggestedPost['featured_image_url'] !== '' && bethammi_valid_image_url($suggestedPost['featured_image_url'])): ?>
+            <img src="<?= bethammi_escape($suggestedPost['featured_image_url']) ?>" alt="" loading="lazy">
+            <?php else: ?>
+            <span aria-hidden="true"></span>
+            <?php endif; ?>
+          </a>
+          <div class="post-recommendation__body">
+            <p class="story-card__meta">BETH AMMI <span>·</span> <?= bethammi_escape(date('j F Y', strtotime($suggestedPost['published_at']))) ?></p>
+            <h3><a href="posts?slug=<?= rawurlencode($suggestedPost['slug']) ?>"><?= bethammi_escape($suggestedPost['title']) ?></a></h3>
+            <?php if (($suggestedSummary = bethammi_post_card_summary($suggestedPost)) !== ''): ?>
+            <p><?= bethammi_escape($suggestedSummary) ?></p>
+            <?php endif; ?>
+            <a class="story-card__link" href="posts?slug=<?= rawurlencode($suggestedPost['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <?php endforeach; ?>
+      </div>
+      <?php endif; ?>
     </section>
     <?php endif; ?>
   <?php else: ?>
@@ -116,33 +181,76 @@ require __DIR__ . '/../includes/site-header.php';
     <?php if ($pageError !== ''): ?>
     <div class="container page-message" role="status"><?= bethammi_escape($pageError) ?></div>
     <?php endif; ?>
-    <section class="container archive posts-archive">
-      <div class="archive__heading">
-        <div><p class="eyebrow"><span></span> Stories and updates</p><h2>Faith in <em>action.</em></h2><p>Read the latest news, sermons, services, and events from our church.</p></div>
-        <label class="archive-search"><span>Search stories</span><input id="posts-search" type="search" placeholder="Try a title or date…" autocomplete="off"><span class="archive-search__icon" aria-hidden="true">⌕</span></label>
-      </div>
-      <p class="archive__count" id="posts-count"><?= count($posts) ?> <?= count($posts) === 1 ? 'story' : 'stories' ?></p>
-      <div class="archive-grid" id="posts-archive">
-        <?php foreach ($posts as $post): ?>
-        <article class="archive-card" data-search="<?= bethammi_escape(mb_strtolower($post['title'] . ' ' . $post['short_info'] . ' ' . $post['published_at'], 'UTF-8')) ?>">
-          <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
-          <div class="archive-card__image"><a href="posts?slug=<?= rawurlencode($post['slug']) ?>"><img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy"></a></div>
-          <?php else: ?>
-          <div class="archive-card__image" aria-hidden="true"></div>
-          <?php endif; ?>
-          <div class="archive-card__body">
-            <p class="story-card__meta">BETH AMMI <span>·</span> <?= bethammi_escape(date('j F Y', strtotime($post['published_at']))) ?></p>
-            <h3><?= bethammi_escape($post['title']) ?></h3>
-            <p><?= bethammi_escape($post['short_info']) ?></p>
-            <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
-            <a class="youtube-video-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>
+    <section class="container posts-archive-layout">
+      <div class="archive posts-archive">
+        <div class="archive__heading">
+          <div><p class="eyebrow"><span></span> Stories and updates</p><h2>Faith in <em>action.</em></h2><p>Read the latest news, sermons, services, and events from our church.</p></div>
+          <label class="archive-search"><span>Search stories</span><input id="posts-search" type="search" placeholder="Try a title or date…" autocomplete="off"><span class="archive-search__icon" aria-hidden="true">⌕</span></label>
+        </div>
+        <p class="archive__count" id="posts-count"><?= count($posts) ?> <?= count($posts) === 1 ? 'story' : 'stories' ?></p>
+        <div class="archive-grid" id="posts-archive">
+          <?php foreach ($posts as $post): ?>
+          <?php $postCardSummary = bethammi_post_card_summary($post); ?>
+          <article class="archive-card" data-search="<?= bethammi_escape(mb_strtolower($post['title'] . ' ' . $postCardSummary . ' ' . $post['published_at'], 'UTF-8')) ?>">
+            <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
+            <div class="archive-card__image"><a href="posts?slug=<?= rawurlencode($post['slug']) ?>"><img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy"></a></div>
+            <?php else: ?>
+            <div class="archive-card__image" aria-hidden="true"></div>
             <?php endif; ?>
-            <a class="story-card__link" href="posts?slug=<?= rawurlencode($post['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
-          </div>
-        </article>
-        <?php endforeach; ?>
+            <div class="archive-card__body">
+              <p class="story-card__meta">BETH AMMI <span>·</span> <?= bethammi_escape(date('j F Y', strtotime($post['published_at']))) ?></p>
+              <h3><?= bethammi_escape($post['title']) ?></h3>
+              <p><?= bethammi_escape($postCardSummary) ?></p>
+              <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
+              <a class="youtube-video-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>
+              <?php endif; ?>
+              <a class="story-card__link" href="posts?slug=<?= rawurlencode($post['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <?php endforeach; ?>
+        </div>
+        <p class="archive-empty" id="posts-empty"<?= $posts || $pageError !== '' ? ' hidden' : '' ?>><?= $posts ? 'No stories match that search. Try a different word.' : 'There are no stories to show right now.' ?></p>
       </div>
-      <p class="archive-empty" id="posts-empty"<?= $posts || $pageError !== '' ? ' hidden' : '' ?>><?= $posts ? 'No stories match that search. Try a different word.' : 'There are no stories to show right now.' ?></p>
+      <aside class="sidebar-card posts-newsletter" aria-labelledby="posts-newsletter-title">
+        <section class="posts-latest-posts" aria-labelledby="posts-latest-posts-title">
+          <p class="eyebrow"><span></span> Fresh from Beth Ammi</p>
+          <h2 id="posts-latest-posts-title">Latest <em>posts.</em></h2>
+          <?php if ($latestPosts): ?>
+          <ul class="latest-posts__list">
+            <?php foreach ($latestPosts as $latestPost): ?>
+            <?php $latestPostHasImage = $latestPost['featured_image_url'] !== '' && bethammi_valid_image_url($latestPost['featured_image_url']); ?>
+            <li>
+              <a class="latest-posts__link<?= $latestPostHasImage ? '' : ' latest-posts__link--no-image' ?>" href="posts?slug=<?= rawurlencode($latestPost['slug']) ?>">
+                <?php if ($latestPostHasImage): ?>
+                <img src="<?= bethammi_escape($latestPost['featured_image_url']) ?>" alt="" loading="lazy">
+                <?php endif; ?>
+                <span class="latest-posts__copy">
+                  <span class="latest-posts__title"><?= bethammi_escape($latestPost['title']) ?></span>
+                  <span class="latest-posts__date"><?= bethammi_escape(date('j F Y', strtotime($latestPost['published_at']))) ?></span>
+                </span>
+              </a>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+          <?php else: ?>
+          <p class="latest-posts__empty">There are no posts to show right now.</p>
+          <?php endif; ?>
+        </section>
+        <hr class="posts-newsletter__divider">
+        <p class="eyebrow"><span></span> Stay connected</p>
+        <h2 id="posts-newsletter-title">News in your <em>inbox.</em></h2>
+        <p class="posts-newsletter__intro">Receive church news, sermons, and community updates by email.</p>
+        <form class="newsletter-form" action="../subscribe.php" method="post">
+          <input type="hidden" name="csrf_token" value="<?= bethammi_escape($loginCsrfToken) ?>">
+          <label for="posts-newsletter-email">Email address</label>
+          <div class="newsletter-form__controls">
+            <input id="posts-newsletter-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="Your email address" required>
+            <button type="submit" name="action" value="subscribe">Subscribe <span aria-hidden="true">↗</span></button>
+          </div>
+          <p class="newsletter-form__note">Subscribe to receive church updates.</p>
+          <p class="newsletter-form__status" role="status" aria-live="polite" hidden></p>
+        </form>
+      </aside>
     </section>
   <?php endif; ?>
 </main>

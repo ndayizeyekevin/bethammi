@@ -10,7 +10,7 @@ $sections = [
         'label' => 'Posts',
         'singular' => 'Post',
         'table' => 'posts',
-        'fields' => ['title', 'slug', 'published_at', 'featured_image_url', 'youtube_url', 'short_info', 'description', 'is_published'],
+        'fields' => ['title', 'slug', 'published_at', 'featured_image_url', 'youtube_url', 'action_button_text', 'action_button_url', 'action_button_new_tab', 'short_info', 'description', 'is_published'],
     ],
     'team' => [
         'label' => 'Team',
@@ -46,6 +46,53 @@ function bethammi_admin_input($key, $fallback = '')
     return is_string($value) || is_numeric($value) ? (string) $value : $fallback;
 }
 
+function bethammi_admin_post_images()
+{
+    $submittedImages = $_POST['post_images'] ?? [];
+    if (!is_array($submittedImages) || count($submittedImages) > 30) {
+        throw new InvalidArgumentException('A post can contain up to 30 images.');
+    }
+
+    $images = [];
+    foreach ($submittedImages as $image) {
+        if (!is_array($image)) {
+            throw new InvalidArgumentException('One of the post images is invalid. Please review the image list.');
+        }
+
+        $imagePath = trim(is_string($image['image_path'] ?? null) ? $image['image_path'] : '');
+        $altText = trim(is_string($image['alt_text'] ?? null) ? $image['alt_text'] : '');
+        $belowText = trim(is_string($image['below_text'] ?? null) ? $image['below_text'] : '');
+        $belowTextType = is_string($image['below_text_type'] ?? null) ? $image['below_text_type'] : '';
+        $layout = is_string($image['layout'] ?? null) ? $image['layout'] : '';
+
+        if (!bethammi_valid_image_url($imagePath) || $imagePath === '') {
+            throw new InvalidArgumentException('Enter a valid image URL or site-relative path for every post image.');
+        }
+        if (mb_strlen($altText, 'UTF-8') > 200) {
+            throw new InvalidArgumentException('Image accessibility descriptions must be 200 characters or fewer.');
+        }
+        if (mb_strlen($belowText, 'UTF-8') > 5000) {
+            throw new InvalidArgumentException('Image captions and paragraphs must be 5,000 characters or fewer.');
+        }
+        if (!in_array($belowTextType, ['caption', 'paragraph'], true)) {
+            throw new InvalidArgumentException('Choose whether the text below each image is a caption or paragraph.');
+        }
+        if (!in_array($layout, ['left', 'center', 'right', 'gallery'], true)) {
+            throw new InvalidArgumentException('Choose a valid image layout.');
+        }
+
+        $images[] = [
+            'image_path' => $imagePath,
+            'alt_text' => $altText,
+            'below_text' => $belowText,
+            'below_text_type' => $belowTextType,
+            'layout' => $layout,
+        ];
+    }
+
+    return $images;
+}
+
 function bethammi_admin_field($name, $label, $type = 'text', $required = false, $wide = false)
 {
     $value = bethammi_admin_value($name);
@@ -69,10 +116,10 @@ function bethammi_admin_image_field($name, $label)
 $message = '';
 $error = '';
 $isAuthenticated = isset($_SESSION['admin_user']);
-$adminPage = isset($adminPage) && in_array($adminPage, ['dashboard', 'posts', 'team', 'parishes'], true)
+$adminPage = isset($adminPage) && in_array($adminPage, ['dashboard', 'posts', 'add-post', 'team', 'parishes'], true)
     ? $adminPage
     : 'dashboard';
-$section = $adminPage === 'dashboard' ? 'posts' : $adminPage;
+$section = in_array($adminPage, ['dashboard', 'add-post'], true) ? 'posts' : $adminPage;
 
 if (
     $_SERVER['REQUEST_METHOD'] === 'GET'
@@ -137,14 +184,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $entity = $sections[$section];
                 $recordId = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
                 $values = [];
+                $postImages = [];
 
                 if ($section === 'posts') {
+                    $postImages = bethammi_admin_post_images();
                     $values['title'] = trim(bethammi_admin_input('title'));
                     $values['slug'] = trim(bethammi_admin_input('slug'));
                     if ($values['slug'] === '') $values['slug'] = bethammi_slugify($values['title']);
                     $values['published_at'] = trim(bethammi_admin_input('published_at'));
                     $values['featured_image_url'] = trim(bethammi_admin_input('featured_image_url'));
                     $values['youtube_url'] = trim(bethammi_admin_input('youtube_url'));
+                    $values['action_button_text'] = trim(bethammi_admin_input('action_button_text'));
+                    $values['action_button_url'] = trim(bethammi_admin_input('action_button_url'));
+                    $actionButtonNewTab = bethammi_admin_input('action_button_new_tab', '0');
+                    if (!in_array($actionButtonNewTab, ['0', '1'], true)) {
+                        throw new InvalidArgumentException('Choose whether the post button opens in the current or a new tab.');
+                    }
+                    $values['action_button_new_tab'] = $actionButtonNewTab === '1' ? 1 : 0;
                     $values['short_info'] = trim(bethammi_admin_input('short_info'));
                     $values['description'] = trim(bethammi_admin_input('description'));
                     $date = DateTime::createFromFormat('!Y-m-d', $values['published_at']);
@@ -154,8 +210,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $values['slug'])) {
                         throw new InvalidArgumentException('Use a URL-friendly post slug made of lowercase letters, numbers, and hyphens.');
                     }
-                    if ($values['title'] === '' || $values['description'] === '') {
-                        throw new InvalidArgumentException('Post title and full description are required.');
+                    if ($values['title'] === '' || ($values['description'] === '' && $postImages === [])) {
+                        throw new InvalidArgumentException('Enter post text or add at least one image.');
                     }
                     if (mb_strlen($values['short_info'], 'UTF-8') > 500) {
                         throw new InvalidArgumentException('Post short info must be 500 characters or fewer.');
@@ -165,6 +221,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     if (!bethammi_valid_youtube_url($values['youtube_url'])) {
                         throw new InvalidArgumentException('Enter a valid HTTPS YouTube video, Shorts, or live URL.');
+                    }
+                    if (mb_strlen($values['action_button_text'], 'UTF-8') > 120) {
+                        throw new InvalidArgumentException('Post button text must be 120 characters or fewer.');
+                    }
+                    if (mb_strlen($values['action_button_url'], 'UTF-8') > 2048) {
+                        throw new InvalidArgumentException('Post button link must be 2,048 characters or fewer.');
+                    }
+                    if (($values['action_button_text'] === '') !== ($values['action_button_url'] === '')) {
+                        throw new InvalidArgumentException('Enter both the post button text and its link, or leave both blank.');
+                    }
+                    if (!bethammi_valid_post_button_url($values['action_button_url'])) {
+                        throw new InvalidArgumentException('Enter a valid http(s) URL or a site-relative link for the post button.');
                     }
                 } elseif ($section === 'team') {
                     $values['name'] = trim(bethammi_admin_input('name'));
@@ -206,7 +274,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $values['is_published'] = ($_POST['is_published'] ?? '') === '1' ? 1 : 0;
                 $columns = array_keys($values);
-                if ($recordId) {
+                if ($section === 'posts') {
+                    $database = bethammi_db();
+                    $database->beginTransaction();
+                    try {
+                        if ($recordId) {
+                            $assignments = array_map(function ($column) {
+                                return "`{$column}` = :{$column}";
+                            }, $columns);
+                            $values['id'] = $recordId;
+                            $sql = 'UPDATE `posts` SET ' . implode(', ', $assignments) . ' WHERE id = :id';
+                            $database->prepare($sql)->execute($values);
+                            $postId = (int) $recordId;
+                        } else {
+                            $columnNames = array_map(function ($column) {
+                                return "`{$column}`";
+                            }, $columns);
+                            $placeholders = array_map(function ($column) {
+                                return ':' . $column;
+                            }, $columns);
+                            $sql = 'INSERT INTO `posts` (' . implode(', ', $columnNames) . ') VALUES (' . implode(', ', $placeholders) . ')';
+                            $database->prepare($sql)->execute($values);
+                            $postId = (int) $database->lastInsertId();
+                        }
+
+                        $database->prepare('DELETE FROM post_images WHERE post_id = :post_id')
+                            ->execute(['post_id' => $postId]);
+                        $insertImage = $database->prepare(
+                            'INSERT INTO post_images
+                                (post_id, image_path, alt_text, below_text, below_text_type, layout, sort_order)
+                             VALUES
+                                (:post_id, :image_path, :alt_text, :below_text, :below_text_type, :layout, :sort_order)'
+                        );
+                        foreach ($postImages as $sortOrder => $image) {
+                            $insertImage->execute([
+                                'post_id' => $postId,
+                                'image_path' => $image['image_path'],
+                                'alt_text' => $image['alt_text'],
+                                'below_text' => $image['below_text'],
+                                'below_text_type' => $image['below_text_type'],
+                                'layout' => $image['layout'],
+                                'sort_order' => $sortOrder,
+                            ]);
+                        }
+                        $database->commit();
+                    } catch (Throwable $exception) {
+                        if ($database->inTransaction()) {
+                            $database->rollBack();
+                        }
+                        throw $exception;
+                    }
+                    bethammi_admin_redirect($section . '.php?saved=1');
+                } elseif ($recordId) {
                     $assignments = array_map(function ($column) {
                         return "`{$column}` = :{$column}";
                     }, $columns);
@@ -240,9 +359,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = $exception->getMessage();
         } catch (PDOException $exception) {
             error_log('Beth Ammi admin database operation failed: ' . $exception->getMessage());
-            $error = (string) $exception->getCode() === '23000'
+            $mysqlErrorCode = (int) ($exception->errorInfo[1] ?? 0);
+            $error = $mysqlErrorCode === 1062
                 ? 'That post slug is already in use.'
-                : 'The change could not be saved. Check the database connection and try again.';
+                : ($mysqlErrorCode === 1054
+                    ? 'Post button storage is not installed. Apply database/migrations/20261018_add_post_action_button.sql, then reload this page.'
+                    : ((string) $exception->getCode() === '42S02'
+                        ? 'Image storage is not installed. Apply database/migrations/20261018_create_post_images.sql, then reload this page.'
+                        : 'The change could not be saved. Check the database connection and try again.'));
         } catch (Throwable $exception) {
             error_log('Beth Ammi admin request failed: ' . $exception->getMessage());
             $error = 'The request could not be completed. Check the server log for details.';
@@ -257,7 +381,8 @@ if (isset($_GET['deleted'])) $message = 'Record deleted.';
 
 $selectedRecord = [];
 $records = [];
-if ($isAuthenticated && $adminPage !== 'dashboard') {
+$postImages = [];
+if ($isAuthenticated && !in_array($adminPage, ['dashboard', 'add-post'], true)) {
     try {
         $entity = $sections[$section];
         $editId = filter_var($_GET['edit'] ?? null, FILTER_VALIDATE_INT);
@@ -265,6 +390,14 @@ if ($isAuthenticated && $adminPage !== 'dashboard') {
             $statement = bethammi_db()->prepare('SELECT * FROM `' . $entity['table'] . '` WHERE id = :id LIMIT 1');
             $statement->execute(['id' => $editId]);
             $selectedRecord = $statement->fetch() ?: [];
+            if ($section === 'posts' && $selectedRecord !== []) {
+                $imageStatement = bethammi_db()->prepare(
+                    'SELECT image_path, alt_text, below_text, below_text_type, layout
+                     FROM post_images WHERE post_id = :post_id ORDER BY sort_order ASC, id ASC'
+                );
+                $imageStatement->execute(['post_id' => (int) $editId]);
+                $postImages = $imageStatement->fetchAll();
+            }
         }
         $orderBy = $section === 'posts' ? 'published_at DESC, id DESC' : 'sort_order ASC, id DESC';
         $listColumns = [
@@ -277,7 +410,11 @@ if ($isAuthenticated && $adminPage !== 'dashboard') {
         )->fetchAll();
     } catch (Throwable $exception) {
         error_log('Beth Ammi admin records could not be loaded: ' . $exception->getMessage());
-        $error = 'Database records could not be loaded. Check the connection and schema setup.';
+        $error = $exception instanceof PDOException && (string) $exception->getCode() === '42S02'
+            ? 'Image storage is not installed. Apply database/migrations/20261018_create_post_images.sql, then reload this page.'
+            : ($exception instanceof PDOException && (int) ($exception->errorInfo[1] ?? 0) === 1054
+                ? 'Post button storage is not installed. Apply database/migrations/20261018_add_post_action_button.sql, then reload this page.'
+                : 'Database records could not be loaded. Check the connection and schema setup.');
     }
 }
 
@@ -309,12 +446,12 @@ $csrfToken = bethammi_admin_csrf_token();
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= bethammi_escape($adminPage === 'dashboard' ? 'Dashboard' : $sections[$section]['label']) ?> | Beth Ammi Admin</title>
+  <title><?= bethammi_escape($adminPage === 'dashboard' ? 'Dashboard' : ($adminPage === 'add-post' ? 'Add post' : $sections[$section]['label'])) ?> | Beth Ammi Admin</title>
   <link rel="icon" type="image/png" href="../assets/images/bethammilogo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="admin.css?v=<?= (int) filemtime(__DIR__ . '/admin.css') ?>">
 </head>
 <body>
 <?php if (!$isAuthenticated): ?>
@@ -329,6 +466,7 @@ $csrfToken = bethammi_admin_csrf_token();
     <?php require __DIR__ . '/views/content-manager.php'; ?>
   <?php endif; ?>
   <?php require __DIR__ . '/views/layout-end.php'; ?>
+  <?php if (in_array($adminPage, ['posts', 'add-post'], true)): ?><script src="post-formatting.js?v=<?= (int) filemtime(__DIR__ . '/post-formatting.js') ?>" defer></script><?php endif; ?>
 <?php endif; ?>
 </body>
 </html>

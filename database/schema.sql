@@ -5,6 +5,9 @@ CREATE TABLE IF NOT EXISTS posts (
     published_at DATE NOT NULL,
     featured_image_url VARCHAR(2048) NOT NULL DEFAULT '',
     youtube_url VARCHAR(2048) NOT NULL DEFAULT '',
+    action_button_text VARCHAR(120) NOT NULL DEFAULT '',
+    action_button_url VARCHAR(2048) NOT NULL DEFAULT '',
+    action_button_new_tab TINYINT(1) NOT NULL DEFAULT 0,
     short_info VARCHAR(500) NOT NULL DEFAULT '',
     description MEDIUMTEXT NOT NULL,
     is_published TINYINT(1) NOT NULL DEFAULT 1,
@@ -13,6 +16,21 @@ CREATE TABLE IF NOT EXISTS posts (
     PRIMARY KEY (id),
     UNIQUE KEY posts_slug_unique (slug),
     KEY posts_published_date (is_published, published_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS post_images (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    post_id BIGINT UNSIGNED NOT NULL,
+    image_path VARCHAR(2048) NOT NULL,
+    alt_text VARCHAR(200) NOT NULL,
+    below_text TEXT NOT NULL,
+    below_text_type ENUM('caption', 'paragraph') NOT NULL DEFAULT 'caption',
+    layout ENUM('left', 'center', 'right', 'gallery') NOT NULL DEFAULT 'left',
+    sort_order INT UNSIGNED NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY post_images_order (post_id, sort_order, id),
+    CONSTRAINT post_images_post_fk FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS team_members (
@@ -64,4 +82,13 @@ CREATE TABLE IF NOT EXISTS admin_login_attempts (
     attempted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     KEY admin_attempts_lookup (username, ip_hash, attempted_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    email VARCHAR(254) NOT NULL,
+    status ENUM('subscribed', 'unsubscribed') NOT NULL DEFAULT 'subscribed',
+    subscribed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY newsletter_subscribers_email_unique (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

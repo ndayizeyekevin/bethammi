@@ -19,7 +19,7 @@
         <span aria-hidden="true">›</span>
       </button>
       <div class="container hero__content">
-        <p class="eyebrow eyebrow--light"><span></span> Beth Ammi Christian Fellowship Church</p>
+        <p class="eyebrow eyebrow--light"><span></span> Welcome to Beth Ammi Christian Fellowship Church</p>
         <h1 id="hero-title">Faith grows<br>better <em>together.</em></h1>
         <p class="hero__intro">Come as you are. Find a welcoming community, worship together, and grow in the Word of God.</p>
         <div class="hero__actions">
@@ -87,6 +87,18 @@
       </div>
     </section>
 
+    <section class="mwana-section section" aria-labelledby="mwana-title">
+      <div class="container mwana-section__content">
+        <p class="eyebrow eyebrow--light"><span></span> A ministry under Beth Ammi</p>
+        <h2 id="mwana-title">MWANA IGIRIRE ICYIZERE</h2>
+        <p>We are a ministry that is working under Beth Ammi. Our mission is:</p>
+        <blockquote>To empower vulnerable children and families through education and sustainable business initiatives, fostering hope, resilience, and lasting change for sustainable livelihoods.</blockquote>
+        <a class="btn button button--gold" href="https://mii.bethammicfc.org/" target="_blank" rel="noopener noreferrer">
+          Visit Mwana Igirire Icyizere <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
     <section class="stories section" id="stories" aria-labelledby="stories-title">
       <div class="container">
         <div class="section-heading">
@@ -104,7 +116,7 @@
             <div class="story-card__body">
               <p class="story-card__meta">FROM OUR CHURCH <span>·</span> <?= bethammi_escape(strtoupper(date('F Y', strtotime($post['published_at'])))) ?></p>
               <h3><?= bethammi_escape($post['title']) ?></h3>
-              <p><?= bethammi_escape($post['short_info']) ?></p>
+              <p><?= bethammi_escape(bethammi_post_card_summary($post)) ?></p>
               <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
               <a class="youtube-video-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>
               <?php endif; ?>

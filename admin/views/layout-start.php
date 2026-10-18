@@ -2,6 +2,7 @@
 $adminPages = [
     'dashboard' => ['label' => 'Dashboard', 'description' => 'A clear overview of your church website content.'],
     'posts' => ['label' => 'Posts', 'description' => 'Create and organize news, stories, and sermons.'],
+    'add-post' => ['label' => 'Add post', 'description' => 'Write a post, format its text, and add images with captions.'],
     'team' => ['label' => 'Team', 'description' => 'Keep church leadership and team profiles up to date.'],
     'parishes' => ['label' => 'Parishes', 'description' => 'Manage parish information shown across the website.'],
 ];
@@ -16,8 +17,8 @@ $currentPage = $adminPages[$adminPage];
     <p class="sidebar-label">WORKSPACE</p>
     <nav class="sidebar-nav" aria-label="Admin pages">
       <?php foreach ($adminPages as $key => $page): ?>
-        <a class="sidebar-link<?= $adminPage === $key ? ' is-active' : '' ?>" href="<?= bethammi_escape($key === 'dashboard' ? 'dashboard.php' : $key . '.php') ?>"<?= $adminPage === $key ? ' aria-current="page"' : '' ?>>
-          <span class="sidebar-icon" aria-hidden="true"><?= ['dashboard' => '⌂', 'posts' => '▤', 'team' => '♙', 'parishes' => '⌖'][$key] ?></span>
+        <a class="sidebar-link<?= $adminPage === $key ? ' is-active' : '' ?>" href="<?= bethammi_escape($key === 'dashboard' ? 'dashboard.php' : ($key === 'add-post' ? 'add-post.php' : $key . '.php')) ?>"<?= $adminPage === $key ? ' aria-current="page"' : '' ?>>
+          <span class="sidebar-icon" aria-hidden="true"><?= ['dashboard' => '⌂', 'posts' => '▤', 'add-post' => '+', 'team' => '♙', 'parishes' => '⌖'][$key] ?></span>
           <span><?= bethammi_escape($page['label']) ?></span>
         </a>
       <?php endforeach; ?>
@@ -50,7 +51,11 @@ $currentPage = $adminPages[$adminPage];
           <h1><?= bethammi_escape($currentPage['label']) ?></h1>
           <p><?= bethammi_escape($currentPage['description']) ?></p>
         </div>
-        <?php if ($adminPage !== 'dashboard'): ?>
+        <?php if ($adminPage === 'posts'): ?>
+          <a class="button button--primary" href="add-post.php">+ Add post</a>
+        <?php elseif ($adminPage !== 'dashboard' && $adminPage !== 'add-post'): ?>
           <a class="button button--primary" href="#editor">+ <?= $selectedRecord ? 'Edit ' . bethammi_escape($sections[$section]['singular']) : 'Add ' . bethammi_escape($sections[$section]['singular']) ?></a>
+        <?php elseif ($adminPage === 'add-post'): ?>
+          <a class="button button--secondary" href="posts.php">Back to posts</a>
         <?php endif; ?>
       </header>

@@ -142,6 +142,62 @@ if (scrollTopButton) {
 const year = document.querySelector("#year");
 if (year) year.textContent = String(new Date().getFullYear());
 
+document.querySelectorAll(".newsletter-form").forEach((newsletterForm) => {
+  if (!(newsletterForm instanceof HTMLFormElement)) return;
+
+  const newsletterStatus = newsletterForm.querySelector(".newsletter-form__status");
+  const newsletterSubmit = newsletterForm.querySelector('button[type="submit"]');
+
+  newsletterForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!(newsletterStatus instanceof HTMLElement) || !(newsletterSubmit instanceof HTMLButtonElement)) return;
+
+    newsletterSubmit.disabled = true;
+    newsletterStatus.hidden = false;
+    newsletterStatus.classList.remove("is-success", "is-error");
+    newsletterStatus.classList.add("is-pending");
+    newsletterStatus.textContent = "Submitting your subscription…";
+
+    try {
+      const formData = new FormData(newsletterForm);
+      formData.set("action", "subscribe");
+      const endpoint = newsletterForm.getAttribute("action");
+      if (!endpoint) throw new Error("The subscription form is missing its endpoint.");
+      const response = await fetch(endpoint, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+      });
+      const responseBody = await response.text();
+      let result;
+      try {
+        result = JSON.parse(responseBody);
+      } catch {
+        throw new Error("The subscription service returned an invalid response. Please try again later.");
+      }
+      if (!response.ok) throw new Error(result.error || "Your subscription could not be completed.");
+
+      newsletterStatus.classList.remove("is-pending", "is-error");
+      newsletterStatus.classList.add("is-success");
+      newsletterStatus.textContent = result.message;
+      if (result.message === "Subscribed successfully.") {
+        newsletterForm.reset();
+      }
+    } catch (error) {
+      newsletterStatus.classList.remove("is-pending");
+      newsletterStatus.classList.add("is-error");
+      newsletterStatus.textContent = error instanceof Error
+        ? error.message
+        : "Your subscription could not be completed. Please try again.";
+    } finally {
+      newsletterSubmit.disabled = false;
+    }
+  });
+});
+
 const heroSlides = document.querySelectorAll(".hero__slide");
 if (heroSlides.length > 1) {
   const previousHeroButton = document.querySelector(".hero__control--previous");
