@@ -48,22 +48,54 @@ function bethammi_post_by_id($id)
     return $statement->fetch() ?: null;
 }
 
+function bethammi_post_inline_image($paragraph)
+{
+    if (!preg_match('/^!\[([^\]\r\n]*)\]\(([^)\s]+)(?:\s+"([^"\r\n]*)")?\)(?:\{layout=(left|center|right|gallery)\})?$/u', trim($paragraph), $imageMatch)) {
+        return null;
+    }
+
+    $imageUrl = $imageMatch[2];
+    if ($imageUrl === '' || !bethammi_valid_image_url($imageUrl)) {
+        return null;
+    }
+
+    $layout = $imageMatch[4] ?? 'left';
+    $caption = trim($imageMatch[3] ?? '');
+    $figure = '<figure class="post-inline-image post-inline-image--' . $layout . '">'
+        . '<img src="' . bethammi_escape($imageUrl) . '" alt="' . bethammi_escape($imageMatch[1]) . '" loading="lazy">'
+        . ($caption !== '' ? '<figcaption>' . bethammi_escape($caption) . '</figcaption>' : '')
+        . '</figure>';
+
+    return ['layout' => $layout, 'html' => $figure];
+}
+
 function bethammi_post_response(array $post, $includeDescription = false)
 {
     $paragraphs = preg_split('/\R{2,}/u', trim((string) $post['description']));
-    $content = implode('', array_map(function ($paragraph) {
+    $renderedParagraphs = [];
+    $galleryImages = [];
+    $flushGallery = function () use (&$renderedParagraphs, &$galleryImages) {
+        if ($galleryImages !== []) {
+            $renderedParagraphs[] = '<div class="post-inline-gallery">' . implode('', $galleryImages) . '</div>';
+            $galleryImages = [];
+        }
+    };
+
+    foreach (array_filter($paragraphs, 'strlen') as $paragraph) {
         $paragraph = trim($paragraph);
-        if (preg_match('/^!\[([^\]\r\n]*)\]\(([^)\s]+)(?:\s+"([^"\r\n]*)")?\)$/u', $paragraph, $imageMatch)) {
-            $imageUrl = $imageMatch[2];
-            if ($imageUrl !== '' && bethammi_valid_image_url($imageUrl)) {
-                $caption = trim($imageMatch[3] ?? '');
-                return '<figure class="post-inline-image">'
-                    . '<img src="' . bethammi_escape($imageUrl) . '" alt="' . bethammi_escape($imageMatch[1]) . '" loading="lazy">'
-                    . ($caption !== '' ? '<figcaption>' . bethammi_escape($caption) . '</figcaption>' : '')
-                    . '</figure>';
+        $image = bethammi_post_inline_image($paragraph);
+        if ($image !== null) {
+            if ($image['layout'] === 'gallery') {
+                $galleryImages[] = $image['html'];
+                continue;
             }
+
+            $flushGallery();
+            $renderedParagraphs[] = $image['html'];
+            continue;
         }
 
+        $flushGallery();
         $escapedParagraph = bethammi_escape($paragraph);
         $formattedParagraph = preg_replace_callback(
             '/\*\*([^*\r\n]+)\*\*|\*([^*\r\n]+)\*/u',
@@ -75,8 +107,10 @@ function bethammi_post_response(array $post, $includeDescription = false)
             },
             $escapedParagraph
         );
-        return '<p>' . nl2br($formattedParagraph, false) . '</p>';
-    }, array_filter($paragraphs, 'strlen')));
+        $renderedParagraphs[] = '<p>' . nl2br($formattedParagraph, false) . '</p>';
+    }
+    $flushGallery();
+    $content = implode('', $renderedParagraphs);
 
     $result = [
         'id' => (int) $post['id'],

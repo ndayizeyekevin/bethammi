@@ -13,9 +13,37 @@ function bethammi_post_image_upload_response(array $payload, $status = 200)
     echo $json === false ? '{"error":"The response could not be encoded."}' : $json;
 }
 
+function bethammi_post_image_request_exceeds_post_limit()
+{
+    $contentLength = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
+    $postMaxSize = trim((string) ini_get('post_max_size'));
+    if ($contentLength < 1 || $postMaxSize === '' || $postMaxSize === '0') {
+        return false;
+    }
+
+    $unit = strtolower(substr($postMaxSize, -1));
+    $limit = (float) $postMaxSize;
+    if ($unit === 'g') {
+        $limit *= 1024;
+    }
+    if ($unit === 'g' || $unit === 'm') {
+        $limit *= 1024;
+    }
+    if ($unit === 'g' || $unit === 'm' || $unit === 'k') {
+        $limit *= 1024;
+    }
+
+    return $contentLength > $limit && empty($_POST) && empty($_FILES);
+}
+
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     header('Allow: POST');
     bethammi_post_image_upload_response(['error' => 'Use the post editor to upload an image.'], 405);
+    exit;
+}
+
+if (bethammi_post_image_request_exceeds_post_limit()) {
+    bethammi_post_image_upload_response(['error' => 'The image is larger than the server allows. Increase PHP post_max_size or choose a smaller image.'], 413);
     exit;
 }
 
@@ -36,9 +64,18 @@ if (!is_array($upload) || !isset($upload['error'], $upload['tmp_name'], $upload[
 }
 
 if ((int) $upload['error'] !== UPLOAD_ERR_OK) {
-    $message = (int) $upload['error'] === UPLOAD_ERR_INI_SIZE || (int) $upload['error'] === UPLOAD_ERR_FORM_SIZE
-        ? 'The image is larger than the server allows.'
-        : 'The image upload did not complete. Please try again.';
+    $uploadError = (int) $upload['error'];
+    $message = match ($uploadError) {
+        UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'The image is larger than the server allows. Choose a smaller image or increase PHP upload_max_filesize.',
+        UPLOAD_ERR_PARTIAL => 'The image upload was interrupted. Please try again.',
+        UPLOAD_ERR_NO_TMP_DIR => 'The server upload temporary directory is unavailable.',
+        UPLOAD_ERR_CANT_WRITE => 'The server could not write the uploaded image to temporary storage.',
+        UPLOAD_ERR_EXTENSION => 'A server extension stopped the image upload.',
+        default => 'The image upload did not complete. Please try again.',
+    };
+    if (in_array($uploadError, [UPLOAD_ERR_NO_TMP_DIR, UPLOAD_ERR_CANT_WRITE, UPLOAD_ERR_EXTENSION], true)) {
+        error_log('Beth Ammi post image upload failed with PHP upload error ' . $uploadError . '.');
+    }
     bethammi_post_image_upload_response(['error' => $message], 422);
     exit;
 }
@@ -85,18 +122,23 @@ if ($mimeType !== $imageTypes[$imageType]['mime']) {
     exit;
 }
 
-$uploadDirectory = dirname(__DIR__) . '/assets/images/posts';
+$uploadDirectory = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'posts';
 if (!is_dir($uploadDirectory) && !mkdir($uploadDirectory, 0755, true) && !is_dir($uploadDirectory)) {
     error_log('Beth Ammi post image upload failed: unable to create image directory.');
-    bethammi_post_image_upload_response(['error' => 'The image could not be saved right now.'], 500);
+    bethammi_post_image_upload_response(['error' => 'The server could not create assets/images/posts. Give PHP permission to write to assets/images.'], 500);
+    exit;
+}
+if (!is_writable($uploadDirectory)) {
+    error_log('Beth Ammi post image upload failed: image directory is not writable.');
+    bethammi_post_image_upload_response(['error' => 'The server cannot write to assets/images/posts. Give PHP permission to write to that directory.'], 500);
     exit;
 }
 
 $filename = bin2hex(random_bytes(16)) . '.' . $imageTypes[$imageType]['extension'];
-$destination = $uploadDirectory . '/' . $filename;
+$destination = $uploadDirectory . DIRECTORY_SEPARATOR . $filename;
 if (!move_uploaded_file($upload['tmp_name'], $destination)) {
     error_log('Beth Ammi post image upload failed: unable to move validated image.');
-    bethammi_post_image_upload_response(['error' => 'The image could not be saved right now.'], 500);
+    bethammi_post_image_upload_response(['error' => 'The server could not save the image in assets/images/posts. Check PHP write permissions.'], 500);
     exit;
 }
 

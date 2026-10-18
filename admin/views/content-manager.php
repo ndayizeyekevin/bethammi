@@ -61,17 +61,26 @@ $hiddenCount = count($records) - $publishedCount;
                 <option value="paragraph">Regular paragraph</option>
               </select>
             </label>
-            <label data-image-caption-field>Caption
+            <label>Image placement
+              <select data-image-layout>
+                <option value="left">Left, above the following text</option>
+                <option value="center">Center, above the following text</option>
+                <option value="right">Right, above the following text</option>
+                <option value="gallery">Side-by-side gallery after the post text</option>
+              </select>
+            </label>
+            <label data-image-caption-field><span>Caption shown below the image</span>
               <input type="text" data-image-caption maxlength="300" placeholder="Write a short caption">
             </label>
-            <label>Image description for accessibility
+            <label>Image description for accessibility (not displayed)
               <input type="text" data-image-alt maxlength="200" placeholder="Describe the image">
             </label>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ad dignissimos assumenda mollitia ipsam iure eos corrupti officiis nesciunt at? Atque quaerat ab, numquam id obcaecati nesciunt? Ab quibusdam vitae quidem recusandae assumenda praesentium incidunt! Molestiae velit adipisci architecto vero sunt, sequi nulla facilis deserunt assumenda voluptas quam! Quos, dolores?
           </div>
           <button type="button" class="button button--secondary post-image-insert__button" data-insert-image>Insert image</button>
           <p class="post-image-insert__status" role="status" aria-live="polite" hidden></p>
         </div>
-        <p class="admin-help">Select text and choose Bold or Italic. Blank lines create paragraphs. Add images from a URL or upload; choose a caption or write a regular paragraph beneath the image. Site paths are relative to the website root, for example assets/images/photo.jpg.</p>
+        <p class="admin-help">Enter the caption or paragraph in the image controls; it will be inserted with the image and displayed below it. Add multiple gallery images to place them side by side. Click Add Post or Save changes to store the post text and images. Site paths are relative to the website root, for example assets/images/photo.jpg.</p>
       </div>
     <?php elseif ($section === 'team'): ?>
       <div class="form-row">

@@ -422,9 +422,20 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
 .remote-content ul, .remote-content ol { margin: 0 0 22px; padding-left: 23px; }
 .remote-content li { margin-block: 7px; padding-left: 4px; }
 .remote-content blockquote { margin: 26px 0; padding: 8px 0 8px 22px; border-left: 2px solid var(--gold); color: #344944; font-family: var(--serif); font-size: 21px; line-height: 1.5; }
-.remote-content img { width: auto; max-width: 100%; height: auto; margin-inline: auto; }
+.remote-content img { display: block; width: auto; max-width: 100%; height: auto; }
 .remote-content figure { max-width: 100%; margin: 26px 0; }
-.remote-content figcaption { margin-top: 8px; color: #7a827f; font-size: 11px; text-align: center; }
+.remote-content figure.post-inline-image--left, .remote-content figure.post-inline-image--center, .remote-content figure.post-inline-image--right { width: fit-content; max-width: 100%; }
+.remote-content .post-inline-image:not(.post-inline-image--gallery) img { max-width: min(100%, 520px); }
+.remote-content figure.post-inline-image--left { margin-right: auto; margin-left: 0; }
+.remote-content figure.post-inline-image--center { margin-right: auto; margin-left: auto; }
+.remote-content figure.post-inline-image--right { margin-right: 0; margin-left: auto; }
+.remote-content .post-inline-image--left img { margin-right: auto; margin-left: 0; }
+.remote-content .post-inline-image--center img { margin-right: auto; margin-left: auto; }
+.remote-content .post-inline-image--right img { margin-right: 0; margin-left: auto; }
+.remote-content figcaption { margin-top: 8px; color: #7a827f; font-size: 11px; text-align: left; }
+.remote-content .post-inline-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 16px; margin: 26px 0; }
+.remote-content .post-inline-gallery figure { min-width: 0; margin: 0; }
+.remote-content .post-inline-gallery img { width: 100%; }
 .remote-content iframe, .remote-content video { width: 100%; max-width: 100%; min-height: 300px; border: 0; }
 .remote-content table { width: 100%; border-collapse: collapse; margin-block: 20px; font-size: 12px; }
 .remote-content th, .remote-content td { padding: 10px; border: 1px solid #deded5; text-align: left; }

@@ -46,6 +46,7 @@
   const fileField = imageComposer.querySelector("[data-image-file-field]");
   const fileInput = imageComposer.querySelector("[data-image-file]");
   const textType = imageComposer.querySelector("[data-image-text-type]");
+  const imageLayout = imageComposer.querySelector("[data-image-layout]");
   const captionField = imageComposer.querySelector("[data-image-caption-field]");
   const captionInput = imageComposer.querySelector("[data-image-caption]");
   const altInput = imageComposer.querySelector("[data-image-alt]");
@@ -61,6 +62,7 @@
     || !(fileField instanceof HTMLElement)
     || !(fileInput instanceof HTMLInputElement)
     || !(textType instanceof HTMLSelectElement)
+    || !(imageLayout instanceof HTMLSelectElement)
     || !(captionField instanceof HTMLElement)
     || !(captionInput instanceof HTMLInputElement)
     || !(altInput instanceof HTMLInputElement)
@@ -75,6 +77,20 @@
     imageStatus.dataset.state = state;
   };
 
+  const updateBelowImageLabel = () => {
+    const label = captionField.querySelector("span");
+    if (label) {
+      label.textContent = imageLayout.value === "gallery"
+        ? "Description shown below each gallery image"
+        : textType.value === "caption"
+          ? "Caption shown below the image"
+          : "Paragraph shown below the image";
+    }
+    captionInput.placeholder = imageLayout.value === "gallery" || textType.value === "caption"
+      ? "Write a short description"
+      : "Write the paragraph to display below the image";
+  };
+
   sourceSelect.addEventListener("change", () => {
     const isUpload = sourceSelect.value === "upload";
     urlField.hidden = isUpload;
@@ -82,30 +98,49 @@
   });
 
   textType.addEventListener("change", () => {
-    captionField.hidden = textType.value !== "caption";
+    updateBelowImageLabel();
   });
+  imageLayout.addEventListener("change", updateBelowImageLabel);
+  updateBelowImageLabel();
 
   const insertImage = (imageUrl) => {
     const alt = altInput.value.trim().replace(/[\]\r\n]/g, " ");
-    const caption = textType.value === "caption"
-      ? captionInput.value.trim().replace(/["\r\n]/g, " ")
+    const belowImageText = captionInput.value.trim().replace(/["\r\n]/g, " ");
+    const caption = textType.value === "caption" || imageLayout.value === "gallery"
+      ? belowImageText
+      : "";
+    const paragraph = textType.value === "paragraph" && imageLayout.value !== "gallery"
+      ? belowImageText
       : "";
     const encodedUrl = imageUrl.trim().replace(/[()"\s]/g, (character) => encodeURIComponent(character));
     const captionMarker = caption ? ` "${caption}"` : "";
-    const imageMarker = `![${alt}](${encodedUrl}${captionMarker})`;
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const before = textarea.value.slice(0, start);
-    const after = textarea.value.slice(end);
-    const prefix = before ? (before.endsWith("\n") ? "\n" : "\n\n") : "";
-    const suffix = after ? (after.startsWith("\n") ? "\n" : "\n\n") : "\n\n";
+    const layout = imageLayout.value;
+    const layoutMarker = `{layout=${layout}}`;
+    const imageMarker = `![${alt}](${encodedUrl}${captionMarker})${layoutMarker}`;
+    if (layout === "gallery") {
+      const existingContent = textarea.value.replace(/\s+$/u, "");
+      const galleryContent = `${existingContent ? `${existingContent}\n\n` : ""}${imageMarker}\n\n`;
+      textarea.setRangeText(galleryContent, 0, textarea.value.length, "end");
+    } else {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const before = textarea.value.slice(0, start);
+      const after = textarea.value.slice(end);
+      const prefix = before
+        ? (before.endsWith("\n\n") ? "" : before.endsWith("\n") ? "\n" : "\n\n")
+        : "";
+      const suffix = after
+        ? (after.startsWith("\n\n") ? "" : after.startsWith("\n") ? "\n" : "\n\n")
+        : "\n\n";
 
-    textarea.setRangeText(`${prefix}${imageMarker}${suffix}`, start, end, "end");
+      const belowImageParagraph = paragraph ? `\n\n${paragraph}` : "";
+      textarea.setRangeText(`${prefix}${imageMarker}${belowImageParagraph}${suffix}`, start, end, "end");
+    }
     textarea.focus();
     textarea.dispatchEvent(new Event("input", { bubbles: true }));
-    setImageStatus(textType.value === "caption"
-      ? "Image and caption added to the post."
-      : "Image added. Type the paragraph beneath it at the cursor.");
+    setImageStatus(layout === "gallery"
+      ? "Image and text added to the gallery after the post text. Add more gallery images to place them side by side, then save the post."
+      : "Image and text added to the post at the cursor. Save the post to keep your changes.");
   };
 
   insertButton.addEventListener("click", async () => {
@@ -117,8 +152,10 @@
       altInput.focus();
       return;
     }
-    if (textType.value === "caption" && !captionInput.value.trim()) {
-      setImageStatus("Enter a caption or choose regular paragraph text.", "error");
+    if (!captionInput.value.trim()) {
+      setImageStatus(textType.value === "caption"
+        ? "Enter a caption to display below the image."
+        : "Enter the paragraph to display below the image.", "error");
       captionInput.focus();
       return;
     }

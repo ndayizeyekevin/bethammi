@@ -314,7 +314,7 @@ $csrfToken = bethammi_admin_csrf_token();
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="admin.css?v=<?= (int) filemtime(__DIR__ . '/admin.css') ?>">
 </head>
 <body>
 <?php if (!$isAuthenticated): ?>
@@ -329,7 +329,7 @@ $csrfToken = bethammi_admin_csrf_token();
     <?php require __DIR__ . '/views/content-manager.php'; ?>
   <?php endif; ?>
   <?php require __DIR__ . '/views/layout-end.php'; ?>
-  <?php if ($adminPage === 'posts'): ?><script src="post-formatting.js" defer></script><?php endif; ?>
+  <?php if ($adminPage === 'posts'): ?><script src="post-formatting.js?v=<?= (int) filemtime(__DIR__ . '/post-formatting.js') ?>" defer></script><?php endif; ?>
 <?php endif; ?>
 </body>
 </html>
