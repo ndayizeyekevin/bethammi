@@ -13,6 +13,7 @@ if ($adminPage !== 'add-post') {
   <article class="stat-card stat-card--compact"><div><p>Hidden</p><strong><?= $hiddenCount ?></strong></div></article>
 </section>
 <?php endif; ?>
+Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi doloremque error, laudantium cum sapiente, ea debitis enim odit sunt repellendus dolore quod nihil necessitatibus eos quia quasi odio perferendis fugit.
 
 <section class="panel editor-panel" id="editor">
   <div class="panel-heading">

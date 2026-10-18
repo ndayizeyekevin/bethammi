@@ -433,7 +433,7 @@ body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .
 .remote-content .post-inline-image--center img { margin-right: auto; margin-left: auto; }
 .remote-content .post-inline-image--right img { margin-right: 0; margin-left: auto; }
 .remote-content figcaption { margin-top: 8px; color: #7a827f; font-size: 11px; text-align: left; }
-.remote-content .post-inline-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 16px; margin: 26px 0; }
+.remote-content .post-inline-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 26px 0; }
 .remote-content .post-inline-gallery figure { min-width: 0; margin: 0; }
 .remote-content .post-inline-gallery img { width: 100%; }
 .remote-content iframe, .remote-content video { width: 100%; max-width: 100%; min-height: 300px; border: 0; }
