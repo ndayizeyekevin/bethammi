@@ -207,8 +207,12 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .newsletter-form__controls button { flex: 0 0 auto; padding: 0 10px; border: 0; background: var(--gold); color: #192b2b; cursor: pointer; font: inherit; font-size: 9px; font-weight: 700; }
 .newsletter-form__controls button:hover { background: #e6c58f; }
 .newsletter-form__controls button:disabled { cursor: wait; opacity: .7; }
-.newsletter-form__note, .newsletter-form__status { margin: 8px 0 0; color: rgba(255,255,255,.53); font-size: 9px; line-height: 1.5; }
-.newsletter-form__status:not([hidden]) { color: var(--gold-light); }
+.newsletter-form__note { margin: 8px 0 0; color: rgba(255,255,255,.65); font-size: 9px; line-height: 1.5; }
+.newsletter-form__status[hidden] { display: none; }
+.newsletter-form__status:not([hidden]) { display: block; margin: 12px 0 0; padding: 11px 13px; border-left: 3px solid var(--gold-light); background: rgba(255,255,255,.1); color: var(--white); font-size: 12px; font-weight: 600; line-height: 1.5; }
+.newsletter-form__status.is-success { border-left-color: #73d29b; background: rgba(49,143,87,.22); }
+.newsletter-form__status.is-error { border-left-color: #ff9f91; background: rgba(174,57,43,.24); }
+.newsletter-form__status.is-pending { border-left-color: var(--gold-light); }
 .footer__contact, .footer__social { display: grid; justify-items: start; gap: 7px; }
 .footer__contact > span, .footer__social > span { margin-bottom: 4px; color: var(--gold-light); font-size: 8px; font-weight: 700; letter-spacing: .15em; }
 .footer__contact a, .footer__social a { color: rgba(255,255,255,.77); font-size: 11px; text-decoration: none; }

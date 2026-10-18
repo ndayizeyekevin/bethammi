@@ -153,6 +153,8 @@ if (newsletterForm instanceof HTMLFormElement) {
 
     newsletterSubmit.disabled = true;
     newsletterStatus.hidden = false;
+    newsletterStatus.classList.remove("is-success", "is-error");
+    newsletterStatus.classList.add("is-pending");
     newsletterStatus.textContent = "Submitting your subscription…";
 
     try {
@@ -164,9 +166,13 @@ if (newsletterForm instanceof HTMLFormElement) {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "Your subscription could not be completed.");
 
+      newsletterStatus.classList.remove("is-pending");
+      newsletterStatus.classList.add("is-success");
       newsletterStatus.textContent = result.message;
       newsletterForm.reset();
     } catch (error) {
+      newsletterStatus.classList.remove("is-pending");
+      newsletterStatus.classList.add("is-error");
       newsletterStatus.textContent = error instanceof Error
         ? error.message
         : "Your subscription could not be completed. Please try again.";
