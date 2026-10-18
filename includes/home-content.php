@@ -19,7 +19,7 @@
         <span aria-hidden="true">›</span>
       </button>
       <div class="container hero__content">
-        <p class="eyebrow eyebrow--light"><span></span> Beth Ammi Christian Fellowship Church</p>
+        <p class="eyebrow eyebrow--light"><span></span> Welcome to Beth Ammi Christian Fellowship Church</p>
         <h1 id="hero-title">Faith grows<br>better <em>together.</em></h1>
         <p class="hero__intro">Come as you are. Find a welcoming community, worship together, and grow in the Word of God.</p>
         <div class="hero__actions">
