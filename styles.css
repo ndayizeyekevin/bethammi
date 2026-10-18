@@ -623,6 +623,22 @@ body[data-content-slug="media"] #page-content .elementor-screen-only { position:
 .archive-card__body { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 21px; }
 .archive-card__body h3 { margin: 0 0 10px; color: var(--ink); font-family: var(--display); font-size: 17px; font-weight: 650; letter-spacing: -.025em; line-height: 1.35; }
 .archive-card__body > p:not(.story-card__meta) { margin: 0 0 20px; color: #747c78; font-size: 11px; }
+.posts-archive-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 36px; align-items: start; padding-block: 42px 58px; }
+.posts-archive-layout .posts-archive { min-width: 0; padding-block: 0; }
+.posts-archive .archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.posts-newsletter { position: sticky; top: 24px; margin-top: 58px; border: 1px solid #e6e3da; background: #efeee8; }
+.posts-newsletter .eyebrow { font-size: 8px; }
+.posts-newsletter h2 { margin-bottom: 13px; color: var(--navy); font-size: 26px; }
+.posts-newsletter__intro { color: #69736f; font-size: 11px; line-height: 1.65; }
+.posts-newsletter .newsletter-form > label { display: block; margin-bottom: 6px; color: #364946; font-size: 10px; font-weight: 700; }
+.posts-newsletter .newsletter-form__controls { min-height: 42px; border-color: #d5d3ca; }
+.posts-newsletter .newsletter-form__controls input { background: var(--white); color: var(--ink); }
+.posts-newsletter .newsletter-form__controls input::placeholder { color: #737c77; }
+.posts-newsletter .newsletter-form__controls button { padding-inline: 9px; }
+.posts-newsletter .newsletter-form__note { color: #69736f; }
+.posts-newsletter .newsletter-form__status:not([hidden]) { background: var(--white); color: var(--ink); }
+.posts-newsletter .newsletter-form__status.is-success { border-left-color: #318f57; background: #e5f2e9; }
+.posts-newsletter .newsletter-form__status.is-error { border-left-color: #ae392b; background: #f7e8e5; }
 .posts-archive .archive__heading { align-items: center; margin-bottom: 36px; }
 .posts-archive .archive__heading > div { max-width: 600px; }
 .posts-archive .archive__heading h2 { margin-bottom: 8px; }
@@ -758,6 +774,8 @@ body[data-content-slug="media"] #page-content .elementor-screen-only { position:
   .page-layout { grid-template-columns: minmax(0, 1fr) 235px; gap: 28px; }
   .post-page-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .post-page-layout .page-sidebar { position: static; }
+  .posts-archive-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .posts-newsletter { position: static; margin-top: 0; }
   .posts-archive .archive__heading { align-items: stretch; flex-direction: column; gap: 16px; }
   .posts-archive .archive-search { width: 100%; flex-basis: auto; }
   body[data-content-slug="children-ministries"] #page-content > .elementor-358 > .elementor-element-szl7ac5 > .elementor-container { grid-template-columns: minmax(0, 1fr); }
@@ -786,6 +804,7 @@ body[data-content-slug="media"] #page-content .elementor-screen-only { position:
   .page-layout--who-we-are .elementor-element-1467dfd .elementor-column:not(:first-child) > .elementor-widget-wrap { min-height: 100%; }
   .remote-content .elementor-element-3312bfa > .elementor-container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .posts-archive .archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .directory-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 680px) {
@@ -928,6 +947,8 @@ body[data-content-slug="media"] #page-content .elementor-screen-only { position:
   .parish-directory-heading h2 { font-size: 34px; }
   .page-layout--parishes .page-sidebar { grid-template-columns: 1fr; }
   .page-sidebar { position: static; grid-template-columns: 1fr; }
+  .posts-archive-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .posts-newsletter { position: static; margin-top: 0; }
   .sidebar-card { padding: 20px; }
   .sidebar-card h2 { font-size: 24px; }
   .sidebar-card--visit .button { min-height: 42px; }
@@ -953,6 +974,8 @@ body[data-content-slug="media"] #page-content .elementor-screen-only { position:
   .archive-search { width: 100%; }
   .archive-grid { grid-template-columns: 1fr; gap: 14px; }
   .posts-archive { padding-block: 42px 58px; }
+  .posts-archive-layout .posts-archive { padding-block: 0; }
+  .posts-archive .archive-grid { grid-template-columns: 1fr; }
   .posts-archive .archive-card { display: flex; }
   .posts-archive .archive-card__image { width: 100%; min-height: 0; aspect-ratio: 16 / 9; }
   .posts-archive .archive-card__body { padding: 18px; }

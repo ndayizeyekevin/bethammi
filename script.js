@@ -142,8 +142,9 @@ if (scrollTopButton) {
 const year = document.querySelector("#year");
 if (year) year.textContent = String(new Date().getFullYear());
 
-const newsletterForm = document.querySelector(".newsletter-form");
-if (newsletterForm instanceof HTMLFormElement) {
+document.querySelectorAll(".newsletter-form").forEach((newsletterForm) => {
+  if (!(newsletterForm instanceof HTMLFormElement)) return;
+
   const newsletterStatus = newsletterForm.querySelector(".newsletter-form__status");
   const newsletterSubmit = newsletterForm.querySelector('button[type="submit"]');
 
@@ -195,7 +196,7 @@ if (newsletterForm instanceof HTMLFormElement) {
       newsletterSubmit.disabled = false;
     }
   });
-}
+});
 
 const heroSlides = document.querySelectorAll(".hero__slide");
 if (heroSlides.length > 1) {

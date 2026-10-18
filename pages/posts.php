@@ -144,33 +144,50 @@ require __DIR__ . '/../includes/site-header.php';
     <?php if ($pageError !== ''): ?>
     <div class="container page-message" role="status"><?= bethammi_escape($pageError) ?></div>
     <?php endif; ?>
-    <section class="container archive posts-archive">
-      <div class="archive__heading">
-        <div><p class="eyebrow"><span></span> Stories and updates</p><h2>Faith in <em>action.</em></h2><p>Read the latest news, sermons, services, and events from our church.</p></div>
-        <label class="archive-search"><span>Search stories</span><input id="posts-search" type="search" placeholder="Try a title or date…" autocomplete="off"><span class="archive-search__icon" aria-hidden="true">⌕</span></label>
-      </div>
-      <p class="archive__count" id="posts-count"><?= count($posts) ?> <?= count($posts) === 1 ? 'story' : 'stories' ?></p>
-      <div class="archive-grid" id="posts-archive">
-        <?php foreach ($posts as $post): ?>
-        <article class="archive-card" data-search="<?= bethammi_escape(mb_strtolower($post['title'] . ' ' . $post['short_info'] . ' ' . $post['published_at'], 'UTF-8')) ?>">
-          <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
-          <div class="archive-card__image"><a href="posts?slug=<?= rawurlencode($post['slug']) ?>"><img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy"></a></div>
-          <?php else: ?>
-          <div class="archive-card__image" aria-hidden="true"></div>
-          <?php endif; ?>
-          <div class="archive-card__body">
-            <p class="story-card__meta">BETH AMMI <span>·</span> <?= bethammi_escape(date('j F Y', strtotime($post['published_at']))) ?></p>
-            <h3><?= bethammi_escape($post['title']) ?></h3>
-            <p><?= bethammi_escape($post['short_info']) ?></p>
-            <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
-            <a class="youtube-video-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>
+    <section class="container posts-archive-layout">
+      <div class="archive posts-archive">
+        <div class="archive__heading">
+          <div><p class="eyebrow"><span></span> Stories and updates</p><h2>Faith in <em>action.</em></h2><p>Read the latest news, sermons, services, and events from our church.</p></div>
+          <label class="archive-search"><span>Search stories</span><input id="posts-search" type="search" placeholder="Try a title or date…" autocomplete="off"><span class="archive-search__icon" aria-hidden="true">⌕</span></label>
+        </div>
+        <p class="archive__count" id="posts-count"><?= count($posts) ?> <?= count($posts) === 1 ? 'story' : 'stories' ?></p>
+        <div class="archive-grid" id="posts-archive">
+          <?php foreach ($posts as $post): ?>
+          <article class="archive-card" data-search="<?= bethammi_escape(mb_strtolower($post['title'] . ' ' . $post['short_info'] . ' ' . $post['published_at'], 'UTF-8')) ?>">
+            <?php if ($post['featured_image_url'] !== '' && bethammi_valid_image_url($post['featured_image_url'])): ?>
+            <div class="archive-card__image"><a href="posts?slug=<?= rawurlencode($post['slug']) ?>"><img src="<?= bethammi_escape($post['featured_image_url']) ?>" alt="<?= bethammi_escape($post['title']) ?>" loading="lazy"></a></div>
+            <?php else: ?>
+            <div class="archive-card__image" aria-hidden="true"></div>
             <?php endif; ?>
-            <a class="story-card__link" href="posts?slug=<?= rawurlencode($post['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
-          </div>
-        </article>
-        <?php endforeach; ?>
+            <div class="archive-card__body">
+              <p class="story-card__meta">BETH AMMI <span>·</span> <?= bethammi_escape(date('j F Y', strtotime($post['published_at']))) ?></p>
+              <h3><?= bethammi_escape($post['title']) ?></h3>
+              <p><?= bethammi_escape($post['short_info']) ?></p>
+              <?php if (bethammi_valid_youtube_url($post['youtube_url'] ?? '') && ($post['youtube_url'] ?? '') !== ''): ?>
+              <a class="youtube-video-link" href="<?= bethammi_escape($post['youtube_url']) ?>" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>
+              <?php endif; ?>
+              <a class="story-card__link" href="posts?slug=<?= rawurlencode($post['slug']) ?>">Read the story <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <?php endforeach; ?>
+        </div>
+        <p class="archive-empty" id="posts-empty"<?= $posts || $pageError !== '' ? ' hidden' : '' ?>><?= $posts ? 'No stories match that search. Try a different word.' : 'There are no stories to show right now.' ?></p>
       </div>
-      <p class="archive-empty" id="posts-empty"<?= $posts || $pageError !== '' ? ' hidden' : '' ?>><?= $posts ? 'No stories match that search. Try a different word.' : 'There are no stories to show right now.' ?></p>
+      <aside class="sidebar-card posts-newsletter" aria-labelledby="posts-newsletter-title">
+        <p class="eyebrow"><span></span> Stay connected</p>
+        <h2 id="posts-newsletter-title">News in your <em>inbox.</em></h2>
+        <p class="posts-newsletter__intro">Receive church news, sermons, and community updates by email.</p>
+        <form class="newsletter-form" action="../subscribe.php" method="post">
+          <input type="hidden" name="csrf_token" value="<?= bethammi_escape($loginCsrfToken) ?>">
+          <label for="posts-newsletter-email">Email address</label>
+          <div class="newsletter-form__controls">
+            <input id="posts-newsletter-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="Your email address" required>
+            <button type="submit" name="action" value="subscribe">Subscribe <span aria-hidden="true">↗</span></button>
+          </div>
+          <p class="newsletter-form__note">Subscribe to receive church updates.</p>
+          <p class="newsletter-form__status" role="status" aria-live="polite" hidden></p>
+        </form>
+      </aside>
     </section>
   <?php endif; ?>
 </main>
