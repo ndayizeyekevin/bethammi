@@ -26,7 +26,7 @@
       <a href="<?= bethammi_escape($siteRoot) ?>pages/donate" data-bs-toggle="modal" data-bs-target="#donateModal" aria-haspopup="dialog">Give</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/disclaimer">Website Disclaimer</a>
     </div>
-    <div class="container footer__bottom"><span>© <span id="year"></span> Beth Ammi Christian Fellowship Church</span><a href="#main">Back to top ↑</a></div>
+    <div class="container footer__bottom"><span>Copyright © 2020 - <span id="year"></span> Beth Ammi Christian Fellowship Church. All rights reserved.</span> <a href="#main">Back to top ↑</a></div>
   </footer>
   <div class="modal fade" id="donateModal" tabindex="-1" aria-labelledby="donateModalLabel" aria-describedby="donateModalDescription" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
