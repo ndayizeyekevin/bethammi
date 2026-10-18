@@ -115,6 +115,16 @@ button, input, textarea { font: inherit; }
 .post-formatting-toolbar button { display: grid; width: 30px; height: 28px; place-items: center; border: 1px solid #dce2dc; border-radius: 3px; background: #fff; color: var(--ink); cursor: pointer; font: 13px "DM Sans", Arial, sans-serif; }
 .post-formatting-toolbar button:hover, .post-formatting-toolbar button:focus-visible { border-color: #9c7b4b; background: #f3eee5; outline: 2px solid rgba(156,123,75,.25); }
 .admin-form .post-description-field textarea { margin-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+.post-image-insert { margin-top: 12px; padding: 13px; border: 1px solid #dce2dc; border-radius: 3px; background: #f7f8f5; }
+.post-image-insert h3 { margin: 0 0 10px; color: var(--navy); font-size: 11px; }
+.post-image-insert__fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.post-image-insert__fields label { display: grid; gap: 5px; min-width: 0; color: #43534f; font-size: 9px; font-weight: 700; }
+.post-image-insert__fields input, .post-image-insert__fields select { width: 100%; min-height: 35px; padding: 7px 9px; border: 1px solid #dce2dc; border-radius: 3px; background: #fff; color: var(--ink); font: 11px "DM Sans", Arial, sans-serif; }
+.post-image-insert__fields [hidden] { display: none; }
+.post-image-insert__button { margin-top: 10px; }
+.post-image-insert__button:disabled { cursor: wait; opacity: .65; }
+.post-image-insert__status { margin: 8px 0 0; color: #65716d; font-size: 10px; }
+.post-image-insert__status[data-state="error"] { color: #a33a30; }
 .admin-help { margin: 6px 0 0; color: #89938f; font-size: 9px; font-weight: 400; }
 .checkbox-field { display: flex !important; align-items: center; font-weight: 600 !important; }
 .checkbox-field input { width: 16px; height: 16px; margin: 0 8px 0 0; accent-color: var(--navy); }
@@ -191,6 +201,7 @@ button, input, textarea { font: inherit; }
   .stats-grid--compact .stat-card strong { font-size: 21px; }
   .stats-grid--compact .stat-card p { font-size: 9px; }
   .form-row { grid-template-columns: 1fr; }
+  .post-image-insert__fields { grid-template-columns: 1fr; }
   .recent-item { align-items: flex-start; flex-wrap: wrap; padding: 12px 0; }
   .recent-date { width: 43px; flex-basis: 43px; padding-top: 2px; }
   .recent-copy { flex-basis: calc(100% - 60px); }

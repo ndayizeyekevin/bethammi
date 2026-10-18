@@ -40,7 +40,38 @@ $hiddenCount = count($records) - $publishedCount;
           <button type="button" data-format="italic" aria-label="Italicize selected text"><em>I</em></button>
         </div>
         <textarea id="post-description" name="description" required><?= bethammi_escape(bethammi_admin_value('description')) ?></textarea>
-        <p class="admin-help">Select text and choose Bold or Italic. Blank lines create paragraphs. Formatting is saved as **bold** and *italic* text.</p>
+        <div class="post-image-insert" data-upload-endpoint="post-image-upload.php">
+          <h3>Add an image to your post</h3>
+          <div class="post-image-insert__fields">
+            <label>Image source
+              <select data-image-source>
+                <option value="url">Image URL or site path</option>
+                <option value="upload">Upload from computer</option>
+              </select>
+            </label>
+            <label data-image-url-field>Image URL or site path
+              <input type="text" data-image-url placeholder="https://example.com/image.jpg or assets/images/photo.jpg">
+            </label>
+            <label data-image-file-field hidden>Choose image
+              <input type="file" data-image-file accept="image/jpeg,image/png,image/webp">
+            </label>
+            <label>Text below the image
+              <select data-image-text-type>
+                <option value="caption">Caption</option>
+                <option value="paragraph">Regular paragraph</option>
+              </select>
+            </label>
+            <label data-image-caption-field>Caption
+              <input type="text" data-image-caption maxlength="300" placeholder="Write a short caption">
+            </label>
+            <label>Image description for accessibility
+              <input type="text" data-image-alt maxlength="200" placeholder="Describe the image">
+            </label>
+          </div>
+          <button type="button" class="button button--secondary post-image-insert__button" data-insert-image>Insert image</button>
+          <p class="post-image-insert__status" role="status" aria-live="polite" hidden></p>
+        </div>
+        <p class="admin-help">Select text and choose Bold or Italic. Blank lines create paragraphs. Add images from a URL or upload; choose a caption or write a regular paragraph beneath the image. Site paths are relative to the website root, for example assets/images/photo.jpg.</p>
       </div>
     <?php elseif ($section === 'team'): ?>
       <div class="form-row">
