@@ -35,7 +35,7 @@ if (!in_array('script.js', $pageScripts, true)) {
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= bethammi_escape($siteRoot) ?>styles.css?v=<?= (int) filemtime(__DIR__ . '/../styles.css') ?>">
   <?php foreach ($pageScripts as $script): ?>
-  <script src="<?= bethammi_escape($siteRoot . $script) ?>" defer></script>
+  <script src="<?= bethammi_escape($siteRoot . $script) ?><?= $script === 'script.js' ? '?v=' . (int) filemtime(__DIR__ . '/../script.js') : '' ?>" defer></script>
   <?php endforeach; ?>
 </head>
 <body data-site-root="<?= bethammi_escape($siteRoot) ?>"<?= $contentKind !== '' ? ' data-content-kind="' . bethammi_escape($contentKind) . '"' : '' ?><?= $contentSlug !== '' ? ' data-content-slug="' . bethammi_escape($contentSlug) . '"' : '' ?><?= $isStaticPage ? ' data-static-page="true" data-page-title="' . bethammi_escape($staticPageTitle) . '"' : '' ?>>
