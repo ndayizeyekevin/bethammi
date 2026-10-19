@@ -37,6 +37,8 @@ const pageSearch = document.querySelector(".header-search");
 const pageSearchInput = pageSearch?.querySelector("input");
 const pageSearchStatus = pageSearch?.querySelector(".header-search__status");
 const pageContent = document.querySelector("main#main, main");
+let pageSearchMatches = [];
+let currentPageSearchMatch = -1;
 
 function clearPageSearchHighlights() {
   pageContent?.querySelectorAll("mark.header-search__highlight").forEach((highlight) => {
@@ -97,23 +99,42 @@ function updatePageSearchHighlights() {
   if (!pageSearchInput || !pageSearchStatus) return [];
 
   const query = pageSearchInput.value.trim();
-  const matches = highlightPageSearchMatches(query);
+  pageSearchMatches = highlightPageSearchMatches(query);
+  currentPageSearchMatch = -1;
   pageSearchStatus.hidden = !query;
   pageSearchStatus.textContent = !query
     ? ""
-    : matches.length
-      ? `${matches.length} ${matches.length === 1 ? "match" : "matches"} highlighted`
+    : pageSearchMatches.length
+      ? `${pageSearchMatches.length} ${pageSearchMatches.length === 1 ? "match" : "matches"}`
       : "No matches on this page.";
-  return matches;
+  return pageSearchMatches;
+}
+
+function navigatePageSearchMatches(direction = 1) {
+  const matches = pageSearchMatches;
+  if (!matches.length || !pageSearchStatus) return;
+
+  currentPageSearchMatch = currentPageSearchMatch < 0
+    ? (direction < 0 ? matches.length - 1 : 0)
+    : (currentPageSearchMatch + direction + matches.length) % matches.length;
+
+  matches.forEach((match, index) => {
+    match.classList.toggle("is-current", index === currentPageSearchMatch);
+  });
+  pageSearchStatus.textContent = `${currentPageSearchMatch + 1} of ${matches.length}`;
+  matches[currentPageSearchMatch].scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 pageSearchInput?.addEventListener("input", updatePageSearchHighlights);
 pageSearch?.addEventListener("submit", (event) => {
   event.preventDefault();
-  const matches = updatePageSearchHighlights();
-  matches[0]?.scrollIntoView({ behavior: "smooth", block: "center" });
+  navigatePageSearchMatches();
 });
 pageSearchInput?.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && !event.isComposing) {
+    event.preventDefault();
+    navigatePageSearchMatches(event.shiftKey ? -1 : 1);
+  }
   if (event.key === "Escape") {
     pageSearchInput.value = "";
     updatePageSearchHighlights();
