@@ -58,6 +58,12 @@ $siteRoot = $siteRoot ?? '';
         <button class="nav-login" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
       </nav>
       <a class="btn header-donate" href="<?= bethammi_escape($siteRoot) ?>pages/donate" data-bs-toggle="modal" data-bs-target="#donateModal" aria-haspopup="dialog"><i class="bi bi-heart-fill" aria-hidden="true"></i> Donate</a>
+      <form class="header-search" role="search" aria-label="Find text on this page">
+        <label class="visually-hidden" for="header-search-input">Find text on this page</label>
+        <input id="header-search-input" type="search" placeholder="Find on page" autocomplete="off" aria-controls="header-search-status">
+        <button type="submit" aria-label="Find on this page"><i class="bi bi-search" aria-hidden="true"></i></button>
+        <p class="header-search__status" id="header-search-status" role="status" aria-live="polite" hidden></p>
+      </form>
       <button class="btn header-login" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
     </div>
   </header>

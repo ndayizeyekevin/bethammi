@@ -33,6 +33,94 @@ function markActiveNavigationLink() {
 
 markActiveNavigationLink();
 
+const pageSearch = document.querySelector(".header-search");
+const pageSearchInput = pageSearch?.querySelector("input");
+const pageSearchStatus = pageSearch?.querySelector(".header-search__status");
+const pageContent = document.querySelector("main#main, main");
+
+function clearPageSearchHighlights() {
+  pageContent?.querySelectorAll("mark.header-search__highlight").forEach((highlight) => {
+    const parent = highlight.parentElement;
+    highlight.replaceWith(document.createTextNode(highlight.textContent ?? ""));
+    parent?.normalize();
+  });
+}
+
+function highlightPageSearchMatches(query) {
+  clearPageSearchHighlights();
+  if (!pageContent || !query) return [];
+
+  const terms = [...new Set(query.split(/\s+/).filter(Boolean))]
+    .sort((left, right) => right.length - left.length)
+    .map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const matcher = new RegExp(terms.join("|"), "gi");
+  const walker = document.createTreeWalker(pageContent, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (!parent || !node.textContent?.trim()) return NodeFilter.FILTER_REJECT;
+      if (parent.closest("script, style, noscript, textarea, input, select, button, [hidden], [aria-hidden='true']")) {
+        return NodeFilter.FILTER_REJECT;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+  const textNodes = [];
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+  const highlights = [];
+  textNodes.forEach((textNode) => {
+    const text = textNode.textContent ?? "";
+    matcher.lastIndex = 0;
+    let match;
+    let lastIndex = 0;
+    const fragment = document.createDocumentFragment();
+
+    while ((match = matcher.exec(text)) !== null) {
+      fragment.append(document.createTextNode(text.slice(lastIndex, match.index)));
+      const highlight = document.createElement("mark");
+      highlight.className = "header-search__highlight";
+      highlight.textContent = match[0];
+      fragment.append(highlight);
+      highlights.push(highlight);
+      lastIndex = match.index + match[0].length;
+    }
+
+    if (lastIndex === 0) return;
+    fragment.append(document.createTextNode(text.slice(lastIndex)));
+    textNode.replaceWith(fragment);
+  });
+
+  return highlights;
+}
+
+function updatePageSearchHighlights() {
+  if (!pageSearchInput || !pageSearchStatus) return [];
+
+  const query = pageSearchInput.value.trim();
+  const matches = highlightPageSearchMatches(query);
+  pageSearchStatus.hidden = !query;
+  pageSearchStatus.textContent = !query
+    ? ""
+    : matches.length
+      ? `${matches.length} ${matches.length === 1 ? "match" : "matches"} highlighted`
+      : "No matches on this page.";
+  return matches;
+}
+
+pageSearchInput?.addEventListener("input", updatePageSearchHighlights);
+pageSearch?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const matches = updatePageSearchHighlights();
+  matches[0]?.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+pageSearchInput?.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    pageSearchInput.value = "";
+    updatePageSearchHighlights();
+    pageSearchInput.blur();
+  }
+});
+
 if (document.body.dataset.routeMode !== "static" && /\/index\.html$/.test(window.location.pathname)) {
   const destination = new URL(window.location.href);
   destination.pathname = destination.pathname.replace(/index\.html$/, "index.php");

@@ -63,7 +63,7 @@
     <section class="welcome section" id="welcome" aria-labelledby="welcome-title">
       <div class="container welcome__grid">
         <div class="welcome__image">
-          <img src="./assets/images/founder.png" alt="Founder image" loading="lazy">
+          <img src="./assets/images/130A0090.jpg" alt="Founder image" loading="lazy">
           <span class="image-caption">A community rooted in faith</span>
           <span class="welcome__badge" aria-hidden="true"><span>✦</span><strong>All are<br>welcome</strong></span>
         </div>
