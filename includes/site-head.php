@@ -28,11 +28,9 @@ if (!in_array('script.js', $pageScripts, true)) {
   <meta name="description" content="<?= bethammi_escape($pageDescription) ?>">
   <title><?= bethammi_escape($pageTitle) ?></title>
   <link rel="icon" type="image/png" href="<?= bethammi_escape($siteRoot) ?>assets/images/bethammilogo.png">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="<?= bethammi_escape($siteRoot) ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="<?= bethammi_escape($siteRoot) ?>assets/bootstrap/icons/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="<?= bethammi_escape($siteRoot) ?>assets/bootstrap/googlefonts/css2.css" rel="stylesheet">
   <link rel="stylesheet" href="<?= bethammi_escape($siteRoot) ?>styles.css?v=<?= (int) filemtime(__DIR__ . '/../styles.css') ?>">
   <?php foreach ($pageScripts as $script): ?>
   <script src="<?= bethammi_escape($siteRoot . $script) ?><?= $script === 'script.js' ? '?v=' . (int) filemtime(__DIR__ . '/../script.js') : '' ?>" defer></script>
