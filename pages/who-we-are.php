@@ -151,7 +151,7 @@ require __DIR__ . '/../includes/site-header.php';
                     <a class="elementor-button elementor-button-link elementor-size-sm" href="../pages/about-us">
                       <span class="elementor-button-content-wrapper">
                       <span class="elementor-button-icon">
-                  <i aria-hidden="true" class="fas fa-arrow-right"></i>      </span>
+                  <i aria-hidden="true" class="fa-solid fa-arrow-right"></i>      </span>
                             <span class="elementor-button-text">Know More About Us</span>
                     </span>
                     </a>
@@ -282,7 +282,7 @@ require __DIR__ . '/../includes/site-header.php';
                     <a class="elementor-button elementor-button-link elementor-size-md" href="../pages/our-parishes">
                       <span class="elementor-button-content-wrapper">
                       <span class="elementor-button-icon">
-                  <i aria-hidden="true" class="fas fa-church"></i>      </span>
+                  <i aria-hidden="true" class="fa-solid fa-church"></i>      </span>
                             <span class="elementor-button-text">More</span>
                     </span>
                     </a>
@@ -313,7 +313,7 @@ require __DIR__ . '/../includes/site-header.php';
 
                       <div class="elementor-icon-box-icon">
                   <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Kabuga Parish">
-                  <i aria-hidden="true" class="fas fa-church"></i>        </a>
+                  <i aria-hidden="true" class="fa-solid fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
@@ -335,7 +335,7 @@ require __DIR__ . '/../includes/site-header.php';
 
                       <div class="elementor-icon-box-icon">
                   <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Gahanga Parish">
-                  <i aria-hidden="true" class="fas fa-church"></i>        </a>
+                  <i aria-hidden="true" class="fa-solid fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
@@ -357,7 +357,7 @@ require __DIR__ . '/../includes/site-header.php';
 
                       <div class="elementor-icon-box-icon">
                   <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Muyumbu Parish">
-                  <i aria-hidden="true" class="fas fa-church"></i>        </a>
+                  <i aria-hidden="true" class="fa-solid fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
@@ -384,7 +384,7 @@ require __DIR__ . '/../includes/site-header.php';
 
                       <div class="elementor-icon-box-icon">
                   <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Runingu Parish">
-                  <i aria-hidden="true" class="fas fa-church"></i>        </a>
+                  <i aria-hidden="true" class="fa-solid fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
@@ -406,7 +406,7 @@ require __DIR__ . '/../includes/site-header.php';
 
                       <div class="elementor-icon-box-icon">
                   <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Luvungi Parish">
-                  <i aria-hidden="true" class="fas fa-church"></i>        </a>
+                  <i aria-hidden="true" class="fa-solid fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
@@ -428,7 +428,7 @@ require __DIR__ . '/../includes/site-header.php';
 
                       <div class="elementor-icon-box-icon">
                   <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Mutarule Parish">
-                  <i aria-hidden="true" class="fas fa-church"></i>        </a>
+                  <i aria-hidden="true" class="fa-solid fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
@@ -455,7 +455,7 @@ require __DIR__ . '/../includes/site-header.php';
 
                       <div class="elementor-icon-box-icon">
                   <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Burera Parish">
-                  <i aria-hidden="true" class="fas fa-church"></i>        </a>
+                  <i aria-hidden="true" class="fa-solid fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
@@ -477,7 +477,7 @@ require __DIR__ . '/../includes/site-header.php';
 
                       <div class="elementor-icon-box-icon">
                   <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Nyamasheke Parish">
-                  <i aria-hidden="true" class="fas fa-church"></i>        </a>
+                  <i aria-hidden="true" class="fa-solid fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
@@ -499,7 +499,7 @@ require __DIR__ . '/../includes/site-header.php';
 
                       <div class="elementor-icon-box-icon">
                   <a href="../pages/our-parishes" class="elementor-icon" tabindex="-1" aria-label="Nyaruguru Parish">
-                  <i aria-hidden="true" class="fas fa-church"></i>        </a>
+                  <i aria-hidden="true" class="fa-solid fa-church"></i>        </a>
                 </div>
 
                       <div class="elementor-icon-box-content">
