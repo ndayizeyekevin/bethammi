@@ -1,15 +1,15 @@
 <?php if ($error === ''): ?>
 <section class="stats-grid" aria-label="Content overview">
   <article class="stat-card">
-    <span class="stat-icon stat-icon--posts" aria-hidden="true">▤</span>
+    <span class="stat-icon stat-icon--posts" aria-hidden="true"><i class="fa-solid fa-newspaper"></i></span>
     <div><p>Published posts</p><strong><?= $dashboardCounts['posts_published'] ?? 0 ?></strong><small><?= $dashboardCounts['posts'] ?? 0 ?> total posts</small></div>
   </article>
   <article class="stat-card">
-    <span class="stat-icon stat-icon--team" aria-hidden="true">♙</span>
+    <span class="stat-icon stat-icon--team" aria-hidden="true"><i class="fa-solid fa-users"></i></span>
     <div><p>Team members</p><strong><?= $dashboardCounts['team'] ?? 0 ?></strong><small><?= $dashboardCounts['team_published'] ?? 0 ?> visible on the website</small></div>
   </article>
   <article class="stat-card">
-    <span class="stat-icon stat-icon--parishes" aria-hidden="true">⌖</span>
+    <span class="stat-icon stat-icon--parishes" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span>
     <div><p>Parishes</p><strong><?= $dashboardCounts['parishes'] ?? 0 ?></strong><small><?= $dashboardCounts['parishes_published'] ?? 0 ?> visible on the website</small></div>
   </article>
 </section>
@@ -38,9 +38,9 @@
   <section class="panel shortcuts-panel">
     <div class="panel-heading"><div><p class="eyebrow">QUICK ACCESS</p><h2>Manage content</h2></div></div>
     <div class="shortcut-list">
-      <a class="shortcut" href="posts.php"><span class="shortcut-icon">▤</span><span><strong>Posts</strong><small>Stories, news, and sermons</small></span><span class="shortcut-arrow" aria-hidden="true">→</span></a>
-      <a class="shortcut" href="team.php"><span class="shortcut-icon">♙</span><span><strong>Team</strong><small>Leadership and profiles</small></span><span class="shortcut-arrow" aria-hidden="true">→</span></a>
-      <a class="shortcut" href="parishes.php"><span class="shortcut-icon">⌖</span><span><strong>Parishes</strong><small>Locations and community details</small></span><span class="shortcut-arrow" aria-hidden="true">→</span></a>
+      <a class="shortcut" href="posts.php"><span class="shortcut-icon" aria-hidden="true"><i class="fa-solid fa-newspaper"></i></span><span><strong>Posts</strong><small>Stories, news, and sermons</small></span><span class="shortcut-arrow" aria-hidden="true">→</span></a>
+      <a class="shortcut" href="team.php"><span class="shortcut-icon" aria-hidden="true"><i class="fa-solid fa-users"></i></span><span><strong>Team</strong><small>Leadership and profiles</small></span><span class="shortcut-arrow" aria-hidden="true">→</span></a>
+      <a class="shortcut" href="parishes.php"><span class="shortcut-icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span><span><strong>Parishes</strong><small>Locations and community details</small></span><span class="shortcut-arrow" aria-hidden="true">→</span></a>
     </div>
   </section>
 </section>
