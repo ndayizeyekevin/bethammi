@@ -18,7 +18,7 @@ $currentPage = $adminPages[$adminPage];
     <nav class="sidebar-nav" aria-label="Admin pages">
       <?php foreach ($adminPages as $key => $page): ?>
         <a class="sidebar-link<?= $adminPage === $key ? ' is-active' : '' ?>" href="<?= bethammi_escape($key === 'dashboard' ? 'dashboard.php' : ($key === 'add-post' ? 'add-post.php' : $key . '.php')) ?>"<?= $adminPage === $key ? ' aria-current="page"' : '' ?>>
-          <span class="sidebar-icon" aria-hidden="true"><?= ['dashboard' => '⌂', 'posts' => '▤', 'add-post' => '+', 'team' => '♙', 'parishes' => '⌖'][$key] ?></span>
+          <span class="sidebar-icon" aria-hidden="true"><i class="fa-solid <?= ['dashboard' => 'fa-gauge', 'posts' => 'fa-newspaper', 'add-post' => 'fa-circle-plus', 'team' => 'fa-users', 'parishes' => 'fa-location-dot'][$key] ?>"></i></span>
           <span><?= bethammi_escape($page['label']) ?></span>
         </a>
       <?php endforeach; ?>
