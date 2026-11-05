@@ -30,6 +30,7 @@ if (!in_array('script.js', $pageScripts, true)) {
   <link rel="icon" type="image/png" href="<?= bethammi_escape($siteRoot) ?>assets/images/bethammilogo.png">
   <link href="<?= bethammi_escape($siteRoot) ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="<?= bethammi_escape($siteRoot) ?>assets/bootstrap/icons/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="<?= bethammi_escape($siteRoot) ?>assets/fontawesome/css/all.min.css" rel="stylesheet">
   <link href="<?= bethammi_escape($siteRoot) ?>assets/bootstrap/googlefonts/css2.css" rel="stylesheet">
   <link rel="stylesheet" href="<?= bethammi_escape($siteRoot) ?>styles.css?v=<?= (int) filemtime(__DIR__ . '/../styles.css') ?>">
   <?php foreach ($pageScripts as $script): ?>
