@@ -26,7 +26,7 @@
           <a class="btn button button--gold" href="#gather">Join us this week <span aria-hidden="true">↗</span></a>
           <a class="text-link text-link--light" href="#welcome">Get to know us <span aria-hidden="true">↓</span></a>
         </div>
-        <div class="hero__note"><span class="hero__note-icon" aria-hidden="true">✦</span><span>There is a place for you here.</span></div>
+        <div class="hero__note"><span class="hero__note-icon" aria-hidden="true"><i class="fa-solid fa-star"></i></span><span>There is a place for you here.</span></div>
       </div>
       <a class="hero__scroll" href="#gather" aria-label="Scroll to service times"><span></span> SCROLL TO EXPLORE</a>
     </section>
@@ -65,7 +65,7 @@
         <div class="welcome__image">
           <img src="./assets/images/130A0090.jpg" alt="Founder image" loading="lazy">
           <span class="image-caption">A community rooted in faith</span>
-          <span class="welcome__badge" aria-hidden="true"><span>✦</span><strong>All are<br>welcome</strong></span>
+          <span class="welcome__badge" aria-hidden="true"><span><i class="fa-solid fa-star"></i></span><strong>All are<br>welcome</strong></span>
         </div>
         <div class="welcome__copy">
           <p class="eyebrow"><span></span> A note from our pastor</p>
@@ -83,7 +83,7 @@
         <h2 id="belief-title">Through Christ alone<br><em>we have been saved.</em></h2>
         <p>We believe in God as our Heavenly Father, Jesus Christ as our Lord and Savior, the Son of God, and the Holy Spirit.</p>
         <a class="btn button button--outline" href="#welcome">Discover our church <span aria-hidden="true">↗</span></a>
-        <span class="belief__ornament" aria-hidden="true">✦</span>
+        <span class="belief__ornament" aria-hidden="true"><i class="fa-solid fa-star"></i></span>
       </div>
     </section>
 
