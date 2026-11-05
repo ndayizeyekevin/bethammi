@@ -518,7 +518,7 @@ require __DIR__ . '/../includes/site-header.php';
                     <a class="elementor-button elementor-button-link elementor-size-md" href="http://bethammicfc.org/Donate">
                       <span class="elementor-button-content-wrapper">
                       <span class="elementor-button-icon">
-                  <i aria-hidden="true" class="fas fa-donate"></i>      </span>
+                  <i aria-hidden="true" class="fa-solid fa-hand-holding-dollar"></i>      </span>
                             <span class="elementor-button-text">Donate</span>
                     </span>
                     </a>
