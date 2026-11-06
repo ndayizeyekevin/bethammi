@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if ($message !== ''): ?><p class="notice" role="status"><?= bethammi_escape($message) ?></p><?php endif; ?>
     <form class="admin-form" method="post">
       <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
-      <label>Email address<input type="email" name="email" value="<?= bethammi_escape($email) ?>" maxlength="254" autocomplete="email" required></label>
+      <label>Email address<input type="email" name="email" placeholder="Enter your email" value="<?= bethammi_escape($email) ?>" maxlength="254" autocomplete="email" required></label>
       <button class="button button--primary" type="submit">Send recovery link</button>
     </form>
     <a class="login-home" href="./">Return to sign in</a>
