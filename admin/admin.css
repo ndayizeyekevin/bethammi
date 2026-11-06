@@ -175,6 +175,8 @@ button, input, textarea { font: inherit; }
 .login-intro { margin: 0 0 22px; color: var(--muted); font-size: 11px; }
 .login-card .admin-form { margin-top: 20px; }
 .login-card .button { width: 100%; margin-top: 3px; }
+.login-recovery { display: block; margin-top: 16px; color: var(--navy); font-size: 11px; font-weight: 700; text-align: center; text-decoration: none; }
+.login-recovery:hover, .login-recovery:focus-visible { color: #80633b; text-decoration: underline; text-underline-offset: 3px; }
 .login-home { display: block; margin-top: 23px; color: #75817c; font-size: 10px; text-align: center; text-decoration: none; }
 .login-home:hover { color: var(--navy); }
 
