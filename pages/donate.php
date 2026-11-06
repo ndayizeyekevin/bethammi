@@ -54,8 +54,8 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-toggle-item">
                     <div id="elementor-tab-title-1211" class="elementor-tab-title" data-tab="1" role="button" aria-controls="elementor-tab-content-1211" aria-expanded="false">
                                   <span class="elementor-toggle-icon elementor-toggle-icon-left" aria-hidden="true">
-                                        <span class="elementor-toggle-icon-closed"><i class="fas fa-caret-right"></i></span>
-                          <span class="elementor-toggle-icon-opened"><i class="elementor-toggle-icon-opened fas fa-caret-up"></i></span>
+                                        <span class="elementor-toggle-icon-closed"><i class="fa-solid fa-caret-right"></i></span>
+                          <span class="elementor-toggle-icon-opened"><i class="elementor-toggle-icon-opened fa-solid fa-caret-up"></i></span>
                                     </span>
                                   <a class="elementor-toggle-title" tabindex="0">DONATE BY CHECK</a>
                     </div>
@@ -75,8 +75,8 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-toggle-item">
                     <div id="elementor-tab-title-5561" class="elementor-tab-title" data-tab="1" role="button" aria-controls="elementor-tab-content-5561" aria-expanded="false">
                                   <span class="elementor-toggle-icon elementor-toggle-icon-left" aria-hidden="true">
-                                        <span class="elementor-toggle-icon-closed"><i class="fas fa-caret-right"></i></span>
-                          <span class="elementor-toggle-icon-opened"><i class="elementor-toggle-icon-opened fas fa-caret-up"></i></span>
+                                        <span class="elementor-toggle-icon-closed"><i class="fa-solid fa-caret-right"></i></span>
+                          <span class="elementor-toggle-icon-opened"><i class="elementor-toggle-icon-opened fa-solid fa-caret-up"></i></span>
                                     </span>
                                   <a class="elementor-toggle-title" tabindex="0">Danate Through Wire Transfer</a>
                     </div>
@@ -96,8 +96,8 @@ require __DIR__ . '/../includes/site-header.php';
                         <div class="elementor-toggle-item">
                     <div id="elementor-tab-title-1461" class="elementor-tab-title" data-tab="1" role="button" aria-controls="elementor-tab-content-1461" aria-expanded="false">
                                   <span class="elementor-toggle-icon elementor-toggle-icon-left" aria-hidden="true">
-                                        <span class="elementor-toggle-icon-closed"><i class="fas fa-caret-right"></i></span>
-                          <span class="elementor-toggle-icon-opened"><i class="elementor-toggle-icon-opened fas fa-caret-up"></i></span>
+                                        <span class="elementor-toggle-icon-closed"><i class="fa-solid fa-caret-right"></i></span>
+                          <span class="elementor-toggle-icon-opened"><i class="elementor-toggle-icon-opened fa-solid fa-caret-up"></i></span>
                                     </span>
                                   <a class="elementor-toggle-title" tabindex="0">Donate Through Mobile Money</a>
                     </div>
