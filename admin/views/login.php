@@ -16,6 +16,7 @@
       <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
       <button class="button button--primary" type="submit">Sign in</button>
     </form>
+    <a class="login-recovery" href="forgot-password.php">Forgot your password?</a>
     <a class="login-home" href="../">Return to Beth Ammi website</a>
   </section>
 </main>
