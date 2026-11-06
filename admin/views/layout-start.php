@@ -1,10 +1,11 @@
 <?php
 $adminPages = [
-    'dashboard' => ['label' => 'Dashboard', 'description' => 'A clear overview of your church website content.'],
+    'dashboard' => ['label' => 'Dashboard', 'description' => 'A clear overview of your church website content'],
     'posts' => ['label' => 'Posts', 'description' => 'Create and organize news, stories, and sermons.'],
     'add-post' => ['label' => 'Add post', 'description' => 'Write a post, format its text, and add images with captions.'],
     'team' => ['label' => 'Team', 'description' => 'Keep church leadership and team profiles up to date.'],
     'parishes' => ['label' => 'Parishes', 'description' => 'Manage parish information shown across the website.'],
+    'profile' => ['label' => 'Profile', 'description' => 'View your account details and update your password.'],
 ];
 $currentPage = $adminPages[$adminPage];
 ?>
@@ -18,7 +19,7 @@ $currentPage = $adminPages[$adminPage];
     <nav class="sidebar-nav" aria-label="Admin pages">
       <?php foreach ($adminPages as $key => $page): ?>
         <a class="sidebar-link<?= $adminPage === $key ? ' is-active' : '' ?>" href="<?= bethammi_escape($key === 'dashboard' ? 'dashboard.php' : ($key === 'add-post' ? 'add-post.php' : $key . '.php')) ?>"<?= $adminPage === $key ? ' aria-current="page"' : '' ?>>
-          <span class="sidebar-icon" aria-hidden="true"><i class="fa-solid <?= ['dashboard' => 'fa-gauge', 'posts' => 'fa-newspaper', 'add-post' => 'fa-circle-plus', 'team' => 'fa-users', 'parishes' => 'fa-location-dot'][$key] ?>"></i></span>
+          <span class="sidebar-icon" aria-hidden="true"><i class="fa-solid <?= ['dashboard' => 'fa-gauge', 'posts' => 'fa-newspaper', 'add-post' => 'fa-circle-plus', 'team' => 'fa-users', 'parishes' => 'fa-location-dot', 'profile' => 'fa-user'][$key] ?>"></i></span>
           <span><?= bethammi_escape($page['label']) ?></span>
         </a>
       <?php endforeach; ?>
@@ -39,8 +40,10 @@ $currentPage = $adminPages[$adminPage];
           <i class="fa-solid fa-moon" aria-hidden="true"></i>
           <span>Dark mode</span>
         </button>
-        <span class="account-avatar" aria-hidden="true"><?= bethammi_escape(strtoupper(substr($_SESSION['admin_user']['username'], 0, 1))) ?></span>
-        <span class="account-name"><?= bethammi_escape($_SESSION['admin_user']['username']) ?></span>
+        <a class="account-profile" href="profile.php" aria-label="View profile">
+          <span class="account-avatar" aria-hidden="true"><?= bethammi_escape(strtoupper(substr($_SESSION['admin_user']['username'], 0, 1))) ?></span>
+          <span class="account-name"><?= bethammi_escape($_SESSION['admin_user']['username']) ?></span>
+        </a>
         <form method="post" action="index.php">
           <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
           <input type="hidden" name="action" value="logout">
@@ -57,7 +60,7 @@ $currentPage = $adminPages[$adminPage];
         </div>
         <?php if ($adminPage === 'posts'): ?>
           <a class="button button--primary" href="add-post.php">+ Add post</a>
-        <?php elseif ($adminPage !== 'dashboard' && $adminPage !== 'add-post'): ?>
+        <?php elseif ($adminPage !== 'dashboard' && $adminPage !== 'add-post' && $adminPage !== 'profile'): ?>
           <a class="button button--primary" href="#editor">+ <?= $selectedRecord ? 'Edit ' . bethammi_escape($sections[$section]['singular']) : 'Add ' . bethammi_escape($sections[$section]['singular']) ?></a>
         <?php elseif ($adminPage === 'add-post'): ?>
           <a class="button button--secondary" href="posts.php">Back to posts</a>
