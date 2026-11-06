@@ -235,7 +235,7 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .admin-login-modal .modal-body { padding: 8px 30px 30px; }
 .admin-login-modal .modal-body > p { margin: 0 0 20px; color: var(--muted); font-size: 12px; }
 .admin-login-modal__form { display: grid; gap: 9px; }
-.admin-login-modal__error { margin: 3px 0 2px; padding: 9px 11px; border: 1px solid #efd2ce; border-radius: 3px; background: #fcf0ee; color: #762c25; font-size: 11px; }
+.admin-login-modal__error { margin: 3px 0 2px; padding: 10px 12px; border: 1px solid #e7aaa4; border-left: 4px solid #b42318; border-radius: 3px; background: #fff1f0; color: #9f1d16; font-size: 11px; font-weight: 700; }
 .admin-login-modal__error[hidden] { display: none; }
 .admin-login-modal__form[aria-busy="true"] { opacity: .8; }
 .admin-login-modal__form button[type="submit"]:disabled { cursor: wait; opacity: .7; }
