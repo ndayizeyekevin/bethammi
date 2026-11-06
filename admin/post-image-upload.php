@@ -67,6 +67,7 @@ $uploadType = is_string($_POST['upload_type'] ?? null) ? $_POST['upload_type'] :
 $uploadDirectories = [
     'posts' => 'posts',
     'team' => 'team',
+    'parishes' => 'parishes',
 ];
 if (!isset($uploadDirectories[$uploadType])) {
     bethammi_post_image_upload_response(['error' => 'Choose a supported image upload destination.'], 422);
