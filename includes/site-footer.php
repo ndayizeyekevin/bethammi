@@ -92,6 +92,8 @@
           <form class="admin-login-modal__form" method="post" action="<?= bethammi_escape($siteRoot) ?>admin/">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($loginCsrfToken, ENT_QUOTES, 'UTF-8') ?>">
             <input type="hidden" name="action" value="login">
+            <input type="hidden" name="modal_login" value="1">
+            <p class="admin-login-modal__error" role="alert" hidden></p>
             <label for="site-login-username">Username</label>
             <input class="form-control" id="site-login-username" name="username" placeholder="Enter Username" autocomplete="username" required>
             <label for="site-login-password">Password</label>
