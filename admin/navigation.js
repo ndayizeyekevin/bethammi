@@ -81,3 +81,121 @@ if (accountMenu && accountMenuToggle) {
     }
   });
 }
+
+const teamPhotoUpload = document.querySelector("[data-team-photo-upload]");
+if (teamPhotoUpload instanceof HTMLElement) {
+  const uploadForm = teamPhotoUpload.closest("form");
+  const endpoint = teamPhotoUpload.dataset.uploadEndpoint;
+  const csrfInput = uploadForm?.querySelector('input[name="csrf_token"]');
+  const photoUrl = teamPhotoUpload.querySelector("[data-team-photo-url]");
+  const photoFile = teamPhotoUpload.querySelector("[data-team-photo-file]");
+  const uploadButton = teamPhotoUpload.querySelector("[data-team-photo-upload-button]");
+  const preview = teamPhotoUpload.querySelector("[data-team-photo-preview]");
+  const placeholder = teamPhotoUpload.querySelector("[data-team-photo-placeholder]");
+  const status = teamPhotoUpload.querySelector("[data-team-photo-status]");
+  let pendingUpload = false;
+  let previewObjectUrl = "";
+
+  if (
+    endpoint &&
+    csrfInput instanceof HTMLInputElement &&
+    photoUrl instanceof HTMLInputElement &&
+    photoFile instanceof HTMLInputElement &&
+    uploadButton instanceof HTMLButtonElement &&
+    preview instanceof HTMLImageElement &&
+    placeholder instanceof HTMLElement &&
+    status instanceof HTMLElement &&
+    uploadForm instanceof HTMLFormElement
+  ) {
+    const setStatus = (message, isError = false) => {
+      status.hidden = !message;
+      status.textContent = message;
+      status.dataset.state = isError ? "error" : "";
+    };
+    const setPreview = (source) => {
+      preview.src = source;
+      preview.hidden = !source;
+      placeholder.hidden = !!source;
+    };
+
+    photoFile.addEventListener("change", () => {
+      const file = photoFile.files?.[0];
+      pendingUpload = !!file;
+      setStatus(file ? `${file.name} selected. Upload it before saving.` : "");
+      if (previewObjectUrl) {
+        URL.revokeObjectURL(previewObjectUrl);
+        previewObjectUrl = "";
+      }
+      if (file) {
+        previewObjectUrl = URL.createObjectURL(file);
+        setPreview(previewObjectUrl);
+      } else {
+        setPreview(photoUrl.value);
+      }
+    });
+
+    uploadButton.addEventListener("click", async () => {
+      const file = photoFile.files?.[0];
+      if (!file) {
+        setStatus("Choose a team member photo to upload.", true);
+        photoFile.focus();
+        return;
+      }
+      uploadButton.disabled = true;
+      setStatus("Uploading photo…");
+      const uploadData = new FormData();
+      uploadData.set("csrf_token", csrfInput.value);
+      uploadData.set("upload_type", "team");
+      uploadData.set("image", file);
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          body: uploadData,
+          headers: { Accept: "application/json" },
+        });
+        const responseText = await response.text();
+        let result;
+        try {
+          result = JSON.parse(responseText);
+        } catch {
+          throw new Error("The photo upload returned an invalid response.");
+        }
+        if (!result || typeof result !== "object" || Array.isArray(result)) {
+          throw new Error("The photo upload returned an invalid response.");
+        }
+        if (!response.ok) {
+          throw new Error(typeof result.error === "string" ? result.error : "The photo could not be uploaded.");
+        }
+        if (typeof result.url !== "string" || !result.url) {
+          throw new Error("The photo upload returned an invalid response.");
+        }
+        const siteRoot = new URL("../", window.location.href);
+        const uploadedUrl = new URL(result.url, window.location.origin);
+        if (uploadedUrl.origin !== siteRoot.origin || !uploadedUrl.pathname.startsWith(siteRoot.pathname)) {
+          throw new Error("The uploaded photo returned an unsafe path.");
+        }
+        photoUrl.value = uploadedUrl.pathname;
+        pendingUpload = false;
+        photoFile.value = "";
+        if (previewObjectUrl) {
+          URL.revokeObjectURL(previewObjectUrl);
+          previewObjectUrl = "";
+        }
+        setPreview(photoUrl.value);
+        setStatus("Photo uploaded. Save the team member to apply it.");
+      } catch (error) {
+        setStatus(error instanceof Error ? error.message : "The photo could not be uploaded.", true);
+      } finally {
+        uploadButton.disabled = false;
+      }
+    });
+
+    uploadForm.addEventListener("submit", (event) => {
+      if (pendingUpload) {
+        event.preventDefault();
+        setStatus("Upload the selected photo before saving.", true);
+        photoFile.focus();
+      }
+    });
+  }
+}
