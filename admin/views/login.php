@@ -12,7 +12,7 @@
     <form class="admin-form" method="post">
       <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
       <input type="hidden" name="action" value="login">
-      <label>Username<input name="username" autocomplete="username" placeholder="Enter Username" required></label>
+      <label>Username or email<input name="username" autocomplete="username" placeholder="Enter username or email" required></label>
       <label for="admin-password">Password</label>
       <div class="password-field">
         <input id="admin-password" type="password" name="password" placeholder="Enter Password" autocomplete="current-password" required>
