@@ -15,7 +15,8 @@ document.addEventListener("submit", async (event) => {
   submitButton.disabled = true;
 
   try {
-    const response = await fetch(form.action, {
+    const formAction = form.getAttribute("action") || window.location.href;
+    const response = await fetch(formAction, {
       method: "POST",
       body: new FormData(form),
       credentials: "same-origin",
@@ -31,7 +32,8 @@ document.addEventListener("submit", async (event) => {
       return;
     }
 
-    window.location.assign(new URL(result.redirect, form.action).href);
+    const formUrl = new URL(formAction, window.location.href);
+    window.location.assign(new URL(result.redirect, formUrl).href);
   } catch {
     errorMessage.textContent = "Unable to sign in right now. Check your connection and try again.";
     errorMessage.hidden = false;

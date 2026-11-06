@@ -94,8 +94,8 @@
             <input type="hidden" name="action" value="login">
             <input type="hidden" name="modal_login" value="1">
             <p class="admin-login-modal__error" role="alert" hidden></p>
-            <label for="site-login-username">Username</label>
-            <input class="form-control" id="site-login-username" name="username" placeholder="Enter Username" autocomplete="username" required>
+            <label for="site-login-username">Username or email</label>
+            <input class="form-control" id="site-login-username" name="username" placeholder="Enter username or email" autocomplete="username" required>
             <label for="site-login-password">Password</label>
             <div class="password-field">
               <input class="form-control" id="site-login-password" name="password" type="password" placeholder="Enter Password" autocomplete="current-password" required>
