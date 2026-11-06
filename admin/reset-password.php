@@ -91,7 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $tokenIsValid) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Reset password | Beth Ammi Admin</title>
   <link rel="icon" type="image/png" href="../assets/images/bethammilogo.png">
+  <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="admin.css">
+  <script src="../assets/js/password-visibility.js?v=<?= (int) filemtime(__DIR__ . '/../assets/js/password-visibility.js') ?>" defer></script>
 </head>
 <body>
 <main class="login-page">
@@ -108,8 +110,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $tokenIsValid) {
     <form class="admin-form" method="post">
       <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
       <input type="hidden" name="token" value="<?= bethammi_escape($token) ?>">
-      <label>New password<input type="password" name="password" autocomplete="new-password" minlength="12" required></label>
-      <label>Confirm new password<input type="password" name="password_confirmation" autocomplete="new-password" minlength="12" required></label>
+      <label for="reset-password">New password</label>
+      <div class="password-field">
+        <input id="reset-password" type="password" name="password" autocomplete="new-password" minlength="12" required>
+        <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+      </div>
+      <label for="reset-password-confirmation">Confirm new password</label>
+      <div class="password-field">
+        <input id="reset-password-confirmation" type="password" name="password_confirmation" autocomplete="new-password" minlength="12" required>
+        <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+      </div>
       <button class="button button--primary" type="submit">Update password</button>
     </form>
     <?php elseif ($error === ''): ?>
