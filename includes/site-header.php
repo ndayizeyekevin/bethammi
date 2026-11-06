@@ -23,7 +23,7 @@ $siteRoot = $siteRoot ?? '';
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
         <a class="site-nav__home" href="<?= bethammi_escape($siteRoot) ?>index">Home</a>
         <div class="nav-dropdown">
-          <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-about">Who we are <span aria-hidden="true">⌄</span></button>
+          <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-about">Who we are <span aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span></button>
           <div class="nav-dropdown__menu" id="nav-about">
             <a href="<?= bethammi_escape($siteRoot) ?>pages/who-we-are"><i class="fa-solid fa-people-group" aria-hidden="true"></i>Who We Are</a>
             <a href="<?= bethammi_escape($siteRoot) ?>pages/about-us"><i class="fa-solid fa-book-open" aria-hidden="true"></i>About Us</a>
@@ -32,7 +32,7 @@ $siteRoot = $siteRoot ?? '';
           </div>
         </div>
         <div class="nav-dropdown">
-          <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-ministries">Ministries <span aria-hidden="true">⌄</span></button>
+          <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-ministries">Ministries <span aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span></button>
           <div class="nav-dropdown__menu" id="nav-ministries">
             <a href="<?= bethammi_escape($siteRoot) ?>pages/ministries"><i class="fa-solid fa-hands-praying" aria-hidden="true"></i>Ministries</a>
             <a href="<?= bethammi_escape($siteRoot) ?>pages/outreach-evangelism"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i>Outreach Evangelism</a>
@@ -42,7 +42,7 @@ $siteRoot = $siteRoot ?? '';
           </div>
         </div>
         <div class="nav-dropdown">
-          <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-partners">Partners <span aria-hidden="true">⌄</span></button>
+          <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-partners">Partners <span aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span></button>
           <div class="nav-dropdown__menu" id="nav-partners">
             <a href="<?= bethammi_escape($siteRoot) ?>pages/partners"><i class="fa-solid fa-handshake" aria-hidden="true"></i>About our partners</a>
             <a href="<?= bethammi_escape($siteRoot) ?>pages/josh"><i class="fa-solid fa-heart" aria-hidden="true"></i>God's Beloved Ministries</a>
