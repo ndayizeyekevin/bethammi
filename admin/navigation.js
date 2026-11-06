@@ -82,22 +82,25 @@ if (accountMenu && accountMenuToggle) {
   });
 }
 
-const teamPhotoUpload = document.querySelector("[data-team-photo-upload]");
-if (teamPhotoUpload instanceof HTMLElement) {
-  const uploadForm = teamPhotoUpload.closest("form");
-  const endpoint = teamPhotoUpload.dataset.uploadEndpoint;
+document.querySelectorAll("[data-record-photo-upload]").forEach((photoUpload) => {
+  if (!(photoUpload instanceof HTMLElement)) return;
+  const uploadForm = photoUpload.closest("form");
+  const endpoint = photoUpload.dataset.uploadEndpoint;
+  const uploadType = photoUpload.dataset.uploadType;
+  const recordType = uploadType === "parishes" ? "parish" : "team member";
   const csrfInput = uploadForm?.querySelector('input[name="csrf_token"]');
-  const photoUrl = teamPhotoUpload.querySelector("[data-team-photo-url]");
-  const photoFile = teamPhotoUpload.querySelector("[data-team-photo-file]");
-  const uploadButton = teamPhotoUpload.querySelector("[data-team-photo-upload-button]");
-  const preview = teamPhotoUpload.querySelector("[data-team-photo-preview]");
-  const placeholder = teamPhotoUpload.querySelector("[data-team-photo-placeholder]");
-  const status = teamPhotoUpload.querySelector("[data-team-photo-status]");
+  const photoUrl = photoUpload.querySelector("[data-record-photo-url]");
+  const photoFile = photoUpload.querySelector("[data-record-photo-file]");
+  const uploadButton = photoUpload.querySelector("[data-record-photo-upload-button]");
+  const preview = photoUpload.querySelector("[data-record-photo-preview]");
+  const placeholder = photoUpload.querySelector("[data-record-photo-placeholder]");
+  const status = photoUpload.querySelector("[data-record-photo-status]");
   let pendingUpload = false;
   let previewObjectUrl = "";
 
   if (
     endpoint &&
+    ["team", "parishes"].includes(uploadType) &&
     csrfInput instanceof HTMLInputElement &&
     photoUrl instanceof HTMLInputElement &&
     photoFile instanceof HTMLInputElement &&
@@ -137,7 +140,7 @@ if (teamPhotoUpload instanceof HTMLElement) {
     uploadButton.addEventListener("click", async () => {
       const file = photoFile.files?.[0];
       if (!file) {
-        setStatus("Choose a team member photo to upload.", true);
+        setStatus(`Choose a ${recordType} photo to upload.`, true);
         photoFile.focus();
         return;
       }
@@ -145,7 +148,7 @@ if (teamPhotoUpload instanceof HTMLElement) {
       setStatus("Uploading photo…");
       const uploadData = new FormData();
       uploadData.set("csrf_token", csrfInput.value);
-      uploadData.set("upload_type", "team");
+      uploadData.set("upload_type", uploadType);
       uploadData.set("image", file);
       try {
         const response = await fetch(endpoint, {
@@ -182,7 +185,7 @@ if (teamPhotoUpload instanceof HTMLElement) {
           previewObjectUrl = "";
         }
         setPreview(photoUrl.value);
-        setStatus("Photo uploaded. Save the team member to apply it.");
+        setStatus(`Photo uploaded. Save the ${recordType} to apply it.`);
       } catch (error) {
         setStatus(error instanceof Error ? error.message : "The photo could not be uploaded.", true);
       } finally {
@@ -193,9 +196,9 @@ if (teamPhotoUpload instanceof HTMLElement) {
     uploadForm.addEventListener("submit", (event) => {
       if (pendingUpload) {
         event.preventDefault();
-        setStatus("Upload the selected photo before saving.", true);
+        setStatus(`Upload the selected photo before saving the ${recordType}.`, true);
         photoFile.focus();
       }
     });
   }
-}
+});
