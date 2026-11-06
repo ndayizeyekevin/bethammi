@@ -87,6 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Forgot password | Beth Ammi Admin</title>
   <link rel="icon" type="image/png" href="../assets/images/bethammilogo.png">
   <link rel="stylesheet" href="admin.css">
+  <script src="../assets/js/form-loading-overlay.js?v=<?= (int) filemtime(__DIR__ . '/../assets/js/form-loading-overlay.js') ?>" defer></script>
 </head>
 <body>
 <main class="login-page">
@@ -100,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p class="login-intro">Enter the recovery email address associated with your administrator account.</p>
     <?php if ($error !== ''): ?><p class="notice notice--error" role="alert"><?= bethammi_escape($error) ?></p><?php endif; ?>
     <?php if ($message !== ''): ?><p class="notice" role="status"><?= bethammi_escape($message) ?></p><?php endif; ?>
-    <form class="admin-form" method="post">
+    <form class="admin-form" method="post" data-loading-overlay-form>
       <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
       <label>Email address<input type="email" name="email" placeholder="Enter your email" value="<?= bethammi_escape($email) ?>" maxlength="254" autocomplete="email" required></label>
       <button class="button button--primary" type="submit">Send recovery link</button>
@@ -108,5 +109,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <a class="login-home" href="./">Return to sign in</a>
   </section>
 </main>
+<div class="loading-overlay" data-loading-overlay hidden>
+  <div class="loading-overlay__card" role="dialog" aria-modal="true" aria-labelledby="loading-overlay-title" aria-describedby="loading-overlay-description" tabindex="-1">
+    <span class="loading-overlay__spinner" aria-hidden="true"></span>
+    <strong id="loading-overlay-title">Sending your recovery link</strong>
+    <span id="loading-overlay-description" role="status" aria-live="polite">Please wait while we securely process your request.</span>
+  </div>
+</div>
 </body>
 </html>
