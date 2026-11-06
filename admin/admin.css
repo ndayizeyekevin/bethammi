@@ -72,6 +72,15 @@ button, input, textarea { font: inherit; }
 .stats-grid--compact .stat-card { min-height: 92px; }
 .stats-grid--compact .stat-card strong { font-size: 25px; }
 
+.dashboard-charts { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .85fr); gap: 18px; margin-bottom: 18px; }
+.chart-panel { min-width: 0; margin: 0; }
+.chart-panel .panel-heading { min-height: 32px; }
+.chart-period { padding: 5px 8px; border-radius: 20px; background: #f6f1e8; color: #947449; font-size: 8px; font-weight: 700; letter-spacing: .08em; white-space: nowrap; }
+.chart-canvas { position: relative; width: 100%; }
+.chart-canvas--bar { height: 245px; }
+.chart-canvas--doughnut { height: 220px; max-width: 300px; margin: 0 auto; }
+.chart-note { margin: 14px 0 0; color: var(--muted); font-size: 10px; text-align: center; }
+
 .panel { margin-bottom: 18px; padding: 23px; border: 1px solid var(--line); border-radius: 4px; background: #fff; box-shadow: 0 3px 12px rgba(27,55,48,.025); }
 .panel-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 19px; }
 .panel-heading .eyebrow { margin-bottom: 4px; }
@@ -203,6 +212,7 @@ button, input, textarea { font: inherit; }
   .topbar { padding-right: 26px; padding-left: 26px; }
   .page-content { padding-right: 26px; padding-left: 26px; }
   .dashboard-grid { grid-template-columns: minmax(0, 1fr); }
+  .dashboard-charts { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 700px) {
   .sidebar { position: static; width: 100%; padding: 12px 16px 9px; }
