@@ -14,6 +14,40 @@
   </article>
 </section>
 
+<section class="dashboard-charts" aria-label="Content analytics">
+  <article class="panel chart-panel chart-panel--wide">
+    <div class="panel-heading">
+      <div><p class="eyebrow">CONTENT LIBRARY</p><h2>Published by category</h2></div>
+      <span class="chart-period">CURRENT TOTALS</span>
+    </div>
+    <div class="chart-canvas chart-canvas--bar">
+      <canvas id="content-breakdown-chart" role="img" aria-label="Published and unpublished content by category"></canvas>
+    </div>
+  </article>
+  <article class="panel chart-panel">
+    <div class="panel-heading">
+      <div><p class="eyebrow">PUBLISHING STATUS</p><h2>Visibility overview</h2></div>
+    </div>
+    <div class="chart-canvas chart-canvas--doughnut">
+      <canvas id="content-visibility-chart" role="img" aria-label="Published and unpublished content totals"></canvas>
+    </div>
+    <p class="chart-note"><?= (int) (($dashboardCounts['posts_published'] ?? 0) + ($dashboardCounts['team_published'] ?? 0) + ($dashboardCounts['parishes_published'] ?? 0)) ?> items are currently visible on the website.</p>
+  </article>
+</section>
+<script type="application/json" id="dashboard-chart-data"><?= json_encode([
+    'categories' => ['Posts', 'Team', 'Parishes'],
+    'published' => [
+        (int) ($dashboardCounts['posts_published'] ?? 0),
+        (int) ($dashboardCounts['team_published'] ?? 0),
+        (int) ($dashboardCounts['parishes_published'] ?? 0),
+    ],
+    'unpublished' => [
+        max(0, (int) ($dashboardCounts['posts'] ?? 0) - (int) ($dashboardCounts['posts_published'] ?? 0)),
+        max(0, (int) ($dashboardCounts['team'] ?? 0) - (int) ($dashboardCounts['team_published'] ?? 0)),
+        max(0, (int) ($dashboardCounts['parishes'] ?? 0) - (int) ($dashboardCounts['parishes_published'] ?? 0)),
+    ],
+], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?></script>
+
 <section class="dashboard-grid">
   <section class="panel recent-panel">
     <div class="panel-heading">
