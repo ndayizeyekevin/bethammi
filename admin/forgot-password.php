@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false || strlen($email) > 254) {
             $error = 'Enter a valid email address.';
         } else {
-            $message = 'If an administrator account uses that email, a password reset link will be sent.';
+            $message = 'If an administrator account uses that email, we will send a reset link when email delivery is available. If no email arrives within a few minutes, contact the site administrator.';
             try {
                 $database = bethammi_db();
                 $emailHash = hash('sha256', strtolower($email));
