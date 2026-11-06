@@ -64,8 +64,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .nav-dropdown__menu { position: absolute; top: calc(100% + 13px); left: -19px; z-index: 10; display: none; grid-template-columns: 1fr; min-width: 205px; padding: 9px; border: 1px solid #e7e3d9; background: var(--paper); box-shadow: 0 14px 32px rgba(18,39,38,.14); }
 .nav-dropdown__menu::before { position: absolute; top: -14px; left: 0; right: 0; height: 14px; content: ""; }
 .nav-dropdown.is-open .nav-dropdown__menu { display: grid; }
-.site-nav .nav-dropdown__menu a { display: block; padding: 10px 12px; font-size: 11px; }
+.site-nav .nav-dropdown__menu a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; font-size: 11px; }
+.site-nav .nav-dropdown__menu a > i { display: inline-flex; width: 15px; flex: 0 0 15px; justify-content: center; color: #a77838; font-size: 12px; transition: color .16s ease, transform .16s ease; }
 .site-nav .nav-dropdown__menu a:hover, .site-nav .nav-dropdown__menu a:focus-visible { background: #efeee8; }
+.site-nav .nav-dropdown__menu a:hover > i, .site-nav .nav-dropdown__menu a:focus-visible > i { color: var(--navy); transform: translateX(1px); }
 .site-nav > a, .nav-dropdown__toggle { white-space: nowrap; }
 .menu-toggle { display: none; }
 
