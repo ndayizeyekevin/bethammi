@@ -124,13 +124,13 @@ function bethammi_admin_image_field($name, $label)
 $message = '';
 $error = '';
 $isAuthenticated = isset($_SESSION['admin_user']);
+$adminPage = isset($adminPage) && in_array($adminPage, ['dashboard', 'posts', 'add-post', 'team', 'parishes', 'profile'], true)
+    ? $adminPage
+    : 'dashboard';
+$section = isset($sections[$adminPage]) ? $adminPage : 'posts';
 $isModalLoginRequest = $_SERVER['REQUEST_METHOD'] === 'POST'
     && ($_POST['action'] ?? '') === 'login'
     && ($_POST['modal_login'] ?? '') === '1';
-$adminPage = isset($adminPage) && in_array($adminPage, ['dashboard', 'posts', 'add-post', 'team', 'parishes'], true)
-    ? $adminPage
-    : 'dashboard';
-$section = in_array($adminPage, ['dashboard', 'add-post'], true) ? 'posts' : $adminPage;
 
 if (
     $_SERVER['REQUEST_METHOD'] === 'GET'
@@ -212,6 +212,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                         bethammi_admin_redirect('dashboard.php');
                     }
+                }
+            } elseif ($isAuthenticated && $action === 'change-password' && $adminPage === 'profile') {
+                $currentPassword = bethammi_admin_input('current_password');
+                $newPassword = bethammi_admin_input('new_password');
+                $passwordConfirmation = bethammi_admin_input('new_password_confirmation');
+                $accountId = (int) ($_SESSION['admin_user']['id'] ?? 0);
+                $statement = bethammi_db()->prepare(
+                    'SELECT password_hash FROM admin_users WHERE id = :id LIMIT 1'
+                );
+                $statement->execute(['id' => $accountId]);
+                $account = $statement->fetch();
+
+                if (!$account || !password_verify($currentPassword, $account['password_hash'])) {
+                    $error = 'Your current password is incorrect.';
+                } elseif (strlen($newPassword) < 12) {
+                    $error = 'Choose a new password with at least 12 characters.';
+                } elseif (!hash_equals($newPassword, $passwordConfirmation)) {
+                    $error = 'The new passwords do not match.';
+                } elseif (password_verify($newPassword, $account['password_hash'])) {
+                    $error = 'Choose a new password different from your current password.';
+                } else {
+                    bethammi_db()->prepare(
+                        'UPDATE admin_users SET password_hash = :password_hash WHERE id = :id'
+                    )->execute([
+                        'password_hash' => password_hash($newPassword, PASSWORD_DEFAULT),
+                        'id' => $accountId,
+                    ]);
+                    session_regenerate_id(true);
+                    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+                    $message = 'Your password has been updated.';
                 }
             } elseif ($isAuthenticated && $action === 'logout') {
                 $_SESSION = [];
@@ -400,13 +430,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } catch (PDOException $exception) {
             error_log('Beth Ammi admin database operation failed: ' . $exception->getMessage());
             $mysqlErrorCode = (int) ($exception->errorInfo[1] ?? 0);
-            $error = $mysqlErrorCode === 1062
+            $error = $adminPage === 'profile' && $action === 'change-password'
+                ? 'Your password could not be updated. Check the database connection and try again.'
+                : ($mysqlErrorCode === 1062
                 ? 'That post slug is already in use.'
                 : ($mysqlErrorCode === 1054
                     ? 'Post button storage is not installed. Apply database/migrations/20261018_add_post_action_button.sql, then reload this page.'
                     : ((string) $exception->getCode() === '42S02'
                         ? 'Image storage is not installed. Apply database/migrations/20261018_create_post_images.sql, then reload this page.'
-                        : 'The change could not be saved. Check the database connection and try again.'));
+                        : 'The change could not be saved. Check the database connection and try again.')));
         } catch (Throwable $exception) {
             error_log('Beth Ammi admin request failed: ' . $exception->getMessage());
             $error = 'The request could not be completed. Check the server log for details.';
@@ -437,7 +469,7 @@ if (isset($_GET['password-reset'])) $message = 'Your password has been updated. 
 $selectedRecord = [];
 $records = [];
 $postImages = [];
-if ($isAuthenticated && !in_array($adminPage, ['dashboard', 'add-post'], true)) {
+if ($isAuthenticated && isset($sections[$adminPage]) && !in_array($adminPage, ['dashboard', 'add-post'], true)) {
     try {
         $entity = $sections[$section];
         $editId = filter_var($_GET['edit'] ?? null, FILTER_VALIDATE_INT);
@@ -475,6 +507,22 @@ if ($isAuthenticated && !in_array($adminPage, ['dashboard', 'add-post'], true)) 
 
 $dashboardCounts = [];
 $recentPosts = [];
+$adminProfile = null;
+if ($isAuthenticated && $adminPage === 'profile') {
+    try {
+        $profileStatement = bethammi_db()->prepare(
+            'SELECT username, email, created_at, last_login_at FROM admin_users WHERE id = :id LIMIT 1'
+        );
+        $profileStatement->execute(['id' => (int) $_SESSION['admin_user']['id']]);
+        $adminProfile = $profileStatement->fetch();
+        if (!$adminProfile) {
+            throw new RuntimeException('The signed-in administrator account could not be found.');
+        }
+    } catch (Throwable $exception) {
+        error_log('Beth Ammi admin profile could not be loaded: ' . $exception->getMessage());
+        $error = 'Your profile could not be loaded. Check the database connection and try again.';
+    }
+}
 if ($isAuthenticated && $adminPage === 'dashboard') {
     try {
         foreach (['posts' => 'posts', 'team' => 'team_members', 'parishes' => 'parishes'] as $key => $table) {
@@ -501,7 +549,7 @@ $csrfToken = bethammi_admin_csrf_token();
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= bethammi_escape($adminPage === 'dashboard' ? 'Dashboard' : ($adminPage === 'add-post' ? 'Add post' : $sections[$section]['label'])) ?> | Beth Ammi Admin</title>
+  <title><?= bethammi_escape($adminPage === 'dashboard' || $adminPage === 'profile' ? ucfirst($adminPage) : ($adminPage === 'add-post' ? 'Add post' : $sections[$section]['label'])) ?> | Beth Ammi Admin</title>
   <link rel="icon" type="image/png" href="../assets/images/bethammilogo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -520,6 +568,8 @@ $csrfToken = bethammi_admin_csrf_token();
   <?php if ($message !== ''): ?><p class="notice" role="status"><?= bethammi_escape($message) ?></p><?php endif; ?>
   <?php if ($adminPage === 'dashboard'): ?>
     <?php require __DIR__ . '/views/dashboard.php'; ?>
+  <?php elseif ($adminPage === 'profile'): ?>
+    <?php require __DIR__ . '/views/profile.php'; ?>
   <?php else: ?>
     <?php require __DIR__ . '/views/content-manager.php'; ?>
   <?php endif; ?>

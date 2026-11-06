@@ -1,4 +1,8 @@
 <main class="login-page">
+  <button class="theme-toggle login-theme-toggle" type="button" data-admin-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
+    <i class="fa-solid fa-moon" aria-hidden="true"></i>
+    <span>Dark mode</span>
+  </button>
   <section class="login-card">
     <a class="login-brand" href="../" aria-label="Beth Ammi home">
       <img class="admin-brand-logo" src="../assets/images/bethammilogo.png" alt="">

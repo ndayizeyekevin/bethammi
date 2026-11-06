@@ -35,6 +35,10 @@ $currentPage = $adminPages[$adminPage];
         <strong><?= bethammi_escape($currentPage['label']) ?></strong>
       </div>
       <div class="account">
+        <button class="theme-toggle" type="button" data-admin-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
+          <i class="fa-solid fa-moon" aria-hidden="true"></i>
+          <span>Dark mode</span>
+        </button>
         <span class="account-avatar" aria-hidden="true"><?= bethammi_escape(strtoupper(substr($_SESSION['admin_user']['username'], 0, 1))) ?></span>
         <span class="account-name"><?= bethammi_escape($_SESSION['admin_user']['username']) ?></span>
         <form method="post" action="index.php">
