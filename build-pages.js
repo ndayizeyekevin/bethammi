@@ -31,9 +31,13 @@ const staticPageTitles = new Map([
   ["donate", "Donate"],
   ["daily-bible-verses", "Daily Bible verses"],
   ["disclaimer", "Website Disclaimer"],
+  ["privacy-policy", "Privacy Policy"],
+  ["terms-of-use", "Terms of Use"],
 ]);
-if (!pages.some((page) => page.slug === "disclaimer")) {
-  pages.push({ slug: "disclaimer" });
+for (const slug of ["disclaimer", "privacy-policy", "terms-of-use"]) {
+  if (!pages.some((page) => page.slug === slug)) {
+    pages.push({ slug });
+  }
 }
 const pageSlugs = new Set();
 const storySlugs = new Set();
@@ -55,6 +59,13 @@ function rewritePageLinks(html, rootPrefix) {
   return html.replace(/href="page\.html\?type=page&amp;slug=([^"&]+)"/g, (match, slug) => {
     if (!pageSlugs.has(slug)) throw new Error(`Template links to missing page slug "${slug}".`);
     return `href="${rootPrefix}pages/${slug}.html"`;
+  });
+}
+
+function rewriteNestedPageLinks(html) {
+  return html.replace(/href="\.\.\/pages\/([a-z0-9-]+)(?=[?#"])/g, (match, slug) => {
+    if (!pageSlugs.has(slug)) throw new Error(`Template links to missing page slug "${slug}".`);
+    return `href="../pages/${slug}.html`;
   });
 }
 
@@ -116,7 +127,10 @@ for (const page of pages) {
     const pageSource = await readFile(path.join(root, "pages", `${page.slug}.php`), "utf8");
     const pageContentMatch = pageSource.match(/<template id="static-page-content">([\s\S]*?)<\/template>/);
     if (!pageContentMatch) throw new Error(`Could not find inline content for static page "${page.slug}".`);
-    const pageContent = pageContentMatch[1].trim();
+    let pageContent = pageContentMatch[1].trim();
+    if (page.slug === "privacy-policy" || page.slug === "terms-of-use") {
+      pageContent = rewriteNestedPageLinks(pageContent);
+    }
     html = html
       .replace(
         `<body data-content-kind="page" data-content-slug="${page.slug}" data-site-root="../" data-route-mode="static">`,
@@ -126,6 +140,12 @@ for (const page of pages) {
         '<div class="remote-content" id="page-content"></div>',
         `<div class="remote-content" id="page-content"><template id="static-page-content">${pageContent}</template></div>`
       );
+  }
+  if (page.slug === "privacy-policy" || page.slug === "terms-of-use") {
+    html = html.replace(
+      'class="container page-layout" id="page-layout"',
+      'class="container page-layout page-layout--legal" id="page-layout"'
+    );
   }
   await writeFile(path.join(pageDirectory, `${page.slug}.html`), html);
 }

@@ -129,18 +129,18 @@ if ($adminPage !== 'add-post') {
         <?php bethammi_admin_field('name', 'Full name', 'text', true); ?>
         <?php bethammi_admin_field('title', 'Position or title', 'text', true); ?>
       </div>
-      <div class="team-photo-upload" data-team-photo-upload data-upload-endpoint="post-image-upload.php">
-        <input type="hidden" name="photo_url" data-team-photo-url value="<?= bethammi_escape(bethammi_admin_value('photo_url')) ?>">
-        <div class="team-photo-upload__preview">
-          <img data-team-photo-preview src="<?= bethammi_escape(bethammi_admin_value('photo_url')) ?>" alt=""<?= bethammi_admin_value('photo_url') === '' ? ' hidden' : '' ?>>
-          <span data-team-photo-placeholder<?= bethammi_admin_value('photo_url') !== '' ? ' hidden' : '' ?>><i class="fa-solid fa-user" aria-hidden="true"></i> No photo selected</span>
+      <div class="record-photo-upload" data-record-photo-upload data-upload-type="team" data-upload-endpoint="post-image-upload.php">
+        <input type="hidden" name="photo_url" data-record-photo-url value="<?= bethammi_escape(bethammi_admin_value('photo_url')) ?>">
+        <div class="record-photo-upload__preview">
+          <img data-record-photo-preview src="<?= bethammi_escape(bethammi_admin_value('photo_url')) ?>" alt=""<?= bethammi_admin_value('photo_url') === '' ? ' hidden' : '' ?>>
+          <span data-record-photo-placeholder<?= bethammi_admin_value('photo_url') !== '' ? ' hidden' : '' ?>><i class="fa-solid fa-user" aria-hidden="true"></i> No photo selected</span>
         </div>
-        <div class="team-photo-upload__controls">
+        <div class="record-photo-upload__controls">
           <label for="team-photo-file">Team member photo</label>
-          <input id="team-photo-file" type="file" data-team-photo-file accept="image/jpeg,image/png,image/webp" aria-describedby="team-photo-help team-photo-status">
+          <input id="team-photo-file" type="file" data-record-photo-file accept="image/jpeg,image/png,image/webp" aria-describedby="team-photo-help team-photo-status">
           <p id="team-photo-help" class="admin-help">Choose a JPEG, PNG, or WebP image smaller than 8 MB, then upload it. Leave unchanged to keep the current photo.</p>
-          <button type="button" class="button button--secondary" data-team-photo-upload-button>Upload photo</button>
-          <p class="team-photo-status admin-help" id="team-photo-status" data-team-photo-status role="status" aria-live="polite" hidden></p>
+          <button type="button" class="button button--secondary" data-record-photo-upload-button>Upload photo</button>
+          <p class="record-photo-status admin-help" id="team-photo-status" data-record-photo-status role="status" aria-live="polite" hidden></p>
         </div>
       </div>
       <?php bethammi_admin_field('bio', 'Short bio (optional)', 'textarea', false, true); ?>
@@ -154,7 +154,20 @@ if ($adminPage !== 'add-post') {
         <?php bethammi_admin_field('region', 'Region or province'); ?>
         <?php bethammi_admin_field('location', 'Town, district, or address'); ?>
       </div>
-      <?php bethammi_admin_image_field('photo_url', 'Photo URL or path'); ?>
+      <div class="record-photo-upload" data-record-photo-upload data-upload-type="parishes" data-upload-endpoint="post-image-upload.php">
+        <input type="hidden" name="photo_url" data-record-photo-url value="<?= bethammi_escape(bethammi_admin_value('photo_url')) ?>">
+        <div class="record-photo-upload__preview">
+          <img data-record-photo-preview src="<?= bethammi_escape(bethammi_admin_value('photo_url')) ?>" alt=""<?= bethammi_admin_value('photo_url') === '' ? ' hidden' : '' ?>>
+          <span data-record-photo-placeholder<?= bethammi_admin_value('photo_url') !== '' ? ' hidden' : '' ?>><i class="fa-solid fa-location-dot" aria-hidden="true"></i> No photo selected</span>
+        </div>
+        <div class="record-photo-upload__controls">
+          <label for="parish-photo-file">Parish photo</label>
+          <input id="parish-photo-file" type="file" data-record-photo-file accept="image/jpeg,image/png,image/webp" aria-describedby="parish-photo-help parish-photo-status">
+          <p id="parish-photo-help" class="admin-help">Choose a JPEG, PNG, or WebP image smaller than 8 MB, then upload it. Leave unchanged to keep the current photo.</p>
+          <button type="button" class="button button--secondary" data-record-photo-upload-button>Upload photo</button>
+          <p class="record-photo-status admin-help" id="parish-photo-status" data-record-photo-status role="status" aria-live="polite" hidden></p>
+        </div>
+      </div>
       <div class="form-row">
         <?php bethammi_admin_field('short_info', 'Short summary'); ?>
         <?php bethammi_admin_field('member_count', 'Number of members (optional)', 'number'); ?>
