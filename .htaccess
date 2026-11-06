@@ -24,4 +24,6 @@ Options -MultiViews
   RewriteRule ^(.+?)/?$ $1.html [L]
 </IfModule>
 
+ErrorDocument 403 /bethammi/403.php
 ErrorDocument 404 /bethammi/404.php
+ErrorDocument 500 /bethammi/500.php
