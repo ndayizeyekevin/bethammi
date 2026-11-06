@@ -50,6 +50,7 @@ button, input, textarea { font: inherit; }
 .theme-toggle { display: inline-flex; min-height: 34px; align-items: center; gap: 7px; margin-right: 14px; padding: 0 10px; border: 1px solid var(--line); border-radius: 20px; background: transparent; color: var(--ink); font-size: 10px; font-weight: 700; cursor: pointer; transition: background .16s ease, border-color .16s ease, color .16s ease; }
 .theme-toggle:hover, .theme-toggle:focus-visible { border-color: var(--gold); background: #f6f1e8; outline: none; }
 .theme-toggle i { color: #947449; font-size: 12px; }
+.login-theme-toggle { position: fixed; top: 20px; right: 20px; z-index: 1; }
 .page-content { width: 100%; max-width: 1440px; margin: 0 auto; padding: 36px 38px 60px; }
 .page-heading { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 24px; }
 .eyebrow { margin: 0 0 7px; color: #a1804c; font-size: 8px; font-weight: 700; letter-spacing: .16em; }
