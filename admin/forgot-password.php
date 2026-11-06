@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main class="login-page">
   <section class="login-card">
     <a class="login-brand" href="../" aria-label="Beth Ammi home">
-      <span class="brand-mark">BA</span>
+      <img class="admin-brand-logo" src="../assets/images/bethammilogo.png" alt="">
       <span><strong>BETH AMMI</strong><small>CONTENT ADMINISTRATION</small></span>
     </a>
     <p class="eyebrow">ACCOUNT RECOVERY</p>
