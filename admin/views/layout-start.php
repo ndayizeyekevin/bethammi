@@ -43,15 +43,19 @@ $currentPage = $adminPages[$adminPage];
           <i class="fa-solid fa-moon" aria-hidden="true"></i>
           <span>Dark mode</span>
         </button>
-        <a class="account-profile" href="profile.php" aria-label="View profile">
+        <button class="account-menu-toggle" type="button" aria-controls="account-menu" aria-expanded="false" aria-label="Open account menu">
           <span class="account-avatar" aria-hidden="true"><?= bethammi_escape(strtoupper(substr($_SESSION['admin_user']['username'], 0, 1))) ?></span>
           <span class="account-name"><?= bethammi_escape($_SESSION['admin_user']['username']) ?></span>
-        </a>
-        <form method="post" action="index.php">
-          <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
-          <input type="hidden" name="action" value="logout">
-          <button class="signout-button" type="submit">Sign out</button>
-        </form>
+          <i class="fa-solid fa-chevron-down account-menu-chevron" aria-hidden="true"></i>
+        </button>
+        <div class="account-menu" id="account-menu" hidden>
+          <a href="profile.php"><i class="fa-solid fa-user" aria-hidden="true"></i> Profile</a>
+          <form method="post" action="index.php">
+            <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
+            <input type="hidden" name="action" value="logout">
+            <button class="signout-button" type="submit"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign out</button>
+          </form>
+        </div>
       </div>
     </header>
     <div class="page-content">
