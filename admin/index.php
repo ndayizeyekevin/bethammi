@@ -506,6 +506,10 @@ $csrfToken = bethammi_admin_csrf_token();
     <?php require __DIR__ . '/views/content-manager.php'; ?>
   <?php endif; ?>
   <?php require __DIR__ . '/views/layout-end.php'; ?>
+  <?php if ($adminPage === 'dashboard' && $error === ''): ?>
+    <script src="../assets/chartjs/chart.umd.min.js?v=<?= (int) filemtime(__DIR__ . '/../assets/chartjs/chart.umd.min.js') ?>" defer></script>
+    <script src="dashboard-charts.js?v=<?= (int) filemtime(__DIR__ . '/dashboard-charts.js') ?>" defer></script>
+  <?php endif; ?>
   <?php if (in_array($adminPage, ['posts', 'add-post'], true)): ?><script src="post-formatting.js?v=<?= (int) filemtime(__DIR__ . '/post-formatting.js') ?>" defer></script><?php endif; ?>
 <?php endif; ?>
 </body>
