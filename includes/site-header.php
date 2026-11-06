@@ -25,30 +25,30 @@ $siteRoot = $siteRoot ?? '';
         <div class="nav-dropdown">
           <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-about">Who we are <span aria-hidden="true">⌄</span></button>
           <div class="nav-dropdown__menu" id="nav-about">
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/who-we-are">Who We Are</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/about-us">About Us</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/team">Our Team</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/our-parishes">Our Parishes</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/who-we-are"><i class="fa-solid fa-people-group" aria-hidden="true"></i>Who We Are</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/about-us"><i class="fa-solid fa-book-open" aria-hidden="true"></i>About Us</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/team"><i class="fa-solid fa-users" aria-hidden="true"></i>Our Team</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/our-parishes"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Our Parishes</a>
           </div>
         </div>
         <div class="nav-dropdown">
           <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-ministries">Ministries <span aria-hidden="true">⌄</span></button>
           <div class="nav-dropdown__menu" id="nav-ministries">
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/ministries">Ministries</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/outreach-evangelism">Outreach Evangelism</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/children-ministries">Children's Ministry</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/women-ministries">Women's Ministry</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/ministries"><i class="fa-solid fa-hands-praying" aria-hidden="true"></i>Ministries</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/outreach-evangelism"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i>Outreach Evangelism</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/children-ministries"><i class="fa-solid fa-child" aria-hidden="true"></i>Children's Ministry</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/women-ministries"><i class="fa-solid fa-person-dress" aria-hidden="true"></i>Women's Ministry</a>
             <!-- <a href="<?= bethammi_escape($siteRoot) ?>pages/ltu">LTU In Action</a> -->
           </div>
         </div>
         <div class="nav-dropdown">
           <button class="nav-dropdown__toggle" type="button" aria-expanded="false" aria-controls="nav-partners">Partners <span aria-hidden="true">⌄</span></button>
           <div class="nav-dropdown__menu" id="nav-partners">
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/partners">About our partners</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/josh">God's Beloved Ministries</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/joan">Joan Hunter Ministries</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/ltu">Lift Them Up</a>
-            <a href="<?= bethammi_escape($siteRoot) ?>pages/ep-kiramutse">New City Fellowship Church</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/partners"><i class="fa-solid fa-handshake" aria-hidden="true"></i>About our partners</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/josh"><i class="fa-solid fa-heart" aria-hidden="true"></i>God's Beloved Ministries</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/joan"><i class="fa-solid fa-hands-praying" aria-hidden="true"></i>Joan Hunter Ministries</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/ltu"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i>Lift Them Up</a>
+            <a href="<?= bethammi_escape($siteRoot) ?>pages/ep-kiramutse"><i class="fa-solid fa-church" aria-hidden="true"></i>New City Fellowship Church</a>
           </div>
         </div>
         <a href="<?= bethammi_escape($siteRoot) ?>pages/posts">News &amp; sermons</a>
