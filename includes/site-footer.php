@@ -98,6 +98,7 @@
             <input class="form-control" id="site-login-password" name="password" type="password" autocomplete="current-password" required>
             <button class="btn button button--navy" type="submit">Sign in <span aria-hidden="true">↗</span></button>
           </form>
+          <a class="admin-login-modal__recovery" href="<?= bethammi_escape($siteRoot) ?>admin/forgot-password.php">Forgot your password?</a>
         </div>
       </div>
     </div>
