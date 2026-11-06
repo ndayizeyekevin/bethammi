@@ -93,9 +93,12 @@
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($loginCsrfToken, ENT_QUOTES, 'UTF-8') ?>">
             <input type="hidden" name="action" value="login">
             <label for="site-login-username">Username</label>
-            <input class="form-control" id="site-login-username" name="username" autocomplete="username" required>
+            <input class="form-control" id="site-login-username" name="username" placeholder="Enter Username" autocomplete="username" required>
             <label for="site-login-password">Password</label>
-            <input class="form-control" id="site-login-password" name="password" type="password" autocomplete="current-password" required>
+            <div class="password-field">
+              <input class="form-control" id="site-login-password" name="password" type="password" placeholder="Enter Password" autocomplete="current-password" required>
+              <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+            </div>
             <button class="btn button button--navy" type="submit">Sign in <span aria-hidden="true">↗</span></button>
           </form>
           <a class="admin-login-modal__recovery" href="<?= bethammi_escape($siteRoot) ?>admin/forgot-password">Forgot your password?</a>

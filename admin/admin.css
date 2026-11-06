@@ -107,6 +107,12 @@ button, input, textarea { font: inherit; }
 .admin-form > label, .form-row > label { display: block; min-width: 0; margin: 0; color: #43534f; font-size: 10px; font-weight: 700; }
 .form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .admin-form input:not([type="checkbox"]), .admin-form textarea, .admin-form select { display: block; width: 100%; min-height: 42px; margin-top: 6px; padding: 10px 11px; border: 1px solid #dce2dc; border-radius: 3px; outline: none; background: #fff; color: var(--ink); font-size: 12px; }
+.admin-form .password-field input { margin-top: 6px; padding-right: 46px; }
+.password-field { position: relative; min-width: 0; }
+.password-toggle { position: absolute; top: calc(50% + 3px); right: 7px; display: inline-grid; width: 34px; height: 34px; place-items: center; padding: 0; transform: translateY(-50%); border: 0; border-radius: 3px; background: transparent; color: #64736e; cursor: pointer; }
+.password-toggle:hover { background: rgba(23,60,61,.07); color: var(--navy); }
+.password-toggle:focus-visible { outline: 2px solid #9c7b4b; outline-offset: 1px; }
+.password-toggle i { font-size: 15px; }
 .admin-form textarea { min-height: 104px; resize: vertical; }
 .admin-form input:focus, .admin-form textarea:focus, .admin-form select:focus { border-color: #9c7b4b; box-shadow: 0 0 0 3px rgba(156,123,75,.12); }
 .admin-field { display: block; min-width: 0; color: #43534f; font-size: 10px; font-weight: 700; }
