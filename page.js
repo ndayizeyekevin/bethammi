@@ -980,6 +980,16 @@ async function start() {
       });
     } else if (document.body.dataset.contentSlug === "outreach-evangelism") {
       initializeOutreachMetrics(article);
+    } else if (document.body.dataset.contentSlug === "women-ministries") {
+      article.querySelectorAll(".elementor-progress-wrapper").forEach((wrapper) => {
+        const title = wrapper.closest(".elementor-widget-progress")?.querySelector(".elementor-title");
+        wrapper.setAttribute("role", "group");
+        if (title?.textContent.trim()) {
+          wrapper.setAttribute("aria-label", title.textContent.trim());
+        }
+        ["aria-labelledby", "aria-valuemin", "aria-valuemax", "aria-valuenow", "aria-valuetext"]
+          .forEach((attribute) => wrapper.removeAttribute(attribute));
+      });
     }
     if (document.body.dataset.contentSlug === "partners") {
       initializePartnersPage(article);
