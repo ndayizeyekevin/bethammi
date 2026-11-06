@@ -13,6 +13,13 @@ if (!preg_match('/^[a-zA-Z0-9_.-]{3,80}$/', $username)) {
     exit(1);
 }
 
+fwrite(STDOUT, 'Recovery email: ');
+$email = trim((string) fgets(STDIN));
+if (filter_var($email, FILTER_VALIDATE_EMAIL) === false || strlen($email) > 254) {
+    fwrite(STDERR, "Enter a valid recovery email address.\n");
+    exit(1);
+}
+
 fwrite(STDOUT, 'Password (minimum 12 characters): ');
 $password = rtrim((string) fgets(STDIN), "\r\n");
 fwrite(STDOUT, 'Confirm password: ');
@@ -25,16 +32,17 @@ if (strlen($password) < 12 || !hash_equals($password, $confirmation)) {
 
 try {
     $statement = bethammi_db()->prepare(
-        'INSERT INTO admin_users (username, password_hash) VALUES (:username, :password_hash)'
+        'INSERT INTO admin_users (username, email, password_hash) VALUES (:username, :email, :password_hash)'
     );
     $statement->execute([
         'username' => $username,
+        'email' => $email,
         'password_hash' => password_hash($password, PASSWORD_DEFAULT),
     ]);
-    fwrite(STDOUT, "Administrator account created for {$username}.\n");
+    fwrite(STDOUT, "Administrator account created for {$username} with a recovery email.\n");
 } catch (PDOException $error) {
     if ((string) $error->getCode() === '23000') {
-        fwrite(STDERR, "That username already exists.\n");
+        fwrite(STDERR, "That username or recovery email is already in use.\n");
         exit(1);
     }
     fwrite(STDERR, 'Could not create the administrator account: ' . $error->getMessage() . "\n");

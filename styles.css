@@ -239,6 +239,13 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .admin-login-modal__form .form-control { min-height: 45px; border-color: #d5d3ca; border-radius: 0; font: 13px var(--sans); }
 .admin-login-modal__form .form-control:focus { border-color: #a77d46; box-shadow: 0 0 0 .2rem rgba(167,125,70,.16); }
 .admin-login-modal__form .button { justify-self: start; margin-top: 13px; border: 0; }
+.password-field { position: relative; min-width: 0; }
+.password-field input { width: 100%; padding-right: 46px; }
+.password-toggle { position: absolute; top: 50%; right: 7px; display: inline-grid; width: 34px; height: 34px; place-items: center; padding: 0; transform: translateY(-50%); border: 0; border-radius: 3px; background: transparent; color: #64736e; cursor: pointer; }
+.password-toggle:hover { background: rgba(23,60,61,.07); color: var(--navy); }
+.password-toggle:focus-visible { outline: 2px solid #a77d46; outline-offset: 1px; }
+.password-toggle i { font-size: 15px; }
+.admin-login-modal__recovery { display: inline-block; margin-top: 17px; color: #765b35; font-size: 11px; font-weight: 700; text-underline-offset: 3px; }
 .donate-modal { border: 1px solid rgba(18,52,59,.12); border-radius: 0; box-shadow: 0 24px 80px rgba(8,28,32,.22); }
 .donate-modal .modal-header { align-items: flex-start; padding: 28px 30px 20px; border-bottom: 0; }
 .donate-modal .eyebrow { margin: 0 0 8px; color: #8e744b; font-size: 9px; }

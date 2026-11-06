@@ -378,6 +378,7 @@ $isAuthenticated = isset($_SESSION['admin_user']);
 if (isset($_GET['logged-out'])) $message = 'You have been signed out.';
 if (isset($_GET['saved'])) $message = 'Changes saved.';
 if (isset($_GET['deleted'])) $message = 'Record deleted.';
+if (isset($_GET['password-reset'])) $message = 'Your password has been updated. Sign in with your new password.';
 
 $selectedRecord = [];
 $records = [];
@@ -453,6 +454,7 @@ $csrfToken = bethammi_admin_csrf_token();
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="admin.css?v=<?= (int) filemtime(__DIR__ . '/admin.css') ?>">
+  <script src="../assets/js/password-visibility.js?v=<?= (int) filemtime(__DIR__ . '/../assets/js/password-visibility.js') ?>" defer></script>
 </head>
 <body>
 <?php if (!$isAuthenticated): ?>

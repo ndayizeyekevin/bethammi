@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'host' => '127.0.0.1',
+    'host' => 'sql305.thsite.top',
     'port' => 3306,
-    'database' => 'bethammi_redesign',
-    'username' => 'root',
+    'database' => 'thsi_43158216_bethammi',
+    'username' => 'thsi_43158216',
     'password' => '3FjyEVQo',
     'charset' => 'utf8mb4',
 ];
