@@ -15,8 +15,11 @@ $currentPage = $adminPages[$adminPage];
       <img class="admin-brand-logo" src="../assets/images/bethammilogo.png" alt="">
       <span class="brand-copy"><strong>BETH AMMI</strong><small>CONTENT ADMIN</small></span>
     </a>
+    <button class="sidebar-toggle" type="button" aria-controls="admin-navigation" aria-expanded="false" aria-label="Open admin navigation">
+      <i class="fa-solid fa-bars" aria-hidden="true"></i>
+    </button>
     <p class="sidebar-label">WORKSPACE</p>
-    <nav class="sidebar-nav" aria-label="Admin pages">
+    <nav class="sidebar-nav" id="admin-navigation" aria-label="Admin pages">
       <?php foreach ($adminPages as $key => $page): ?>
         <a class="sidebar-link<?= $adminPage === $key ? ' is-active' : '' ?>" href="<?= bethammi_escape($key === 'dashboard' ? 'dashboard.php' : ($key === 'add-post' ? 'add-post.php' : $key . '.php')) ?>"<?= $adminPage === $key ? ' aria-current="page"' : '' ?>>
           <span class="sidebar-icon" aria-hidden="true"><i class="fa-solid <?= ['dashboard' => 'fa-gauge', 'posts' => 'fa-newspaper', 'add-post' => 'fa-circle-plus', 'team' => 'fa-users', 'parishes' => 'fa-location-dot', 'profile' => 'fa-user'][$key] ?>"></i></span>
