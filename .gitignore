@@ -1,3 +1,5 @@
 /dist/
+/vendor/
 /config/database.local.php
 /config/database.example.php
+/config/smtp.php
