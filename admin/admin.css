@@ -161,18 +161,18 @@ button, input, textarea { font: inherit; }
 .featured-image-upload[hidden], .featured-image-url-field[hidden] { display: none; }
 .featured-image-upload .button { margin-top: 9px; }
 .featured-image-status[data-state="error"] { color: #a33a30; }
-.team-photo-upload { display: grid; grid-template-columns: minmax(150px, 210px) minmax(0, 1fr); gap: 18px; align-items: center; padding: 14px; border: 1px solid var(--line); border-radius: 4px; background: #f7f8f5; }
-.team-photo-upload__preview { display: grid; min-height: 170px; place-items: center; overflow: hidden; background: #e8eee9; color: #74817b; }
-.team-photo-upload__preview img { width: 100%; height: 190px; object-fit: cover; }
-.team-photo-upload__preview img[hidden] { display: none; }
-.team-photo-upload__preview span { display: grid; justify-items: center; gap: 8px; padding: 14px; font-size: 10px; text-align: center; }
-.team-photo-upload__preview span[hidden] { display: none; }
-.team-photo-upload__preview i { color: #87958f; font-size: 25px; }
-.team-photo-upload__controls { min-width: 0; }
-.team-photo-upload__controls > label { display: block; color: #43534f; font-size: 10px; font-weight: 700; }
-.team-photo-upload__controls input[type="file"] { display: block; width: 100%; margin-top: 7px; color: var(--muted); font-size: 10px; }
-.team-photo-upload__controls .button { margin-top: 10px; }
-.team-photo-status[data-state="error"] { color: #a33a30; }
+.record-photo-upload { display: grid; grid-template-columns: minmax(150px, 210px) minmax(0, 1fr); gap: 18px; align-items: center; padding: 14px; border: 1px solid var(--line); border-radius: 4px; background: #f7f8f5; }
+.record-photo-upload__preview { display: grid; min-height: 170px; place-items: center; overflow: hidden; background: #e8eee9; color: #74817b; }
+.record-photo-upload__preview img { width: 100%; height: 190px; object-fit: cover; }
+.record-photo-upload__preview img[hidden] { display: none; }
+.record-photo-upload__preview span { display: grid; justify-items: center; gap: 8px; padding: 14px; font-size: 10px; text-align: center; }
+.record-photo-upload__preview span[hidden] { display: none; }
+.record-photo-upload__preview i { color: #87958f; font-size: 25px; }
+.record-photo-upload__controls { min-width: 0; }
+.record-photo-upload__controls > label { display: block; color: #43534f; font-size: 10px; font-weight: 700; }
+.record-photo-upload__controls input[type="file"] { display: block; width: 100%; margin-top: 7px; color: var(--muted); font-size: 10px; }
+.record-photo-upload__controls .button { margin-top: 10px; }
+.record-photo-status[data-state="error"] { color: #a33a30; }
 .post-description-field { min-width: 0; }
 .post-description-field > label { display: block; margin: 0; color: #43534f; font-size: 10px; font-weight: 700; }
 .post-formatting-toolbar { display: flex; gap: 5px; margin-top: 7px; padding: 6px; border: 1px solid #dce2dc; border-bottom: 0; border-radius: 3px 3px 0 0; background: #f7f8f5; }
@@ -332,10 +332,10 @@ html[data-admin-theme="dark"] .form-row > label,
 html[data-admin-theme="dark"] .admin-field,
 html[data-admin-theme="dark"] .admin-field > label,
 html[data-admin-theme="dark"] .featured-image-upload > label,
-html[data-admin-theme="dark"] .team-photo-upload__controls > label,
+html[data-admin-theme="dark"] .record-photo-upload__controls > label,
 html[data-admin-theme="dark"] .post-description-field > label { color: #d0ddd7; }
-html[data-admin-theme="dark"] .team-photo-upload { border-color: var(--line); background: #202b29; }
-html[data-admin-theme="dark"] .team-photo-upload__preview { background: #35433f; color: #b4c5bd; }
+html[data-admin-theme="dark"] .record-photo-upload { border-color: var(--line); background: #202b29; }
+html[data-admin-theme="dark"] .record-photo-upload__preview { background: #35433f; color: #b4c5bd; }
 html[data-admin-theme="dark"] .password-toggle { color: #b4c5bd; }
 html[data-admin-theme="dark"] .password-toggle:hover { background: #34443f; color: #e2ebe7; }
 html[data-admin-theme="dark"] .post-formatting-toolbar { border-bottom-color: var(--line); }
@@ -406,9 +406,9 @@ html[data-admin-theme="dark"] .login-recovery { color: #c1ddd4; }
   .stat-icon { width: 34px; height: 34px; flex-basis: 34px; margin-right: 10px; font-size: 17px; }
   .stat-card strong { font-size: 24px; }
   .panel { padding: 17px 14px; }
-  .team-photo-upload { grid-template-columns: minmax(0, 1fr); }
-  .team-photo-upload__preview { min-height: 210px; }
-  .team-photo-upload__preview img { height: 240px; }
+  .record-photo-upload { grid-template-columns: minmax(0, 1fr); }
+  .record-photo-upload__preview { min-height: 210px; }
+  .record-photo-upload__preview img { height: 240px; }
 }
 @media (max-width: 430px) {
   .sidebar { padding-right: 12px; padding-left: 12px; }
