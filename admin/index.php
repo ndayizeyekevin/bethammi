@@ -152,31 +152,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $action = is_string($_POST['action'] ?? null) ? $_POST['action'] : '';
         try {
             if (!$isAuthenticated && $action === 'login') {
-                $username = trim(bethammi_admin_input('username'));
+                $loginIdentifier = trim(bethammi_admin_input('username'));
                 $password = bethammi_admin_input('password');
+                $user = false;
+                if (filter_var($loginIdentifier, FILTER_VALIDATE_EMAIL) !== false) {
+                    $statement = bethammi_db()->prepare(
+                        'SELECT id, username, password_hash FROM admin_users WHERE email = :identifier LIMIT 1'
+                    );
+                    $statement->execute(['identifier' => $loginIdentifier]);
+                    $user = $statement->fetch();
+                }
+                if (!$user) {
+                    $statement = bethammi_db()->prepare(
+                        'SELECT id, username, password_hash FROM admin_users WHERE username = :identifier LIMIT 1'
+                    );
+                    $statement->execute(['identifier' => $loginIdentifier]);
+                    $user = $statement->fetch();
+                }
+                $attemptUsername = $user
+                    ? $user['username']
+                    : (strlen($loginIdentifier) <= 80
+                        ? $loginIdentifier
+                        : 'email:' . hash('sha256', strtolower($loginIdentifier)));
                 $ipHash = hash('sha256', (string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown'));
                 $attempts = bethammi_db()->prepare(
                     'SELECT COUNT(*) FROM admin_login_attempts
                      WHERE username = :username AND ip_hash = :ip_hash
                      AND attempted_at >= (NOW() - INTERVAL 15 MINUTE)'
                 );
-                $attempts->execute(['username' => $username, 'ip_hash' => $ipHash]);
+                $attempts->execute(['username' => $attemptUsername, 'ip_hash' => $ipHash]);
                 if ((int) $attempts->fetchColumn() >= 5) {
                     if ($isModalLoginRequest) {
                         http_response_code(429);
                     }
                     $error = 'Too many sign-in attempts. Wait 15 minutes before trying again.';
                 } else {
-                    $statement = bethammi_db()->prepare('SELECT id, username, password_hash FROM admin_users WHERE username = :username LIMIT 1');
-                    $statement->execute(['username' => $username]);
-                    $user = $statement->fetch();
                     if (!$user || !password_verify($password, $user['password_hash'])) {
                         if ($isModalLoginRequest) {
                             http_response_code(401);
                         }
                         bethammi_db()->prepare(
                             'INSERT INTO admin_login_attempts (username, ip_hash) VALUES (:username, :ip_hash)'
-                        )->execute(['username' => $username, 'ip_hash' => $ipHash]);
+                        )->execute(['username' => $attemptUsername, 'ip_hash' => $ipHash]);
                         $error = 'The username or password was not recognized.';
                     } else {
                         session_regenerate_id(true);
@@ -184,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                         bethammi_db()->prepare(
                             'DELETE FROM admin_login_attempts WHERE username = :username AND ip_hash = :ip_hash'
-                        )->execute(['username' => $username, 'ip_hash' => $ipHash]);
+                        )->execute(['username' => $user['username'], 'ip_hash' => $ipHash]);
                         bethammi_db()->prepare('UPDATE admin_users SET last_login_at = NOW() WHERE id = :id')
                             ->execute(['id' => $user['id']]);
                         if ($isModalLoginRequest) {
