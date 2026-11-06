@@ -378,6 +378,7 @@ $isAuthenticated = isset($_SESSION['admin_user']);
 if (isset($_GET['logged-out'])) $message = 'You have been signed out.';
 if (isset($_GET['saved'])) $message = 'Changes saved.';
 if (isset($_GET['deleted'])) $message = 'Record deleted.';
+if (isset($_GET['password-reset'])) $message = 'Your password has been updated. Sign in with your new password.';
 
 $selectedRecord = [];
 $records = [];
