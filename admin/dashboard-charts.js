@@ -7,12 +7,14 @@ if (chartDataElement instanceof HTMLScriptElement) {
   const categories = chartData.categories;
   const publishedTotal = published.reduce((total, count) => total + count, 0);
   const unpublishedTotal = unpublished.reduce((total, count) => total + count, 0);
+  const rootStyles = getComputedStyle(document.documentElement);
   const palette = {
     gold: "#c49a58",
-    green: "#347455",
+    green: rootStyles.getPropertyValue("--green").trim() || "#347455",
     blue: "#667b9a",
-    muted: "#77827e",
-    grid: "#edf0eb",
+    muted: rootStyles.getPropertyValue("--muted").trim() || "#77827e",
+    grid: rootStyles.getPropertyValue("--line").trim() || "#edf0eb",
+    ink: rootStyles.getPropertyValue("--navy").trim() || "#173c3d",
   };
   const chartFont = {
     family: '"DM Sans", Arial, sans-serif',
@@ -40,7 +42,9 @@ if (chartDataElement instanceof HTMLScriptElement) {
           {
             label: "Unpublished",
             data: unpublished,
-            backgroundColor: ["#eee5d5", "#e2eee6", "#e5eaf0"],
+            backgroundColor: document.documentElement.dataset.adminTheme === "dark"
+              ? ["#4a4031", "#2d4637", "#35404d"]
+              : ["#eee5d5", "#e2eee6", "#e5eaf0"],
             borderRadius: 5,
             borderSkipped: false,
             maxBarThickness: 26,
@@ -98,7 +102,7 @@ if (chartDataElement instanceof HTMLScriptElement) {
         ctx.save();
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillStyle = "#173c3d";
+        ctx.fillStyle = palette.ink;
         ctx.font = '700 27px "Manrope", Arial, sans-serif';
         ctx.fillText(String(publishedTotal), centerX, centerY - 5);
         ctx.fillStyle = palette.muted;
@@ -114,8 +118,8 @@ if (chartDataElement instanceof HTMLScriptElement) {
         labels: ["Published", "Unpublished"],
         datasets: [{
           data: [publishedTotal, unpublishedTotal],
-          backgroundColor: [palette.green, "#e8ece8"],
-          hoverBackgroundColor: ["#286344", "#dce2dc"],
+          backgroundColor: [palette.green, document.documentElement.dataset.adminTheme === "dark" ? "#35433f" : "#e8ece8"],
+          hoverBackgroundColor: ["#286344", document.documentElement.dataset.adminTheme === "dark" ? "#43534e" : "#dce2dc"],
           borderWidth: 0,
           spacing: 4,
           borderRadius: 5,
