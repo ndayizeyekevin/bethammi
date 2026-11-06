@@ -574,6 +574,7 @@ $csrfToken = bethammi_admin_csrf_token();
     <?php require __DIR__ . '/views/content-manager.php'; ?>
   <?php endif; ?>
   <?php require __DIR__ . '/views/layout-end.php'; ?>
+  <script src="navigation.js?v=<?= (int) filemtime(__DIR__ . '/navigation.js') ?>" defer></script>
   <?php if ($adminPage === 'dashboard' && $error === ''): ?>
     <script src="../assets/chartjs/chart.umd.min.js?v=<?= (int) filemtime(__DIR__ . '/../assets/chartjs/chart.umd.min.js') ?>" defer></script>
     <script src="dashboard-charts.js?v=<?= (int) filemtime(__DIR__ . '/dashboard-charts.js') ?>" defer></script>
