@@ -12,8 +12,12 @@
     <form class="admin-form" method="post">
       <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
       <input type="hidden" name="action" value="login">
-      <label>Username<input name="username" autocomplete="username" required></label>
-      <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
+      <label>Username<input name="username" autocomplete="username" placeholder="Enter Username" required></label>
+      <label for="admin-password">Password</label>
+      <div class="password-field">
+        <input id="admin-password" type="password" name="password" placeholder="Enter Password" autocomplete="current-password" required>
+        <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+      </div>
       <button class="button button--primary" type="submit">Sign in</button>
     </form>
     <a class="login-recovery" href="forgot-password.php">Forgot your password?</a>
