@@ -48,7 +48,7 @@ if (bethammi_post_image_request_exceeds_post_limit()) {
 }
 
 if (!isset($_SESSION['admin_user'])) {
-    bethammi_post_image_upload_response(['error' => 'Sign in to upload post images.'], 401);
+    bethammi_post_image_upload_response(['error' => 'Sign in to upload images.'], 401);
     exit;
 }
 
@@ -63,6 +63,16 @@ if (!is_array($upload) || !isset($upload['error'], $upload['tmp_name'], $upload[
     exit;
 }
 
+$uploadType = is_string($_POST['upload_type'] ?? null) ? $_POST['upload_type'] : 'posts';
+$uploadDirectories = [
+    'posts' => 'posts',
+    'team' => 'team',
+];
+if (!isset($uploadDirectories[$uploadType])) {
+    bethammi_post_image_upload_response(['error' => 'Choose a supported image upload destination.'], 422);
+    exit;
+}
+
 if ((int) $upload['error'] !== UPLOAD_ERR_OK) {
     $uploadError = (int) $upload['error'];
     $message = match ($uploadError) {
@@ -74,7 +84,7 @@ if ((int) $upload['error'] !== UPLOAD_ERR_OK) {
         default => 'The image upload did not complete. Please try again.',
     };
     if (in_array($uploadError, [UPLOAD_ERR_NO_TMP_DIR, UPLOAD_ERR_CANT_WRITE, UPLOAD_ERR_EXTENSION], true)) {
-        error_log('Beth Ammi post image upload failed with PHP upload error ' . $uploadError . '.');
+        error_log('Beth Ammi image upload failed with PHP upload error ' . $uploadError . '.');
     }
     bethammi_post_image_upload_response(['error' => $message], 422);
     exit;
@@ -111,7 +121,7 @@ if ($width < 1 || $height < 1 || $width > 12000 || $height > 12000 || $width * $
 
 $finfo = finfo_open(FILEINFO_MIME_TYPE);
 if ($finfo === false) {
-    error_log('Beth Ammi post image upload failed: fileinfo is unavailable.');
+    error_log('Beth Ammi image upload failed: fileinfo is unavailable.');
     bethammi_post_image_upload_response(['error' => 'Image validation is unavailable right now.'], 500);
     exit;
 }
@@ -122,25 +132,26 @@ if ($mimeType !== $imageTypes[$imageType]['mime']) {
     exit;
 }
 
-$uploadDirectory = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'posts';
+$uploadFolder = $uploadDirectories[$uploadType];
+$uploadDirectory = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $uploadFolder;
 if (!is_dir($uploadDirectory) && !mkdir($uploadDirectory, 0755, true) && !is_dir($uploadDirectory)) {
-    error_log('Beth Ammi post image upload failed: unable to create image directory.');
-    bethammi_post_image_upload_response(['error' => 'The server could not create assets/images/posts. Give PHP permission to write to assets/images.'], 500);
+    error_log('Beth Ammi image upload failed: unable to create image directory.');
+    bethammi_post_image_upload_response(['error' => 'The server could not create assets/images/' . $uploadFolder . '. Give PHP permission to write to assets/images.'], 500);
     exit;
 }
 if (!is_writable($uploadDirectory)) {
-    error_log('Beth Ammi post image upload failed: image directory is not writable.');
-    bethammi_post_image_upload_response(['error' => 'The server cannot write to assets/images/posts. Give PHP permission to write to that directory.'], 500);
+    error_log('Beth Ammi image upload failed: image directory is not writable.');
+    bethammi_post_image_upload_response(['error' => 'The server cannot write to assets/images/' . $uploadFolder . '. Give PHP permission to write to that directory.'], 500);
     exit;
 }
 
 $filename = bin2hex(random_bytes(16)) . '.' . $imageTypes[$imageType]['extension'];
 $destination = $uploadDirectory . DIRECTORY_SEPARATOR . $filename;
 if (!move_uploaded_file($upload['tmp_name'], $destination)) {
-    error_log('Beth Ammi post image upload failed: unable to move validated image.');
-    bethammi_post_image_upload_response(['error' => 'The server could not save the image in assets/images/posts. Check PHP write permissions.'], 500);
+    error_log('Beth Ammi image upload failed: unable to move validated image.');
+    bethammi_post_image_upload_response(['error' => 'The server could not save the image in assets/images/' . $uploadFolder . '. Check PHP write permissions.'], 500);
     exit;
 }
 
 $siteBase = rtrim(str_replace('\\', '/', dirname(dirname((string) ($_SERVER['SCRIPT_NAME'] ?? '/admin/post-image-upload.php')))), '/');
-bethammi_post_image_upload_response(['url' => $siteBase . '/assets/images/posts/' . $filename]);
+bethammi_post_image_upload_response(['url' => $siteBase . '/assets/images/' . $uploadFolder . '/' . $filename]);
