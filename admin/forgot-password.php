@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1>Forgot your password?</h1>
     <p class="login-intro">Enter the recovery email address associated with your administrator account.</p>
     <?php if ($error !== ''): ?><p class="notice notice--error" role="alert"><?= bethammi_escape($error) ?></p><?php endif; ?>
-    <?php if ($message !== ''): ?><p class="notice" role="status"><?= bethammi_escape($message) ?></p><?php endif; ?>
+    <?php if ($message !== ''): ?><p class="notice notice--info" role="status"><?= bethammi_escape($message) ?></p><?php endif; ?>
     <form class="admin-form" method="post" data-loading-overlay-form>
       <input type="hidden" name="csrf_token" value="<?= bethammi_escape($csrfToken) ?>">
       <label>Email address<input type="email" name="email" placeholder="Enter your email" value="<?= bethammi_escape($email) ?>" maxlength="254" autocomplete="email" required></label>
