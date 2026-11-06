@@ -21,7 +21,7 @@ button, input, textarea { font: inherit; }
 .admin-shell { min-height: 100vh; }
 .sidebar { position: fixed; top: 0; right: auto; bottom: 0; left: 0; z-index: 10; display: flex; width: 252px; flex-direction: column; padding: 28px 17px 18px; background: var(--navy-dark); color: #fff; }
 .sidebar-brand { display: flex; align-items: center; padding: 0 8px 34px; color: #fff; text-decoration: none; }
-.brand-mark { display: inline-flex; width: 42px; height: 42px; flex: 0 0 42px; align-items: center; justify-content: center; margin-right: 12px; border: 1px solid rgba(196,154,88,.65); color: #d5b476; font: 700 14px "Manrope", Arial, sans-serif; letter-spacing: .02em; }
+.admin-brand-logo { display: block; width: 42px; height: 42px; flex: 0 0 42px; margin-right: 12px; object-fit: contain; }
 .brand-copy strong, .brand-copy small, .login-brand strong, .login-brand small { display: block; }
 .brand-copy strong { font: 800 12px "Manrope", Arial, sans-serif; letter-spacing: .13em; }
 .brand-copy small { margin-top: 4px; color: #9aafaa; font-size: 8px; font-weight: 700; letter-spacing: .16em; }
@@ -174,7 +174,7 @@ button, input, textarea { font: inherit; }
 .login-page { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 24px; background: radial-gradient(circle at top left, #e8eee8, transparent 45%), var(--paper); }
 .login-card { width: 100%; max-width: 420px; padding: 36px; border: 1px solid var(--line); border-radius: 5px; background: #fff; box-shadow: 0 16px 50px rgba(24,55,47,.08); }
 .login-brand { display: flex; align-items: center; margin-bottom: 38px; color: var(--navy); text-decoration: none; }
-.login-brand .brand-mark { color: #a78041; }
+.login-brand .admin-brand-logo { width: 48px; height: 48px; flex-basis: 48px; }
 .login-brand strong { font: 800 12px "Manrope", Arial, sans-serif; letter-spacing: .13em; }
 .login-brand small { margin-top: 4px; color: #84908b; font-size: 8px; font-weight: 700; letter-spacing: .16em; }
 .login-card h1 { margin: 0 0 7px; color: var(--navy); font: 700 27px/1.2 "Manrope", Arial, sans-serif; letter-spacing: -.03em; }
@@ -196,7 +196,7 @@ button, input, textarea { font: inherit; }
 @media (max-width: 700px) {
   .sidebar { position: static; width: 100%; padding: 12px 16px 9px; }
   .sidebar-brand { padding: 0 4px 12px; }
-  .brand-mark { width: 36px; height: 36px; flex-basis: 36px; }
+  .sidebar-brand .admin-brand-logo { width: 36px; height: 36px; flex-basis: 36px; }
   .sidebar-label, .sidebar-bottom { display: none; }
   .sidebar-nav { display: flex; overflow-x: auto; border-top: 1px solid rgba(255,255,255,.13); padding-top: 8px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .sidebar-nav::-webkit-scrollbar { display: none; }
