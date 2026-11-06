@@ -11,7 +11,7 @@ $currentPage = $adminPages[$adminPage];
 <div class="admin-shell">
   <aside class="sidebar">
     <a class="sidebar-brand" href="dashboard.php" aria-label="Beth Ammi admin dashboard">
-      <span class="brand-mark">BA</span>
+      <img class="admin-brand-logo" src="../assets/images/bethammilogo.png" alt="">
       <span class="brand-copy"><strong>BETH AMMI</strong><small>CONTENT ADMIN</small></span>
     </a>
     <p class="sidebar-label">WORKSPACE</p>
