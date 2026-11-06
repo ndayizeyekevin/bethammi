@@ -32,6 +32,14 @@ function bethammi_admin_redirect($url)
     exit;
 }
 
+function bethammi_admin_json_response($payload, $statusCode = 200)
+{
+    http_response_code($statusCode);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($payload, JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
 function bethammi_admin_value($key, $fallback = '')
 {
     if (array_key_exists($key, $_POST)) {
@@ -116,6 +124,9 @@ function bethammi_admin_image_field($name, $label)
 $message = '';
 $error = '';
 $isAuthenticated = isset($_SESSION['admin_user']);
+$isModalLoginRequest = $_SERVER['REQUEST_METHOD'] === 'POST'
+    && ($_POST['action'] ?? '') === 'login'
+    && ($_POST['modal_login'] ?? '') === '1';
 $adminPage = isset($adminPage) && in_array($adminPage, ['dashboard', 'posts', 'add-post', 'team', 'parishes'], true)
     ? $adminPage
     : 'dashboard';
@@ -151,12 +162,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 );
                 $attempts->execute(['username' => $username, 'ip_hash' => $ipHash]);
                 if ((int) $attempts->fetchColumn() >= 5) {
+                    if ($isModalLoginRequest) {
+                        http_response_code(429);
+                    }
                     $error = 'Too many sign-in attempts. Wait 15 minutes before trying again.';
                 } else {
                     $statement = bethammi_db()->prepare('SELECT id, username, password_hash FROM admin_users WHERE username = :username LIMIT 1');
                     $statement->execute(['username' => $username]);
                     $user = $statement->fetch();
                     if (!$user || !password_verify($password, $user['password_hash'])) {
+                        if ($isModalLoginRequest) {
+                            http_response_code(401);
+                        }
                         bethammi_db()->prepare(
                             'INSERT INTO admin_login_attempts (username, ip_hash) VALUES (:username, :ip_hash)'
                         )->execute(['username' => $username, 'ip_hash' => $ipHash]);
@@ -170,6 +187,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         )->execute(['username' => $username, 'ip_hash' => $ipHash]);
                         bethammi_db()->prepare('UPDATE admin_users SET last_login_at = NOW() WHERE id = :id')
                             ->execute(['id' => $user['id']]);
+                        if ($isModalLoginRequest) {
+                            bethammi_admin_json_response([
+                                'success' => true,
+                                'redirect' => 'dashboard.php',
+                            ]);
+                        }
                         bethammi_admin_redirect('dashboard.php');
                     }
                 }
@@ -372,6 +395,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'The request could not be completed. Check the server log for details.';
         }
     }
+}
+
+if ($isModalLoginRequest) {
+    if (isset($_SESSION['admin_user'])) {
+        bethammi_admin_json_response([
+            'success' => true,
+            'redirect' => 'dashboard.php',
+        ]);
+    }
+
+    bethammi_admin_json_response([
+        'success' => false,
+        'message' => $error !== '' ? $error : 'Sign-in could not be completed. Please try again.',
+    ], http_response_code() ?: 400);
 }
 
 $isAuthenticated = isset($_SESSION['admin_user']);
