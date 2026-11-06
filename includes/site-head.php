@@ -34,6 +34,7 @@ if (!in_array('script.js', $pageScripts, true)) {
   <link href="<?= bethammi_escape($siteRoot) ?>assets/bootstrap/googlefonts/css2.css" rel="stylesheet">
   <link rel="stylesheet" href="<?= bethammi_escape($siteRoot) ?>styles.css?v=<?= (int) filemtime(__DIR__ . '/../styles.css') ?>">
   <script src="<?= bethammi_escape($siteRoot) ?>assets/js/password-visibility.js?v=<?= (int) filemtime(__DIR__ . '/../assets/js/password-visibility.js') ?>" defer></script>
+  <script src="<?= bethammi_escape($siteRoot) ?>assets/js/modal-login.js?v=<?= (int) filemtime(__DIR__ . '/../assets/js/modal-login.js') ?>" defer></script>
   <?php foreach ($pageScripts as $script): ?>
   <script src="<?= bethammi_escape($siteRoot . $script) ?><?= $script === 'script.js' ? '?v=' . (int) filemtime(__DIR__ . '/../script.js') : '' ?>" defer></script>
   <?php endforeach; ?>
