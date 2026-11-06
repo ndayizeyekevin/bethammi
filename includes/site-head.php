@@ -36,7 +36,7 @@ if (!in_array('script.js', $pageScripts, true)) {
   <script src="<?= bethammi_escape($siteRoot) ?>assets/js/password-visibility.js?v=<?= (int) filemtime(__DIR__ . '/../assets/js/password-visibility.js') ?>" defer></script>
   <script src="<?= bethammi_escape($siteRoot) ?>assets/js/modal-login.js?v=<?= (int) filemtime(__DIR__ . '/../assets/js/modal-login.js') ?>" defer></script>
   <?php foreach ($pageScripts as $script): ?>
-  <script src="<?= bethammi_escape($siteRoot . $script) ?><?= $script === 'script.js' ? '?v=' . (int) filemtime(__DIR__ . '/../script.js') : '' ?>" defer></script>
+  <script src="<?= bethammi_escape($siteRoot . $script) ?>?v=<?= (int) filemtime(__DIR__ . '/../' . $script) ?>" defer></script>
   <?php endforeach; ?>
 </head>
 <body data-site-root="<?= bethammi_escape($siteRoot) ?>"<?= $contentKind !== '' ? ' data-content-kind="' . bethammi_escape($contentKind) . '"' : '' ?><?= $contentSlug !== '' ? ' data-content-slug="' . bethammi_escape($contentSlug) . '"' : '' ?><?= $isStaticPage ? ' data-static-page="true" data-page-title="' . bethammi_escape($staticPageTitle) . '"' : '' ?>>
