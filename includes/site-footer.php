@@ -44,7 +44,7 @@
       <a href="<?= bethammi_escape($siteRoot) ?>pages/terms-of-use">Terms of Use</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/disclaimer">Website Disclaimer</a>
     </nav>
-    <div class="container footer__bottom"><span>Copyright © 2020 - <span id="year"></span> Beth Ammi Christian Fellowship Church. All rights reserved.</span> <a href="#main">Back to top ↑</a></div>
+    <div class="container footer__bottom"><span>Copyright © 2020 - <span id="year"></span> Beth Ammi Christian Fellowship Church. All rights reserved.</span><span class="footer__credit">Designed and developed by <a href="https://nusk.rw" target="_blank" rel="noopener noreferrer">NUSK Tech Solutions Group</a></span></div>
   </footer>
   <div class="modal fade" id="donateModal" tabindex="-1" aria-labelledby="donateModalLabel" aria-describedby="donateModalDescription" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">

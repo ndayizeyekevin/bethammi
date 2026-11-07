@@ -269,8 +269,11 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .donate-modal__footer { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 16px; padding: 17px 18px; background: #efeee8; }
 .donate-modal__footer p { margin: 0; color: #596762; font-size: 11px; }
 .donate-modal__footer .button { flex: 0 0 auto; border: 0; }
-.footer__bottom { display: flex; justify-content: space-between; gap: 20px; padding-block: 16px 20px; border-top: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.48); font-size: 9px; }
+.footer__bottom { display: flex; flex-direction: column; align-items: center; gap: 7px; padding-block: 16px 20px; border-top: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.48); font-size: 9px; text-align: center; }
 .footer__bottom a { color: var(--gold-light); text-decoration: none; }
+.footer__credit { color: rgba(255,255,255,.62); text-align: center; }
+.footer__credit a { color: var(--gold-light); font-weight: 600; text-decoration: underline; text-decoration-color: var(--gold-light); text-underline-offset: 3px; }
+.footer__credit a:hover, .footer__credit a:focus-visible { color: var(--white); text-decoration-color: var(--white); }
 .footer__directory { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding-block: 0 22px; }
 .footer__directory > span { color: var(--gold-light); font-size: 8px; font-weight: 700; letter-spacing: .15em; }
 .footer__directory a { color: rgba(255,255,255,.55); font-size: 9px; text-decoration: none; }
