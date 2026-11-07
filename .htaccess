@@ -1,5 +1,10 @@
 Options -MultiViews
 
+<IfModule mod_headers.c>
+  Header onsuccess unset X-Powered-By
+  Header always unset X-Powered-By
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /bethammi/
