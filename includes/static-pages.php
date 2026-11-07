@@ -18,5 +18,7 @@ function bethammi_static_pages()
         'donate' => 'Donate',
         'daily-bible-verses' => 'Daily Bible verses',
         'disclaimer' => 'Website Disclaimer',
+        'privacy-policy' => 'Privacy Policy',
+        'terms-of-use' => 'Terms of Use',
     ];
 }

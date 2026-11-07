@@ -37,8 +37,13 @@
       <a href="<?= bethammi_escape($siteRoot) ?>pages/josh">Josh</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/contact-us">Contact Details</a>
       <a href="<?= bethammi_escape($siteRoot) ?>pages/donate" data-bs-toggle="modal" data-bs-target="#donateModal" aria-haspopup="dialog">Give</a>
-      <a href="<?= bethammi_escape($siteRoot) ?>pages/disclaimer">Website Disclaimer</a>
     </div>
+    <nav class="container footer__legal" aria-label="Website policies">
+      <span>WEBSITE POLICIES</span>
+      <a href="<?= bethammi_escape($siteRoot) ?>pages/privacy-policy">Privacy Policy</a>
+      <a href="<?= bethammi_escape($siteRoot) ?>pages/terms-of-use">Terms of Use</a>
+      <a href="<?= bethammi_escape($siteRoot) ?>pages/disclaimer">Website Disclaimer</a>
+    </nav>
     <div class="container footer__bottom"><span>Copyright © 2020 - <span id="year"></span> Beth Ammi Christian Fellowship Church. All rights reserved.</span> <a href="#main">Back to top ↑</a></div>
   </footer>
   <div class="modal fade" id="donateModal" tabindex="-1" aria-labelledby="donateModalLabel" aria-describedby="donateModalDescription" aria-hidden="true">
