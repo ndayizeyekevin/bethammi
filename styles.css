@@ -271,6 +271,9 @@ h2 { font-size: clamp(38px, 4.4vw, 56px); }
 .donate-modal__footer .button { flex: 0 0 auto; border: 0; }
 .footer__bottom { display: flex; justify-content: space-between; gap: 20px; padding-block: 16px 20px; border-top: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.48); font-size: 9px; }
 .footer__bottom a { color: var(--gold-light); text-decoration: none; }
+.footer__credit { color: rgba(255,255,255,.62); text-align: center; }
+.footer__credit a { color: inherit; text-underline-offset: 3px; }
+.footer__credit a:hover, .footer__credit a:focus-visible { color: var(--gold-light); text-decoration: underline; }
 .footer__directory { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding-block: 0 22px; }
 .footer__directory > span { color: var(--gold-light); font-size: 8px; font-weight: 700; letter-spacing: .15em; }
 .footer__directory a { color: rgba(255,255,255,.55); font-size: 9px; text-decoration: none; }
@@ -1079,7 +1082,8 @@ body[data-content-slug="women-ministries"] .page-sidebar { position: static; gri
   .footer__top { grid-template-columns: 1fr 1fr; gap: 27px 18px; }
   .footer__newsletter { grid-column: 1 / -1; }
   .footer__social { grid-column: auto; }
-  .footer__bottom { font-size: 8px; }
+  .footer__bottom { flex-wrap: wrap; font-size: 8px; }
+  .footer__credit { flex-basis: 100%; order: 1; text-align: left; }
   .footer__directory { gap: 9px 14px; }
   .footer__directory > span { width: 100%; }
   .footer__legal { gap: 9px 16px; }
