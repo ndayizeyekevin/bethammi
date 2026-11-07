@@ -409,7 +409,8 @@ function localPageLink(item, kind = "page") {
 const staticPageSlugs = new Set([
   "about-us", "who-we-are", "our-parishes", "ministries", "outreach-evangelism",
   "children-ministries", "women-ministries", "ltu", "partners",
-  "josh", "joan", "ep-kiramutse", "donate", "daily-bible-verses", "team", "contact-us"
+  "josh", "joan", "ep-kiramutse", "donate", "daily-bible-verses", "team", "contact-us",
+  "disclaimer", "privacy-policy", "terms-of-use"
 ]);
 
 function addFeaturedImage(card, item) {
